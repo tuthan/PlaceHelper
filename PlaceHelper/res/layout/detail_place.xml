@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <!--Root node-->
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:background="@drawable/app_bg">
+    
+  			
+  			<!-- Brief info  -->
+  			<LinearLayout
+  						android:layout_width="fill_parent"
+  						android:layout_height="50dp"
+  						android:orientation="vertical"
+  						android:layout_marginLeft="8dp"
+  						android:layout_marginRight="8dp"
+  						android:layout_marginTop="10dp"
+  						android:background="@drawable/detail_bg">
+  						
+  						<!--Place Name-->
+  						 <TextView
+  						 	android:id="@+id/place_name" 
+				  			android:layout_width="fill_parent"
+				  			android:layout_height="wrap_content"
+				  			android:gravity="center_horizontal"
+				  			android:textColor="@color/title_blue"
+				  			android:textStyle="bold"
+				  			android:layout_marginTop="5dp"
+				  			android:layout_marginLeft="10dp"
+				  			android:text="Swiss-BelHotel Wooshu"/>
+				  		  <!--Address-->
+						<TextView 
+							android:id="@+id/address"
+				  			android:layout_width="fill_parent"
+				  			android:layout_height="wrap_content"
+				  			android:gravity="center_horizontal"
+				  			android:layout_marginLeft="15dp"
+				  			android:textColor="@color/black"										  													  			
+				  			android:text="Address: 253 Pham Van Thuan"/>
+						
+										
+  						</LinearLayout>
+  			<!--End of brief info-->
+  						
+  			<!-- Button Bar-->
+			<LinearLayout 
+			    android:orientation="horizontal"
+			    android:layout_width="wrap_content"
+			    android:layout_height="90dp"
+			    android:layout_marginTop="4dp" 
+			    android:layout_marginLeft="8dp"
+			    android:layout_marginRight="8dp"
+			    		    
+			    android:background="@drawable/detail_bg"
+			    >	
+			    
+			    <!-- Web -->
+			    <LinearLayout 			    	
+			    	android:orientation="vertical"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:layout_gravity="center_vertical">	
+			    	
+			    	<ImageButton
+			    		android:id="@+id/btnWeb"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_marginTop="4dp"						
+						android:layout_gravity="center"																					
+						android:src="@drawable/btn_web"/>
+						
+			    	<TextView  			    		
+			    		android:layout_width="wrap_content" 
+			    		android:layout_height="wrap_content"
+			    		android:layout_gravity="center"
+			    		android:textColor="@color/black" 			    		
+			    		android:text="Web"/>			
+			    				
+			    </LinearLayout>		 
+			    <!-- End Web -->
+			    
+				<ImageView
+					android:layout_width="1px"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"																
+					android:background="@drawable/horizon_divider" 
+				/>		
+				
+				<!-- Call -->
+			    <LinearLayout 			    	
+			    	android:orientation="vertical"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:layout_gravity="center_vertical">	
+			    	
+			    	<ImageButton
+			    		android:id="@+id/btnCall"
+						android:layout_marginTop="4dp"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_gravity="center"																
+						android:src="@drawable/btn_call"/>
+						
+			    	<TextView  			    		
+			    		android:layout_width="wrap_content" 
+			    		android:layout_height="wrap_content"
+			    		android:layout_gravity="center"
+			    		android:textColor="@color/black" 			    		
+			    		android:text="Call"/>			
+			    				
+			    </LinearLayout>		 
+			    <!-- End Call -->
+			    
+				<ImageView
+					android:layout_width="1px"
+					android:layout_height="wrap_content"	
+					android:layout_gravity="center_vertical"															
+					android:background="@drawable/horizon_divider" 
+				/>		    
+			    
+			    <!-- Email -->
+			    <LinearLayout 			    	
+			    	android:orientation="vertical"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:layout_gravity="center_vertical">	
+			    	
+			    	<ImageButton
+			    		android:id="@+id/btnEmail"
+			    		android:layout_marginTop="4dp"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_gravity="center"																
+						android:src="@drawable/btn_email"/>
+						
+			    	<TextView  			    		
+			    		android:layout_width="wrap_content" 
+			    		android:layout_height="wrap_content"
+			    		android:layout_gravity="center"
+			    		android:textColor="@color/black" 			    		
+			    		android:text="Email"/>			
+			    				
+			    </LinearLayout>		 
+			    <!-- End Email -->
+			    
+				<ImageView
+					android:layout_width="1px"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"															
+					android:background="@drawable/horizon_divider" 
+				/>	
+				
+				<!-- On Map -->
+			    <LinearLayout 			    	
+			    	android:orientation="vertical"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:layout_gravity="center_vertical">	
+			    	
+			    	<ImageButton
+			    		android:id="@+id/btnMap"
+			    		android:layout_marginTop="4dp"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_gravity="center"																
+						android:src="@drawable/btn_on_map"/>
+						
+			    	<TextView  			    		
+			    		android:layout_width="wrap_content" 
+			    		android:layout_height="wrap_content"
+			    		android:layout_gravity="center"
+			    		android:textColor="@color/black" 			    		
+			    		android:text="Map"/>			
+			    				
+			    </LinearLayout>		 
+			    <!-- End Web -->
+			    
+				<ImageView
+					android:layout_width="1px"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_vertical"															
+					android:background="@drawable/horizon_divider" 
+				/>	
+			    
+			    <!-- Favorite -->
+			    <LinearLayout 			    	
+			    	android:orientation="vertical"
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:layout_gravity="center_vertical">		
+			    	
+			    	<ImageButton
+			    		android:id="@+id/btnFavorite"
+			    		android:layout_marginTop="4dp"
+						android:layout_width="60dp"
+						android:layout_height="60dp"
+						android:layout_gravity="center"																
+						android:src="@drawable/btn_favo_add"/>
+						
+			    	<TextView  						    		
+			    		android:layout_width="wrap_content" 
+			    		android:layout_height="wrap_content"
+			    		android:layout_gravity="center"
+			    		android:textColor="@color/black" 
+			    		android:text="Favorite"/>		
+			    					
+			    </LinearLayout>				       
+				<!-- End Favorite -->
+																			    		    	  
+			</LinearLayout>	
+			<!-- End Button Bar -->	
+			
+			<!-- Detail info-->
+			<LinearLayout 
+			    android:orientation="vertical"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="4dp"
+			    android:layout_marginLeft="8dp"
+  				android:layout_marginRight="8dp"
+  				android:layout_marginBottom="8dp" 			    			   
+			    android:background="@drawable/detail_bg">
+			    
+			    <TextView
+			    	android:layout_width="wrap_content"
+			    	android:layout_height="wrap_content"
+			    	android:layout_marginTop="10dp"
+			    	android:layout_marginLeft="15dp"
+			    	android:text="Thông Tin Chi Tiết"
+			    	android:textColor="@color/Detail"
+			    	android:textStyle="bold"/>
+			 	
+  							
+				  <!--Address-->
+				<TextView 
+					android:id="@+id/address_full"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:layout_marginLeft="15dp"
+		  			android:textColor="@color/black"										  													  			
+		  			android:text="Address: 253 Pham Van Thuan"/>
+	  			
+		  	 	 <!--Phone Number -->
+		  		<TextView 
+		  			android:id="@+id/phone_number"
+		  			android:layout_width="wrap_content"
+		  			android:layout_height="wrap_content"
+		  			android:layout_marginLeft="15dp"
+		  			android:textColor="@color/black"										  													  			
+		  			android:text="N/A"/>
+		  		
+		  		<TextView 
+		  			android:id="@+id/distance"
+		  			android:layout_width="wrap_content"
+		  			android:layout_height="wrap_content"
+		  			android:layout_marginLeft="15dp"
+		  			android:textColor="@color/black"										  													  			
+		  			android:text="12km"/>
+		  	 	
+		  		<TextView 		  			
+		  			android:layout_width="wrap_content"
+		  			android:layout_height="wrap_content"
+		  			android:layout_marginLeft="15dp"		  			
+		  			android:textColor="@color/black"										  			
+		  			android:text="Map:"										  										  													  		
+		  			/>				
+				 <!--Place Map Image -->
+				<ImageView
+					android:layout_gravity="center_horizontal"
+					android:layout_width="150dp"
+					android:layout_height="100dp"			  								
+					android:src="@drawable/no_image" 
+					android:scaleType="center"
+					android:id="@+id/st_map"/>
+  				
+			 </LinearLayout>
+</LinearLayout>

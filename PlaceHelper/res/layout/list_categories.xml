@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="@drawable/app_bg" 
+	android:orientation="vertical">
+	<TextView 
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/cat_select"
+		android:gravity="center_horizontal"		
+		android:layout_marginTop="10dp"
+		android:textStyle="bold"/>
+	<!-- Top row -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="100dp"
+			android:orientation="horizontal"
+			android:layout_marginTop="30dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp">
+			<LinearLayout
+				android:layout_width="100dp"
+				android:layout_height="fill_parent"
+				android:layout_gravity="center_horizontal"				
+				android:orientation="vertical">
+				<Button
+					android:id="@+id/btnrestaurant"
+					android:layout_width="72dp"
+					android:layout_height="72dp"
+					android:layout_gravity="center"										
+					android:background="@drawable/restaurant">
+				</Button>
+				<TextView
+		  			android:text="@string/btn_restaurants"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:gravity="center"			  				
+					android:textColor="#000000">
+		  		</TextView>	
+			</LinearLayout>
+				
+			<LinearLayout
+				android:layout_width="100dp"
+				android:layout_height="wrap_content"				
+				android:orientation="vertical">
+				<Button
+					android:id="@+id/btnhotel"
+					android:layout_width="72dp"
+					android:layout_height="72dp"
+					android:layout_gravity="center"									
+					android:background="@drawable/hotel">
+				</Button>
+				<TextView
+		  			android:text="@string/btn_hotels"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:gravity="center"
+					android:textColor="#000000">
+		  		</TextView>	
+			</LinearLayout>	
+			
+			<LinearLayout
+				android:layout_width="100dp"
+				android:layout_height="wrap_content"				
+				android:orientation="vertical">
+				<Button
+					android:id="@+id/btnbanks"
+					android:layout_width="72dp"
+					android:layout_height="72dp"					
+					android:layout_gravity="center_horizontal"
+					android:background="@drawable/banks">
+				</Button>
+				<TextView
+		  			android:text="@string/btn_banks"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:gravity="center"		  			
+					android:textColor="#000000">
+		  		</TextView>	
+		  		</LinearLayout>	
+			
+		</LinearLayout>
+		<!-- End of top row -->
+		<!-- Middle Row -->
+		<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="100dp"
+			android:orientation="horizontal"
+			android:layout_marginTop="30dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp">
+			<LinearLayout
+				android:layout_width="100dp"
+				android:layout_height="fill_parent"
+				android:layout_gravity="center_horizontal"				
+				android:orientation="vertical">
+				<Button
+					android:id="@+id/btnplace"
+					android:layout_width="72dp"
+					android:layout_height="72dp"
+					android:layout_gravity="center"										
+					android:background="@drawable/coffee">
+				</Button>
+				<TextView
+		  			android:text="@string/btn_places"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:gravity="center"			  				
+					android:textColor="#000000">
+		  		</TextView>	
+			</LinearLayout>
+				
+			<LinearLayout
+				android:layout_width="100dp"
+				android:layout_height="wrap_content"				
+				android:orientation="vertical">
+				<Button
+					android:id="@+id/btnairport"
+					android:layout_width="72dp"
+					android:layout_height="72dp"
+					android:layout_gravity="center"									
+					android:background="@drawable/airport">
+				</Button>
+				<TextView
+		  			android:text="@string/btn_airports"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:gravity="center"
+					android:textColor="#000000">
+		  		</TextView>	
+			</LinearLayout>	
+			
+			<LinearLayout
+				android:layout_width="100dp"
+				android:layout_height="wrap_content"				
+				android:orientation="vertical">
+				<Button
+					android:id="@+id/btnatm"
+					android:layout_width="72dp"
+					android:layout_height="72dp"					
+					android:layout_gravity="center_horizontal"
+					android:background="@drawable/atm">
+				</Button>
+				<TextView
+		  			android:text="@string/btn_atms"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:gravity="center"		  			
+					android:textColor="#000000">
+		  		</TextView>	
+		  		</LinearLayout>	
+			
+		</LinearLayout>
+	<!--  End of middle row -->
+	<!-- Bottom Row -->
+	<LinearLayout
+			android:layout_width="fill_parent"
+			android:layout_height="100dp"
+			android:orientation="horizontal"
+			android:layout_marginTop="30dp"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp">
+			<LinearLayout
+				android:layout_width="100dp"
+				android:layout_height="fill_parent"
+				android:layout_gravity="center_horizontal"				
+				android:orientation="vertical">
+				<Button
+					android:id="@+id/btntaxi"
+					android:layout_width="72dp"
+					android:layout_height="72dp"
+					android:layout_gravity="center"										
+					android:background="@drawable/taxi">
+				</Button>
+				<TextView
+		  			android:text="@string/btn_cab_taxis"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:gravity="center"			  				
+					android:textColor="#000000">
+		  		</TextView>	
+			</LinearLayout>
+				
+			<LinearLayout
+				android:layout_width="100dp"
+				android:layout_height="wrap_content"				
+				android:orientation="vertical">
+				<Button
+					android:id="@+id/btngas"
+					android:layout_width="72dp"
+					android:layout_height="72dp"
+					android:layout_gravity="center"									
+					android:background="@drawable/gas">
+				</Button>
+				<TextView
+		  			android:text="@string/btn_gas_stations"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:gravity="center"
+					android:textColor="#000000">
+		  		</TextView>	
+			</LinearLayout>	
+			
+			<LinearLayout
+				android:layout_width="100dp"
+				android:layout_height="wrap_content"				
+				android:orientation="vertical">
+				<Button
+					android:id="@+id/btnattraction"
+					android:layout_width="72dp"
+					android:layout_height="72dp"					
+					android:layout_gravity="center_horizontal"
+					android:background="@drawable/cinema">
+				</Button>
+				<TextView
+		  			android:text="@string/btn_attractions"
+		  			android:layout_width="fill_parent"
+		  			android:layout_height="wrap_content"
+		  			android:gravity="center"		  			
+					android:textColor="#000000">
+		  		</TextView>	
+		  		</LinearLayout>	
+			
+		</LinearLayout>
+		<!-- End of bottom row -->
+	
+	</LinearLayout>	
+
+
+
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name">PlaceHelper</string>
+    <string name="version">0.5</string>
+    <string name="btn_restaurants">Nhà Hàng</string>
+    <string name="btn_hotels">Khách Sạn </string>
+    <string name="btn_places">Cafe</string>
+    <string name="btn_atms">ATM</string>
+    <string name="btn_banks">Ngân hàng</string>
+    <string name="btn_gas_stations">Cây Xăng</string>
+    <string name="btn_cab_taxis">Taxi</string>
+    <string name="btn_attractions">Rạp Phim</string>
+    <string name="btn_airports">Sân Bay</string>
+    <string name="cur_loca">Current Location</string>
+    <string name="cat_select">Bạn hãy chọn một danh mục</string>
+    <string name="about_title">Thông tin</string>
+    <string name="about_msg ">Sản Phẩm </string>
+</resources>
