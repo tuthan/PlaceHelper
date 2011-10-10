@@ -2,6 +2,8 @@ package mmt.uit.placehelper.services;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class SearchService {
 	public SearchService(String query, double lat, double lng) {
 		this.query = query;
 		this.myLat = lat;
-		this.myLng = lng;
+		this.myLng = lng;		
 		if (placeModel.size() > 0)
 			placeModel.clear();
 	}
@@ -67,11 +69,14 @@ public class SearchService {
 		return STATUS_DONE;
 	}
 	
-	private String makeURL(int start) {
+	private String makeURL(int start) throws UnsupportedEncodingException {
+		String queryEncoded = URLEncoder.encode(query,"utf-8");
 		String url = "http://ajax.googleapis.com/ajax/services/search/local?q="
-			+ query + "&rsz=8&sll=" + String.valueOf(myLat) + ","
+			+ queryEncoded + "&rsz=8&sll=" + String.valueOf(myLat) + ","
 			+ String.valueOf(myLng) + "&v=1.0&start=" + start;
-		return url;		
+		Log.v("url", url);
+		return url;	
+		
 	}
 	
 	// get json data from Google
