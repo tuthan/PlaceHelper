@@ -65,13 +65,13 @@
 				android:layout_width="100dp"
 				android:layout_height="wrap_content"				
 				android:orientation="vertical">
-				<Button
+				<ImageButton
 					android:id="@+id/btnbanks"
 					android:layout_width="72dp"
 					android:layout_height="72dp"					
-					android:layout_gravity="center_horizontal"
-					android:background="@drawable/banks">
-				</Button>
+					android:layout_gravity="center_horizontal"	
+					android:src="@drawable/image_button">
+				</ImageButton>
 				<TextView
 		  			android:text="@string/btn_banks"
 		  			android:layout_width="fill_parent"

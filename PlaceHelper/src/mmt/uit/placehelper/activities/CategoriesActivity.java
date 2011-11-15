@@ -24,6 +24,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -31,7 +32,8 @@ public class CategoriesActivity extends Activity {
 	
 	/** Called when the activity is first created. */
 	
-	private Button btnRestaurant, btnHotel, btnPlace, btnBank, btnAtm, btnAirport, btnTaxi, btnGas, btnAttraction;
+	private Button btnRestaurant, btnHotel, btnPlace, btnAtm, btnAirport, btnTaxi, btnGas, btnAttraction;
+	ImageButton btnBank;
 	boolean gps_enabled = false;
 	boolean network_enabled = false;	
 	private Location currentLoc=null;
@@ -47,7 +49,7 @@ public class CategoriesActivity extends Activity {
         btnHotel = (Button)findViewById(R.id.btnhotel);       
         btnPlace = (Button)findViewById(R.id.btnplace);        
         btnAtm = (Button)findViewById(R.id.btnatm);        
-        btnBank = (Button)findViewById(R.id.btnbanks);        
+        btnBank = (ImageButton)findViewById(R.id.btnbanks);        
         btnGas = (Button)findViewById(R.id.btngas);               
         btnTaxi = (Button)findViewById(R.id.btntaxi);        
         btnAirport = (Button)findViewById(R.id.btnairport);                  
@@ -246,8 +248,8 @@ public class CategoriesActivity extends Activity {
 		switch (id) {
 		case Constants.CHECK_SETTING:
 			return new AlertDialog.Builder(this).setTitle("Alert").setMessage(
-					"GPS đã bị tắt")
-					.setPositiveButton("Thiết lập",
+					"GPS Ä‘Ă£ bá»‹ táº¯t")
+					.setPositiveButton("Thiáº¿t láº­p",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
@@ -255,7 +257,7 @@ public class CategoriesActivity extends Activity {
 											android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 									startActivity(callGPSSettingIntent);
 								}
-							}).setNegativeButton("Bỏ qua",
+							}).setNegativeButton("Bá»� qua",
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
@@ -263,24 +265,24 @@ public class CategoriesActivity extends Activity {
 								}
 							}).create();
 		case Constants.WAIT_MSG:
-			return new ProgressDialog(this).show(this, "Vui lòng chờ...", "Đang lấy vị trí hiện tại ", true,true);
+			return new ProgressDialog(this).show(this, "Vui lĂ²ng chá»�...", "Ä�ang láº¥y vá»‹ trĂ­ hiá»‡n táº¡i ", true,true);
 		case Constants.LOC_NOTFOUND:
 			return new AlertDialog.Builder(this)
 					.setMessage(
-							"Đã có lỗi xảy ra khi xác định vị trí, bạn vui lòng thử lại")
-					.setNegativeButton("Đóng", null).show();
+							"Ä�Ă£ cĂ³ lá»—i xáº£y ra khi xĂ¡c Ä‘á»‹nh vá»‹ trĂ­, báº¡n vui lĂ²ng thá»­ láº¡i")
+					.setNegativeButton("Ä�Ă³ng", null).show();
 		case Constants.RESTORE_LOC: 
 			return new AlertDialog.Builder(this)
             .setIcon(R.drawable.app_icon)
             .setTitle("Do you want use saved location")
-            .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            .setPositiveButton("CĂ³", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                 	currentLoc = new Location("network");
                     currentLoc.setLatitude(mSharePref.getFloat(Constants.KEY_LAT, 0));
                     currentLoc.setLongitude(mSharePref.getFloat(Constants.KEY_LNG, 0));
                 }
             })
-            .setNegativeButton("Không", new DialogInterface.OnClickListener() {
+            .setNegativeButton("KhĂ´ng", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
 
                     try{
@@ -296,13 +298,13 @@ public class CategoriesActivity extends Activity {
 		case Constants.ABOUT:
             return new AlertDialog.Builder(this)
                 .setIcon(R.drawable.about)
-                .setTitle("Thông Tin PlaceHelper")
-                .setMessage("ĐHCNTT - Khoa MMT&TT - Lớp MMT02 \n " +
-                		"Các thành viên: \n Võ Trung Hưng - 07520164 \n " +
-                		"Lương Vĩnh Thảo - 07520499 \n " +
-                		"Lê Thanh Hải - 07520466 \n " +
-                		"Đỗ Huy Hưng -7520167")
-                .setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+                .setTitle("ThĂ´ng Tin PlaceHelper")
+                .setMessage("Ä�HCNTT - Khoa MMT&TT - Lá»›p MMT02 \n " +
+                		"CĂ¡c thĂ nh viĂªn: \n VĂµ Trung HÆ°ng - 07520164 \n " +
+                		"LÆ°Æ¡ng VÄ©nh Tháº£o - 07520499 \n " +
+                		"LĂª Thanh Háº£i - 07520466 \n " +
+                		"Ä�á»— Huy HÆ°ng -7520167")
+                .setPositiveButton("Ä�Ă³ng", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
     
                         dismissDialog(Constants.ABOUT);
