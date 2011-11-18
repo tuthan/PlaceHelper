@@ -43,174 +43,7 @@
   						</LinearLayout>
   			<!--End of brief info-->
   						
-  			<!-- Button Bar-->
-			<LinearLayout 
-			    android:orientation="horizontal"
-			    android:layout_width="wrap_content"
-			    android:layout_height="90dp"
-			    android:layout_marginTop="4dp" 
-			    android:layout_marginLeft="8dp"
-			    android:layout_marginRight="8dp"
-			    		    
-			    android:background="@drawable/detail_bg"
-			    >	
-			    
-			    <!-- Web -->
-			    <LinearLayout 			    	
-			    	android:orientation="vertical"
-			    	android:layout_width="wrap_content"
-			    	android:layout_height="wrap_content"
-			    	android:layout_gravity="center_vertical">	
-			    	
-			    	<ImageButton
-			    		android:id="@+id/btnWeb"
-						android:layout_width="60dp"
-						android:layout_height="60dp"
-						android:layout_marginTop="4dp"						
-						android:layout_gravity="center"																					
-						android:src="@drawable/btn_web"/>
-						
-			    	<TextView  			    		
-			    		android:layout_width="wrap_content" 
-			    		android:layout_height="wrap_content"
-			    		android:layout_gravity="center"
-			    		android:textColor="@color/black" 			    		
-			    		android:text="Web"/>			
-			    				
-			    </LinearLayout>		 
-			    <!-- End Web -->
-			    
-				<ImageView
-					android:layout_width="1px"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"																
-					android:background="@drawable/horizon_divider" 
-				/>		
-				
-				<!-- Call -->
-			    <LinearLayout 			    	
-			    	android:orientation="vertical"
-			    	android:layout_width="wrap_content"
-			    	android:layout_height="wrap_content"
-			    	android:layout_gravity="center_vertical">	
-			    	
-			    	<ImageButton
-			    		android:id="@+id/btnCall"
-						android:layout_marginTop="4dp"
-						android:layout_width="60dp"
-						android:layout_height="60dp"
-						android:layout_gravity="center"																
-						android:src="@drawable/btn_call"/>
-						
-			    	<TextView  			    		
-			    		android:layout_width="wrap_content" 
-			    		android:layout_height="wrap_content"
-			    		android:layout_gravity="center"
-			    		android:textColor="@color/black" 			    		
-			    		android:text="Call"/>			
-			    				
-			    </LinearLayout>		 
-			    <!-- End Call -->
-			    
-				<ImageView
-					android:layout_width="1px"
-					android:layout_height="wrap_content"	
-					android:layout_gravity="center_vertical"															
-					android:background="@drawable/horizon_divider" 
-				/>		    
-			    
-			    <!-- Email -->
-			    <LinearLayout 			    	
-			    	android:orientation="vertical"
-			    	android:layout_width="wrap_content"
-			    	android:layout_height="wrap_content"
-			    	android:layout_gravity="center_vertical">	
-			    	
-			    	<ImageButton
-			    		android:id="@+id/btnEmail"
-			    		android:layout_marginTop="4dp"
-						android:layout_width="60dp"
-						android:layout_height="60dp"
-						android:layout_gravity="center"																
-						android:src="@drawable/btn_email"/>
-						
-			    	<TextView  			    		
-			    		android:layout_width="wrap_content" 
-			    		android:layout_height="wrap_content"
-			    		android:layout_gravity="center"
-			    		android:textColor="@color/black" 			    		
-			    		android:text="Email"/>			
-			    				
-			    </LinearLayout>		 
-			    <!-- End Email -->
-			    
-				<ImageView
-					android:layout_width="1px"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"															
-					android:background="@drawable/horizon_divider" 
-				/>	
-				
-				<!-- On Map -->
-			    <LinearLayout 			    	
-			    	android:orientation="vertical"
-			    	android:layout_width="wrap_content"
-			    	android:layout_height="wrap_content"
-			    	android:layout_gravity="center_vertical">	
-			    	
-			    	<ImageButton
-			    		android:id="@+id/btnMap"
-			    		android:layout_marginTop="4dp"
-						android:layout_width="60dp"
-						android:layout_height="60dp"
-						android:layout_gravity="center"																
-						android:src="@drawable/btn_on_map"/>
-						
-			    	<TextView  			    		
-			    		android:layout_width="wrap_content" 
-			    		android:layout_height="wrap_content"
-			    		android:layout_gravity="center"
-			    		android:textColor="@color/black" 			    		
-			    		android:text="Map"/>			
-			    				
-			    </LinearLayout>		 
-			    <!-- End Web -->
-			    
-				<ImageView
-					android:layout_width="1px"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"															
-					android:background="@drawable/horizon_divider" 
-				/>	
-			    
-			    <!-- Favorite -->
-			    <LinearLayout 			    	
-			    	android:orientation="vertical"
-			    	android:layout_width="wrap_content"
-			    	android:layout_height="wrap_content"
-			    	android:layout_gravity="center_vertical">		
-			    	
-			    	<ImageButton
-			    		android:id="@+id/btnFavorite"
-			    		android:layout_marginTop="4dp"
-						android:layout_width="60dp"
-						android:layout_height="60dp"
-						android:layout_gravity="center"																
-						android:src="@drawable/btn_favo_add"/>
-						
-			    	<TextView  						    		
-			    		android:layout_width="wrap_content" 
-			    		android:layout_height="wrap_content"
-			    		android:layout_gravity="center"
-			    		android:textColor="@color/black" 
-			    		android:text="Favorite"/>		
-			    					
-			    </LinearLayout>				       
-				<!-- End Favorite -->
-																			    		    	  
-			</LinearLayout>	
-			<!-- End Button Bar -->	
-			
+  						
 			<!-- Detail info-->
 			<LinearLayout 
 			    android:orientation="vertical"
@@ -275,4 +108,146 @@
 					android:id="@+id/st_map"/>
   				
 			 </LinearLayout>
+
+			<LinearLayout
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="8dp"
+			    android:layout_marginRight="8dp"
+			    android:layout_marginTop="4dp"
+			    android:background="@drawable/dt_botom_bar_bg"
+			    android:orientation="horizontal" style="@android:style/ButtonBar" >
+
+			    <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:orientation="vertical" >
+
+			        <ImageButton
+			            android:id="@+id/btnWeb"
+			            android:layout_width="60dp"
+			            android:layout_height="60dp"
+			            android:layout_gravity="center"
+			            android:layout_marginTop="4dp"
+			            android:src="@drawable/detail_webbtn" 
+			            android:background="@drawable/transparent_bg"/>
+
+			        <TextView
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:text="Web"
+			            android:textColor="@color/black" />
+			    </LinearLayout>
+
+			    
+
+			    <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:orientation="vertical" >
+
+			        <ImageButton
+			            android:id="@+id/btnCall"
+			            android:layout_width="60dp"
+			            android:layout_height="60dp"
+			            android:layout_gravity="center"
+			            android:layout_marginTop="4dp"
+			            android:src="@drawable/btn_call" />
+
+			        <TextView
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:text="Call"
+			            android:textColor="@color/black" />
+			    </LinearLayout>
+
+			    <ImageView
+			        android:layout_width="1px"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:background="@drawable/horizon_divider" />
+
+			    <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:orientation="vertical" >
+
+			        <ImageButton
+			            android:id="@+id/btnEmail"
+			            android:layout_width="60dp"
+			            android:layout_height="60dp"
+			            android:layout_gravity="center"
+			            android:layout_marginTop="4dp"
+			            android:src="@drawable/btn_email" />
+
+			        <TextView
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:text="Email"
+			            android:textColor="@color/black" />
+			    </LinearLayout>
+
+			    <ImageView
+			        android:layout_width="1px"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:background="@drawable/horizon_divider" />
+
+			    <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:orientation="vertical" >
+
+			        <ImageButton
+			            android:id="@+id/btnMap"
+			            android:layout_width="60dp"
+			            android:layout_height="60dp"
+			            android:layout_gravity="center"
+			            android:layout_marginTop="4dp"
+			            android:src="@drawable/btn_on_map" />
+
+			        <TextView
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:text="Map"
+			            android:textColor="@color/black" />
+			    </LinearLayout>
+
+			    <ImageView
+			        android:layout_width="1px"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:background="@drawable/horizon_divider" />
+
+			    <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:orientation="vertical" >
+
+			        <ImageButton
+			            android:id="@+id/btnFavorite"
+			            android:layout_width="60dp"
+			            android:layout_height="60dp"
+			            android:layout_gravity="center"
+			            android:layout_marginTop="4dp"
+			            android:src="@drawable/btn_favo_add" />
+
+			        <TextView
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:text="Favorite"
+			            android:textColor="@color/black" />
+			    </LinearLayout>
+			</LinearLayout>
+
 </LinearLayout>
