@@ -73,7 +73,7 @@ public class SearchResultActivity extends ListActivity {
         curLat = b.getDouble("curlat");
         curLon = b.getDouble("curlon");   
         searchSrv = new SearchService(searchWhat, curLat, curLon);
-        rsAdapter = new PlaceAdapter(getApplicationContext(), R.layout.row_layout, SearchService.placeModel);
+        rsAdapter = new PlaceAdapter(getApplicationContext(), R.layout.ph_result_row, SearchService.placeModel);
         setListAdapter(rsAdapter);
         setProgressBarIndeterminateVisibility(true);
         parseData();

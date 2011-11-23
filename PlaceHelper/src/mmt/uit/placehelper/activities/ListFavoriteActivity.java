@@ -48,9 +48,9 @@ public class ListFavoriteActivity extends ListActivity {
 					public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 						// TODO Auto-generated method stub
 						menu.setHeaderIcon(R.drawable.del36);
-						menu.setHeaderTitle("Xóa danh mục yêu thích");
-						menu.add(0, CONTEXTMENU_DELETEITEM, 0, "Xóa mục đươc chọn");
-						menu.add(1, CONTEXTMENU_DELETEALL, 1, "Xóa tất cả");
+						menu.setHeaderTitle("XĂ³a danh má»¥c yĂªu thĂ­ch");
+						menu.add(0, CONTEXTMENU_DELETEITEM, 0, "XĂ³a má»¥c Ä‘Æ°Æ¡c chá»�n");
+						menu.add(1, CONTEXTMENU_DELETEALL, 1, "XĂ³a táº¥t cáº£");
 						
 					}
 				});
@@ -65,7 +65,7 @@ public class ListFavoriteActivity extends ListActivity {
 		FavoriteAdapter.setLng(curLon);		
 		favoriteModel = dataService.getListFavorites();
 		rsAdapter = new FavoriteAdapter(getApplicationContext(),
-				R.layout.row_layout, favoriteModel);
+				R.layout.ph_favorite_row, favoriteModel);
 		setListAdapter(rsAdapter);
 	}
 
@@ -80,7 +80,7 @@ public class ListFavoriteActivity extends ListActivity {
 		case CONTEXTMENU_DELETEITEM:
 			/* Get the selected item out of the Adapter by its position. */
 			favContexted = (FavoriteModel) listFavorites.getAdapter().getItem(menuInfo.position);
-			alertBox.setMessage("Bạn có muốn xóa mục này không?");
+			alertBox.setMessage("Báº¡n cĂ³ muá»‘n xĂ³a má»¥c nĂ y khĂ´ng?");
 			//Yes
 			alertBox.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface arg0, int arg1) {
@@ -89,7 +89,7 @@ public class ListFavoriteActivity extends ListActivity {
 						/* Remove it from the list. */
 						dataService.deleteFavorite(favContexted.getPlaceId());
 						refreshFavListItems();
-						Toast.makeText(getApplicationContext(),"Đã xóa", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),"Ä�Ă£ xĂ³a", Toast.LENGTH_SHORT).show();
 					} catch (Exception e) {
 						Log.i("Yes delete"," error "+ e.toString());
 						}
@@ -99,7 +99,7 @@ public class ListFavoriteActivity extends ListActivity {
 			//No
 			alertBox.setNegativeButton("No",new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface arg0, int arg1) {
-							Toast.makeText(getApplicationContext(),"Đã bỏ qua", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(),"Ä�Ă£ bá»� qua", Toast.LENGTH_SHORT).show();
 						}
 					});
 			alertBox.show();
@@ -109,7 +109,7 @@ public class ListFavoriteActivity extends ListActivity {
 			
 			
 		case CONTEXTMENU_DELETEALL:
-			alertBox.setMessage("Bạn có chắc là muốn xóa tất cả?");
+			alertBox.setMessage("Báº¡n cĂ³ cháº¯c lĂ  muá»‘n xĂ³a táº¥t cáº£?");
 			alertBox.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
 				public void onClick(DialogInterface arg0, int arg1) {
 //					Toast.makeText(getApplicationContext(),"Yes clicked", Toast.LENGTH_SHORT).show();
@@ -117,7 +117,7 @@ public class ListFavoriteActivity extends ListActivity {
 						/* Remove all items from the list. */
 						dataService.deleteAll();
 						refreshFavListItems();
-						Toast.makeText(getApplicationContext(),"Đã xóa tất cả", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),"Ä�Ă£ xĂ³a táº¥t cáº£", Toast.LENGTH_SHORT).show();
 					} catch (Exception e) {
 						Log.i("Yes delete"," error "+ e.toString());
 						}
@@ -127,7 +127,7 @@ public class ListFavoriteActivity extends ListActivity {
 			//No
 			alertBox.setNegativeButton("No",new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface arg0, int arg1) {
-							Toast.makeText(getApplicationContext(),"Đã bỏ qua", Toast.LENGTH_SHORT).show();
+							Toast.makeText(getApplicationContext(),"Ä�Ă£ bá»� qua", Toast.LENGTH_SHORT).show();
 						}
 					});
 			alertBox.show();
@@ -140,7 +140,7 @@ public class ListFavoriteActivity extends ListActivity {
 	private void refreshFavListItems() {
 		favoriteModel = dataService.getListFavorites();
 		setListAdapter(new FavoriteAdapter(getApplicationContext(),
-				R.layout.row_layout, favoriteModel));
+				R.layout.ph_favorite_row, favoriteModel));
 	}
 
 	@Override

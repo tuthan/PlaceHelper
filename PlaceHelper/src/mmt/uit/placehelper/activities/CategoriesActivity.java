@@ -265,7 +265,7 @@ public class CategoriesActivity extends Activity {
 								}
 							}).create();
 		case Constants.WAIT_MSG:
-			return new ProgressDialog(this).show(this, "Vui lĂ²ng chá»�...", "Ä�ang láº¥y vá»‹ trĂ­ hiá»‡n táº¡i ", true,true);
+			return new ProgressDialog(this).show(this, "Vui lòng chờ...", "Ä�ang láº¥y vá»‹ trĂ­ hiá»‡n táº¡i ", true,true);
 		case Constants.LOC_NOTFOUND:
 			return new AlertDialog.Builder(this)
 					.setMessage(

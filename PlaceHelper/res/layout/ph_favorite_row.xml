@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="horizontal"
+  android:layout_width="fill_parent"
+  android:layout_margin="4dp"
+  android:layout_height="70dp" 
+  >
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_gravity="center_vertical"/>
+  
+  <ImageView 
+	 android:id="@+id/rs_img"
+	 android:layout_width="50dp"
+	 android:layout_height="50dp"
+	 android:layout_marginLeft="4dp"	 
+	 android:layout_gravity="center_vertical"
+	 android:scaleType="centerCrop"
+	 android:src="@drawable/app_icon"/>
+  
+  <!-- Center linerlayout: get current demension and set width by percentage -->
+  <LinearLayout  
+  android:orientation="vertical"
+  android:layout_width="180dp"
+  android:layout_height="fill_parent">
+  
+  <TextView 
+  			android:id="@+id/rs_name"
+  			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textColor="@color/yellow"
+			android:textStyle="bold"
+			android:textSize="12dp"
+			android:layout_marginTop="4dp"
+			android:layout_marginLeft="4dp"
+			android:maxLines="2"			
+			android:text="Ngân hàng Đông Á"/>
+			
+  <TextView 
+  			android:id="@+id/rs_address"
+  			android:layout_width="fill_parent"
+  			android:layout_height="wrap_content"
+  			android:layout_marginLeft="4dp"
+  			android:textColor="@color/white"
+  			android:textSize="10dp"
+  			android:text="123 Hàm Nghi, P3, Q1, HCM"/>
+
+  <RatingBar
+      android:id="@+id/ratingBar1"
+      style="?android:attr/ratingBarStyleSmall"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:numStars="5"
+      android:rating="2.5" 
+      android:isIndicator="true"/>
+      
+  </LinearLayout>
+  
+  	<LinearLayout
+  			android:layout_width="fill_parent"
+  			android:layout_height="fill_parent"
+  			>
+  			
+  			<TextView
+  			    android:id="@+id/rs_distance"
+  			    android:layout_width="wrap_content"
+  			    android:layout_height="fill_parent"
+  			    android:layout_marginTop="4dp"
+  			    android:gravity="center"
+  			    android:text="12 Km"
+  			    android:textColor="@color/black"
+  			    android:textSize="15dp"
+  			    android:textStyle="bold" />
+  			
+  			</LinearLayout>
+  		
+</LinearLayout>
