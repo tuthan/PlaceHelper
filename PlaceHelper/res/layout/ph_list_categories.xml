@@ -29,7 +29,7 @@
 					android:id="@+id/btnrestaurant"
 					android:layout_width="72dp"
 					android:layout_height="72dp"
-					android:layout_gravity="center"										
+					android:layout_gravity="center"														
 					android:background="@drawable/restaurant">
 				</Button>
 				<TextView
@@ -71,7 +71,7 @@
 					android:layout_height="wrap_content"					
 					android:layout_gravity="center_horizontal"	
 					android:src="@drawable/image_button"
-					android:background="@drawable/transparent_bg">
+					android:background="@android:color/transparent">
 				</ImageButton>
 				<TextView
 		  			android:text="@string/btn_banks"

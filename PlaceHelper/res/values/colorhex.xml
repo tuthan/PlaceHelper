@@ -6,4 +6,9 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="yellow">#ECFA0B</color>
+    <color name="row_bg_clicked">#6BBA4A</color>
+    <color name="row_bg">#568DCE</color>
+    <color name="background_cl">#568DCE</color>
+    <color name="btn_clicked">#AB3E71</color>
+    <color name="btn_focus">#E8E85A</color>
 </resources>

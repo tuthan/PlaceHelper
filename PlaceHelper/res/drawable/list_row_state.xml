@@ -2,9 +2,9 @@
  <selector xmlns:android="http://schemas.android.com/apk/res/android">
      <item android:state_pressed="false"
            android:state_selected="false"
-           android:drawable="@drawable/row_background" /> <!-- Default -->
+           android:drawable="@color/row_bg" /> <!-- Default -->
      <item android:state_pressed="true"
-           android:drawable="@drawable/row_background_clicked" /> <!-- pressed -->
+           android:drawable="@color/row_bg_clicked" /> <!-- pressed -->
      
  </selector>
  
