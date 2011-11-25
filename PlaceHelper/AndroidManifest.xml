@@ -11,20 +11,20 @@
 
     <application android:label="@string/app_name" android:icon="@drawable/placeicon" android:debuggable="true">
         <activity android:name=".MainActivity"
-                  android:label="@string/app_name" android:theme="@android:style/Theme.Black.NoTitleBar">
+                  android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <uses-library android:name="com.google.android.maps"></uses-library>
-        <activity android:name=".activities.WebInfoActivity"></activity>
-        <activity android:name=".activities.DetailPlaceActivity"></activity>
-        <activity android:name=".activities.ViewOnMapActivity"></activity>
-        <activity android:name=".activities.ChangeLocationActivity"></activity>
-        <activity android:name=".activities.CategoriesActivity" android:theme="@android:style/Theme.Black.NoTitleBar"></activity>
-        <activity android:name=".activities.SearchResultActivity"></activity>
-        <activity android:name=".activities.ListFavoriteActivity"></activity>
+        <activity android:name=".activities.WebInfoActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".activities.DetailPlaceActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".activities.ViewOnMapActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".activities.ChangeLocationActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".activities.CategoriesActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".activities.SearchResultActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".activities.ListFavoriteActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
 
     </application>
 </manifest>

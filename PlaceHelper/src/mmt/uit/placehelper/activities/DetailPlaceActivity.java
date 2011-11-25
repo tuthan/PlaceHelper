@@ -49,7 +49,7 @@ public class DetailPlaceActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.detail_place);
+		setContentView(R.layout.ph_detail_place);
 	//Get instance from view
 		btnWeb = (ImageButton)findViewById(id.btnWeb);
 		btnCall = (ImageButton) findViewById(R.id.btnCall);
@@ -89,12 +89,12 @@ public class DetailPlaceActivity extends Activity {
     	for (String s : place.getAddressLines()) {
     		address += s + " ";
     	}
-		txtAddressFull.setText("Đia chỉ: " + address);
+		txtAddressFull.setText("Ä�ia chá»‰: " + address);
 		if(place.getPhoneNumbers()!=null){
-			txtPhoneNumber.setText("Điện thoại: "+ place.getPhoneNumbers().get(0).getNumber());
+			txtPhoneNumber.setText("Ä�iá»‡n thoáº¡i: "+ place.getPhoneNumbers().get(0).getNumber());
 		}
 		
-		txtDistance.setText("Khoảng cách: " + place.getDistance() + " km");
+		txtDistance.setText("Khoáº£ng cĂ¡ch: " + place.getDistance() + " km");
 		}
 		else {
 			curLat = b.getDouble("curlat");
@@ -108,12 +108,12 @@ public class DetailPlaceActivity extends Activity {
 		//Load data to view
 			txtPlaceName.setText(b.getString("title"));
 			txtAddress.setText(b.getString("address"));
-			txtAddressFull.setText("Đia chỉ: " + b.getString("addressFull"));
+			txtAddressFull.setText("Ä�ia chá»‰: " + b.getString("addressFull"));
 			if (b.getString("phone")!=null){
-			txtPhoneNumber.setText("Điện thoại: "+ b.getString("phone"));
+			txtPhoneNumber.setText("Ä�iá»‡n thoáº¡i: "+ b.getString("phone"));
 			}
 			FavoriteModel fv = new FavoriteModel(b.getString("lat"), b.getString("lng"));
-			txtDistance.setText("Khoảng cách: " + fv.getDistance(curLat, curLon) + " km");
+			txtDistance.setText("Khoáº£ng cĂ¡ch: " + fv.getDistance(curLat, curLon) + " km");
 			//txtDistance.setText("Distance: " + place.getDistance() + " km");
 		}
 	}
@@ -158,7 +158,7 @@ public class DetailPlaceActivity extends Activity {
 						}
 						catch (Exception e) {
 		            	Toast.makeText(getApplicationContext(), 
-		            			"Không gọi được", Toast.LENGTH_SHORT).show();
+		            			"KhĂ´ng gá»�i Ä‘Æ°á»£c", Toast.LENGTH_SHORT).show();
 						}
 					}
 				//Button Email
@@ -167,13 +167,13 @@ public class DetailPlaceActivity extends Activity {
 					final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);                
 	                emailIntent.setType("plain/text");           
 	                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, "friends@domainl.com");         
-	                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Địa điểm hay"); 
+	                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ä�á»‹a Ä‘iá»ƒm hay"); 
 	                if(fromFv==false){
-	                	emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Xem nè, chỗ này hay lắm "+ place.getUrl());
+	                	emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Xem nĂ¨, chá»— nĂ y hay láº¯m "+ place.getUrl());
 					}
 					else 
 					{
-						emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Xem nè, chỗ này hay lắm "+ b.getString("webUrl"));
+						emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Xem nĂ¨, chá»— nĂ y hay láº¯m "+ b.getString("webUrl"));
 					}
 	                 
 	                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
@@ -194,7 +194,7 @@ public class DetailPlaceActivity extends Activity {
 				if(btnFavorite.isPressed()){
 					String pPhone=null;
 					if (fromFv==true)
-					{Toast.makeText(getApplicationContext(), "Đã có trong mục yêu thích", Toast.LENGTH_LONG).show();
+					{Toast.makeText(getApplicationContext(), "Ä�Ă£ cĂ³ trong má»¥c yĂªu thĂ­ch", Toast.LENGTH_LONG).show();
 					}
 					else {
 					String pName = place.getTitle();
@@ -215,10 +215,10 @@ public class DetailPlaceActivity extends Activity {
 					dataService.open();
 					
 					if(dataService.isExisted(lat, lng, address)){
-						Toast.makeText(getApplicationContext(), "Đã có trong mục yêu thích", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(), "Ä�Ă£ cĂ³ trong má»¥c yĂªu thĂ­ch", Toast.LENGTH_LONG).show();
 					}else{
 						dataService.insertFavorite(pName, pAddress,	address, pPhone, lng, lat, pMapUrl, webUrl);
-						Toast.makeText(getApplicationContext(), "Thêm thành công", Toast.LENGTH_LONG).show();
+						Toast.makeText(getApplicationContext(), "ThĂªm thĂ nh cĂ´ng", Toast.LENGTH_LONG).show();
 					}
 				}
 				}

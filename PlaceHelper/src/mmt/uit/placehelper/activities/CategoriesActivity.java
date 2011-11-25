@@ -43,7 +43,7 @@ public class CategoriesActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_categories);
+        setContentView(R.layout.ph_list_categories);
         //Get button 
         btnRestaurant = (Button)findViewById(R.id.btnrestaurant);                
         btnHotel = (Button)findViewById(R.id.btnhotel);       
@@ -247,9 +247,9 @@ public class CategoriesActivity extends Activity {
 
 		switch (id) {
 		case Constants.CHECK_SETTING:
-			return new AlertDialog.Builder(this).setTitle("Alert").setMessage(
-					"GPS Ä‘Ă£ bá»‹ táº¯t")
-					.setPositiveButton("Thiáº¿t láº­p",
+			return new AlertDialog.Builder(this).setTitle(R.string.alert).setMessage(
+					R.string.gps_off)
+					.setPositiveButton(R.string.setting,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
@@ -257,7 +257,7 @@ public class CategoriesActivity extends Activity {
 											android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
 									startActivity(callGPSSettingIntent);
 								}
-							}).setNegativeButton("Bá»� qua",
+							}).setNegativeButton(R.string.cancel,
 							new DialogInterface.OnClickListener() {
 								public void onClick(DialogInterface dialog,
 										int whichButton) {
@@ -265,16 +265,16 @@ public class CategoriesActivity extends Activity {
 								}
 							}).create();
 		case Constants.WAIT_MSG:
-			return new ProgressDialog(this).show(this, "Vui lòng chờ...", "Ä�ang láº¥y vá»‹ trĂ­ hiá»‡n táº¡i ", true,true);
+			return new ProgressDialog(this).show(this,getResources().getText(R.string.wait_plz),getResources().getText(R.string.get_location), true,true);
 		case Constants.LOC_NOTFOUND:
 			return new AlertDialog.Builder(this)
 					.setMessage(
-							"Ä�Ă£ cĂ³ lá»—i xáº£y ra khi xĂ¡c Ä‘á»‹nh vá»‹ trĂ­, báº¡n vui lĂ²ng thá»­ láº¡i")
-					.setNegativeButton("Ä�Ă³ng", null).show();
+							R.string.get_loca_error)
+					.setNegativeButton(R.string.ok, null).show();
 		case Constants.RESTORE_LOC: 
 			return new AlertDialog.Builder(this)
             .setIcon(R.drawable.app_icon)
-            .setTitle("Do you want use saved location")
+            .setTitle(R.string.ask_save)
             .setPositiveButton("CĂ³", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                 	currentLoc = new Location("network");
@@ -282,7 +282,7 @@ public class CategoriesActivity extends Activity {
                     currentLoc.setLongitude(mSharePref.getFloat(Constants.KEY_LNG, 0));
                 }
             })
-            .setNegativeButton("KhĂ´ng", new DialogInterface.OnClickListener() {
+            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
 
                     try{
@@ -298,13 +298,9 @@ public class CategoriesActivity extends Activity {
 		case Constants.ABOUT:
             return new AlertDialog.Builder(this)
                 .setIcon(R.drawable.about)
-                .setTitle("ThĂ´ng Tin PlaceHelper")
-                .setMessage("Ä�HCNTT - Khoa MMT&TT - Lá»›p MMT02 \n " +
-                		"CĂ¡c thĂ nh viĂªn: \n VĂµ Trung HÆ°ng - 07520164 \n " +
-                		"LÆ°Æ¡ng VÄ©nh Tháº£o - 07520499 \n " +
-                		"LĂª Thanh Háº£i - 07520466 \n " +
-                		"Ä�á»— Huy HÆ°ng -7520167")
-                .setPositiveButton("Ä�Ă³ng", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.about_title)
+                .setMessage(R.string.about_msg)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
     
                         dismissDialog(Constants.ABOUT);

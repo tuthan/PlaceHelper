@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="gps_off">GPS is turn off</string>
+    <string name="setting">Setting</string>
+    <string name="wait_plz">Please wait ...</string>
+    <string name="get_location">Getting current location.</string>
+    <string name="get_loca_error">There are errors when get current location. Please try again.</string>
+    <string name="ask_save">Do you want use saved location</string>
+
+    
+</resources>

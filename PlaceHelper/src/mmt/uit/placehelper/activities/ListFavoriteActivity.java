@@ -38,7 +38,7 @@ public class ListFavoriteActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.list_favorite);
+		setContentView(R.layout.ph_list_favorite);
 
 		listFavorites = getListView();
 		registerForContextMenu(listFavorites);

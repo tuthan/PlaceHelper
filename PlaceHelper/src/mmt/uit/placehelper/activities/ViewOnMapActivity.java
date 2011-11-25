@@ -43,7 +43,7 @@ public class ViewOnMapActivity extends MapActivity
 	protected void onCreate(Bundle icicle) {
 		// TODO Auto-generated method stub
 		super.onCreate(icicle);
-		setContentView(R.layout.map_view);
+		setContentView(R.layout.ph_map_view);
 		Bundle b = getIntent().getExtras();
 		curlat = b.getDouble("curlat");
 		curlon = b.getDouble("curlon");

@@ -54,7 +54,7 @@ public class SearchResultActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setContentView(R.layout.list_results); 
+        setContentView(R.layout.ph_list_results); 
         
         //Get View
         edtTxtSearch = (EditText) findViewById(R.id.edtSearchTxt);

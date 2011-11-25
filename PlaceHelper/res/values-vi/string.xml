@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="cur_loca">Current Location</string>    
+    <string name="about_title">Thông tin</string>
+    <string name="about_msg ">Sản Phẩm </string>
+    
+</resources>

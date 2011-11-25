@@ -3,8 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="horizontal"
   android:layout_width="fill_parent"
-  android:background="@drawable/row_background"
-  android:layout_margin="4dp"
+  android:background="@drawable/row_bg"  
   android:layout_height="70dp" 
   >
   

@@ -23,7 +23,7 @@ public class WebInfoActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-		setContentView(layout.web_infomation);	
+		setContentView(layout.ph_web_infomation);	
 		Bundle b = getIntent().getExtras();
 		url = b.getString("url");
 		mWebView = (WebView)findViewById(R.id.webview);

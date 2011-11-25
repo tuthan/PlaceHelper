@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="btn_restaurants">Restaurant</string>
+    <string name="btn_hotels">Hotel</string>
+    <string name="btn_places">Coffee</string>
+    <string name="btn_atms">ATM</string>
+    <string name="btn_banks">Banks</string>
+    <string name="btn_gas_stations">Gas Station</string>
+    <string name="btn_cab_taxis">Taxis</string>
+    <string name="btn_attractions">Cinema</string>
+    <string name="btn_airports">Airports</string>
+    <string name="cat_select">Please Chose A Category</string>    
+</resources>
