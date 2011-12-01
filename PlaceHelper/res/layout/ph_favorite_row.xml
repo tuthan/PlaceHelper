@@ -37,7 +37,7 @@
 			android:textSize="12dp"
 			android:layout_marginTop="4dp"
 			android:layout_marginLeft="4dp"
-			android:maxLines="2"			
+			android:maxLines="1"			
 			android:text="Ngân hàng Đông Á"/>
 			
   <TextView 
@@ -47,6 +47,7 @@
   			android:layout_marginLeft="4dp"
   			android:textColor="@color/white"
   			android:textSize="10dp"
+  			android:maxLines="1"
   			android:text="123 Hàm Nghi, P3, Q1, HCM"/>
 
   <RatingBar

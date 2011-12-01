@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-  <!--Root node-->
-       
+  <!--Root node-->      
 <RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:orientation="vertical"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:background="@drawable/app_bg2">
-    
+    <ScrollView 
+		    android:layout_height="440dp"
+		    android:layout_width="fill_parent"		    
+		    android:fillViewport="false">
+
+		    <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="fill_parent"
+		        android:orientation="vertical" >
+
   			<!-- Brief info  -->
   			<LinearLayout
-  			    		android:id="@+id/brief"
+  			    		
   						android:layout_width="fill_parent"
   						android:layout_height="wrap_content"
   						android:orientation="vertical"
@@ -21,25 +29,30 @@
   						
   						<!--Place Name-->
   						 <TextView
-  						 	android:id="@+id/place_name" 
+  						 	android:id="@+id/place_name"  						 	 
 				  			android:layout_width="fill_parent"
-				  			android:layout_height="wrap_content"
-				  			android:gravity="center_horizontal"
+				  			android:layout_height="wrap_content"				  			
 				  			android:textColor="@color/title_blue"
 				  			android:textStyle="bold"
-				  			android:layout_marginTop="5dp"
-				  			android:layout_marginLeft="10dp"
+				  			android:layout_marginTop="10dp"
+				  			android:layout_marginLeft="15dp"
 				  			android:text="Swiss-BelHotel Wooshu"/>
 				  		  <!--Address-->
 						<TextView 
 							android:id="@+id/address"
 				  			android:layout_width="fill_parent"
-				  			android:layout_height="wrap_content"
-				  			android:gravity="center_horizontal"
+				  			android:layout_height="wrap_content"				  			
 				  			android:layout_marginLeft="15dp"
 				  			android:textColor="@color/black"										  													  			
 				  			android:text="Address: 253 Pham Van Thuan"/>
-						
+							
+						<ImageView
+							android:layout_gravity="center_horizontal"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"			  								
+							android:src="@drawable/no_image" 
+							android:scaleType="center"
+							android:id="@+id/st_map"/>
 										
   						</LinearLayout>
   			<!--End of brief info-->
@@ -47,71 +60,31 @@
   						
 			<!-- Detail info-->
 			<LinearLayout 
+			   
 			    android:orientation="vertical"
 			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
-			    android:layout_marginTop="4dp"
+			    android:layout_marginTop="10dp"
 			    android:layout_marginLeft="8dp"
-  				android:layout_marginRight="8dp"
-  				android:layout_marginBottom="8dp" 	
-  				android:layout_below="@id/brief"		    			   
+  				android:layout_marginRight="8dp"  					  					    			 
 			    android:background="@drawable/detail_bg">
-			    
-			    <TextView
-			    	android:layout_width="wrap_content"
-			    	android:layout_height="wrap_content"
-			    	android:layout_marginTop="10dp"
-			    	android:layout_marginLeft="15dp"
-			    	android:text="Thông Tin Chi Tiết"
-			    	android:textColor="@color/Detail"
-			    	android:textStyle="bold"/>
-			 	
-  							
-				  <!--Address-->
-				<TextView 
-					android:id="@+id/address_full"
-		  			android:layout_width="fill_parent"
-		  			android:layout_height="wrap_content"
-		  			android:layout_marginLeft="15dp"
-		  			android:textColor="@color/black"										  													  			
-		  			android:text="Address: 253 Pham Van Thuan"/>
-	  			
-		  	 	 <!--Phone Number -->
-		  		<TextView 
-		  			android:id="@+id/phone_number"
-		  			android:layout_width="wrap_content"
-		  			android:layout_height="wrap_content"
-		  			android:layout_marginLeft="15dp"
-		  			android:textColor="@color/black"										  													  			
-		  			android:text="N/A"/>
-		  		
-		  		<TextView 
-		  			android:id="@+id/distance"
-		  			android:layout_width="wrap_content"
-		  			android:layout_height="wrap_content"
-		  			android:layout_marginLeft="15dp"
-		  			android:textColor="@color/black"										  													  			
-		  			android:text="12km"/>
-		  	 	
-		  		<TextView 		  			
-		  			android:layout_width="wrap_content"
-		  			android:layout_height="wrap_content"
-		  			android:layout_marginLeft="15dp"		  			
-		  			android:textColor="@color/black"										  			
-		  			android:text="Map:"										  										  													  		
-		  			/>				
-				 <!--Place Map Image -->
-				<ImageView
-					android:layout_gravity="center_horizontal"
-					android:layout_width="150dp"
-					android:layout_height="100dp"			  								
-					android:src="@drawable/no_image" 
-					android:scaleType="center"
-					android:id="@+id/st_map"/>
-  				
+			
 			 </LinearLayout>
 <!-- End of info -->
-
+<!-- Rewiew -->
+		
+		<LinearLayout 
+			    android:orientation="vertical"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"				    
+			    android:layout_marginTop="10dp"
+				android:layout_marginLeft="8dp"
+	  			android:layout_marginRight="8dp"	  			  		    				 						    		
+			    android:background="@drawable/detail_rw_bg">
+						</LinearLayout>
+		</LinearLayout>
+		</ScrollView>						
+<!-- End of Rewiew -->
 <!-- Button bar -->
 
 			<LinearLayout
@@ -120,7 +93,7 @@
 			    android:layout_height="wrap_content"
 			    android:layout_marginLeft="8dp"
 			    android:layout_marginRight="8dp"
-			    android:layout_marginBottom="4dp"
+			    android:layout_marginBottom="4dp"			    
 			    android:layout_alignParentBottom="true"			   
 			    android:background="@drawable/dt_botom_bar_bg"
 			    android:orientation="horizontal" >
@@ -128,130 +101,127 @@
 			    <LinearLayout
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="4dp"
 			        android:layout_gravity="center_vertical"
 			        android:orientation="vertical" >
 
 			        <ImageButton
-			            android:id="@+id/btnWeb"
-			            android:layout_width="60dp"
-			            android:layout_height="60dp"
+			            android:id="@+id/btnFacebook"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:layout_marginTop="4dp"
+			            android:layout_marginTop="4dp"			            
 			            android:background="@drawable/transparent_bg"
-			            android:src="@drawable/detail_webbtn" />
+			            android:src="@drawable/detail_btn_facebook" />
 
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:text="Web"
-			            android:textColor="@color/black" />
+			            android:text="Facebook"
+			            android:textColor="@color/black"
+			            android:textSize="10dp" />
+
 			    </LinearLayout>
 
 			    <LinearLayout
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="10dp"
 			        android:layout_gravity="center_vertical"
 			        android:orientation="vertical" >
 
 			        <ImageButton
 			            android:id="@+id/btnCall"
-			            android:layout_width="60dp"
-			            android:layout_height="60dp"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:layout_marginTop="4dp"
-			            android:src="@drawable/btn_call" />
+			            android:layout_marginTop="4dp"			            
+			            android:src="@drawable/detail_btn_twitter"
+			            android:background="@android:color/transparent" />
 
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:text="Call"
-			            android:textColor="@color/black" />
+			            android:text="Twitter"
+			            android:textColor="@color/black"
+			            android:textSize="10dp" />
 			    </LinearLayout>
-
-			    <ImageView
-			        android:layout_width="1px"
-			        android:layout_height="wrap_content"
-			        android:layout_gravity="center_vertical"
-			        android:background="@drawable/horizon_divider" />
 
 			    <LinearLayout
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="10dp"
 			        android:layout_gravity="center_vertical"
 			        android:orientation="vertical" >
 
 			        <ImageButton
 			            android:id="@+id/btnEmail"
-			            android:layout_width="60dp"
-			            android:layout_height="60dp"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:layout_marginTop="4dp"
-			            android:src="@drawable/btn_email" />
+			            android:layout_marginTop="4dp"			            
+			            android:src="@drawable/detail_btn_route"
+			            android:background="@android:color/transparent" />
 
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:text="Email"
-			            android:textColor="@color/black" />
+			            android:text="Route"
+			            android:textColor="@color/black"
+			            android:textSize="10dp" />
 			    </LinearLayout>
-
-			    <ImageView
-			        android:layout_width="1px"
-			        android:layout_height="wrap_content"
-			        android:layout_gravity="center_vertical"
-			        android:background="@drawable/horizon_divider" />
 
 			    <LinearLayout
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="10dp"
 			        android:layout_gravity="center_vertical"
 			        android:orientation="vertical" >
 
 			        <ImageButton
 			            android:id="@+id/btnMap"
-			            android:layout_width="60dp"
-			            android:layout_height="60dp"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:layout_marginTop="4dp"
-			            android:src="@drawable/btn_on_map" />
+			            android:layout_marginTop="4dp"			            
+			            android:src="@drawable/detail_btn_map"
+			            android:background="@android:color/transparent" />
 
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
 			            android:text="Map"
-			            android:textColor="@color/black" />
+			            android:textColor="@color/black"
+			            android:textSize="10dp" />
 			    </LinearLayout>
-
-			    <ImageView
-			        android:layout_width="1px"
-			        android:layout_height="wrap_content"
-			        android:layout_gravity="center_vertical"
-			        android:background="@drawable/horizon_divider" />
 
 			    <LinearLayout
 			        android:layout_width="wrap_content"
 			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="10dp"
 			        android:layout_gravity="center_vertical"
 			        android:orientation="vertical" >
 
 			        <ImageButton
 			            android:id="@+id/btnFavorite"
-			            android:layout_width="60dp"
-			            android:layout_height="60dp"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:layout_marginTop="4dp"
-			            android:src="@drawable/btn_favo_add" />
+			            android:layout_marginTop="4dp"			           
+			            android:src="@drawable/detail_btn_favorite"
+			            android:background="@android:color/transparent" />
 
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
 			            android:text="Favorite"
-			            android:textColor="@color/black" />
+			            android:textColor="@color/black"
+			            android:textSize="10dp" />
 			    </LinearLayout>
 			</LinearLayout>
 <!-- End of Button Bar -->

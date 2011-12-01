@@ -34,7 +34,7 @@ public class DetailPlaceActivity extends Activity {
 	//Button Bar
 	private ImageButton btnCall, btnWeb, btnEmail, btnMap, btnFavorite; 
 	//Textview
-	private TextView txtPlaceName, txtAddress, txtAddressFull, txtPhoneNumber, txtDistance;
+	private TextView txtPlaceName, txtAddress;
 	//Image View
 	private ImageView imgMap;
 	//other
@@ -51,16 +51,16 @@ public class DetailPlaceActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ph_detail_place);
 	//Get instance from view
-		btnWeb = (ImageButton)findViewById(id.btnWeb);
+		btnWeb = (ImageButton)findViewById(id.btnFacebook);
 		btnCall = (ImageButton) findViewById(R.id.btnCall);
 		btnEmail = (ImageButton) findViewById(R.id.btnEmail);
 		btnMap = (ImageButton) findViewById(R.id.btnMap);
 		btnFavorite = (ImageButton) findViewById(R.id.btnFavorite);
 		imgMap = (ImageView) findViewById(R.id.st_map);
 		txtPlaceName = (TextView)findViewById(R.id.place_name);
-		txtAddressFull = (TextView)findViewById(R.id.address_full);		
-		txtPhoneNumber = (TextView)findViewById(R.id.phone_number);
-		txtDistance = (TextView)findViewById(R.id.distance);
+		//txtAddressFull = (TextView)findViewById(R.id.address_full);		
+		//txtPhoneNumber = (TextView)findViewById(R.id.phone_number);
+		//txtDistance = (TextView)findViewById(R.id.distance);
 		txtAddress = (TextView)findViewById(R.id.address);
 	//Set Listener for button		
 		btnWeb.setOnClickListener(mClickListener);
@@ -89,12 +89,12 @@ public class DetailPlaceActivity extends Activity {
     	for (String s : place.getAddressLines()) {
     		address += s + " ";
     	}
-		txtAddressFull.setText("Ä�ia chá»‰: " + address);
-		if(place.getPhoneNumbers()!=null){
-			txtPhoneNumber.setText("Ä�iá»‡n thoáº¡i: "+ place.getPhoneNumbers().get(0).getNumber());
-		}
+		//txtAddressFull.setText("Ä�ia chá»‰: " + address);
+		//if(place.getPhoneNumbers()!=null){
+		//	txtPhoneNumber.setText("Ä�iá»‡n thoáº¡i: "+ place.getPhoneNumbers().get(0).getNumber());
+		//}
 		
-		txtDistance.setText("Khoáº£ng cĂ¡ch: " + place.getDistance() + " km");
+		//txtDistance.setText("Khoáº£ng cĂ¡ch: " + place.getDistance() + " km");
 		}
 		else {
 			curLat = b.getDouble("curlat");
@@ -108,12 +108,12 @@ public class DetailPlaceActivity extends Activity {
 		//Load data to view
 			txtPlaceName.setText(b.getString("title"));
 			txtAddress.setText(b.getString("address"));
-			txtAddressFull.setText("Ä�ia chá»‰: " + b.getString("addressFull"));
-			if (b.getString("phone")!=null){
-			txtPhoneNumber.setText("Ä�iá»‡n thoáº¡i: "+ b.getString("phone"));
-			}
+			//txtAddressFull.setText("Ä�ia chá»‰: " + b.getString("addressFull"));
+			//if (b.getString("phone")!=null){
+			//txtPhoneNumber.setText("Ä�iá»‡n thoáº¡i: "+ b.getString("phone"));
+			//}
 			FavoriteModel fv = new FavoriteModel(b.getString("lat"), b.getString("lng"));
-			txtDistance.setText("Khoáº£ng cĂ¡ch: " + fv.getDistance(curLat, curLon) + " km");
+			//txtDistance.setText("Khoáº£ng cĂ¡ch: " + fv.getDistance(curLat, curLon) + " km");
 			//txtDistance.setText("Distance: " + place.getDistance() + " km");
 		}
 	}
