@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
-	<classpathentry kind="lib" path="google-gson-1.7.1/gson-1.7.1.jar" sourcepath="google-gson-1.7.1/gson-1.7.1-sources.jar">
+	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+	<classpathentry kind="src" output="bin/classes" path="gen">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/mTravellingK13/google-gson-1.7.1/gson-1.7.1-javadoc.jar!/"/>
+			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
