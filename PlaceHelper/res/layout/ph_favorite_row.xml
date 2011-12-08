@@ -4,7 +4,7 @@
   android:orientation="horizontal"
   android:layout_width="fill_parent"  
   android:layout_height="70dp" 
-  android:background="@drawable/row_background"
+  android:background="@drawable/list_row_state"
   >
 
     <CheckBox
@@ -51,7 +51,7 @@
   			android:text="123 Hàm Nghi, P3, Q1, HCM"/>
 
   <RatingBar
-      android:id="@+id/ratingBar1"
+      android:id="@+id/fav_rate_bar"
       style="?android:attr/ratingBarStyleSmall"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"

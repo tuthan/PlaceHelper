@@ -7,7 +7,7 @@ import java.lang.reflect.*;
 
 import mmt.uit.placehelper.models.PlaceModel;
 import mmt.uit.placehelper.services.SearchService;
-import mmt.uit.placehelper.utilities.Constants;
+import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.utilities.MyOverlay;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -62,7 +62,7 @@ public class ViewOnMapActivity extends MapActivity
 		showAllPlace();
 		}
 		else{
-			showCurrentPlace(b.getDouble(Constants.KEY_LNG),b.getDouble(Constants.KEY_LAT));
+			showCurrentPlace(b.getDouble(ConstantsAndKey.KEY_LNG),b.getDouble(ConstantsAndKey.KEY_LAT));
 		}
 			
 	}	

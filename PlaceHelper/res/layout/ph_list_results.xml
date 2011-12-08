@@ -4,62 +4,21 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:orientation="vertical"
-  android:background="@color/background_cl">
+  android:background="@drawable/app_bg2">
 
-	<LinearLayout
-		android:orientation="horizontal"
-		android:layout_width="fill_parent"
-		android:layout_height="60dp"
-		android:background="@drawable/sbar_bg"		
-		android:layout_margin="6dp"
-		>
-			<EditText
-				android:id="@+id/edtSearchTxt"
-				android:layout_width="200dp"
-				android:layout_height="30dp"
-				android:layout_gravity="center"
-				android:layout_marginLeft="6dp"
-				android:background="@drawable/search_bg"
-				android:paddingLeft="8dp"	
-				android:text="search"
-				android:singleLine="true"			
-				/>
-			<ImageButton
-				android:id="@+id/rs_btSearch"
-				android:layout_width="35dp"
-				android:layout_height="35dp"
-				android:layout_marginLeft="8dp"
-				android:src="@drawable/search_icon"
-				android:layout_gravity="center"/>
-			<ImageView
-					android:layout_width="1px"
-					android:layout_marginLeft="4dp"
-					android:layout_height="wrap_content"
-					android:layout_gravity="center_vertical"																
-					android:background="@drawable/horizon_divider" 
-				/>	
-			<ImageButton
-				android:id="@+id/rs_btShowAllMap"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:background="@drawable/all_map"
-				android:layout_marginLeft="4dp"
-				android:layout_gravity="center"				
-				/>
-		</LinearLayout>
+	<TextView
+	    android:id="@+id/txt_result"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"	    
+	    android:text="@string/seact_result" />
 		
 		 <ListView 
 		 	 android:id="@id/android:list"   
 	         android:layout_width="fill_parent"
 	         android:layout_height="fill_parent"
 	         android:layout_weight="1"
+	         android:cacheColorHint="@android:color/transparent"
 	         android:drawSelectorOnTop="false"/>
-         <TextView
-         	android:layout_width="fill_parent"
-         	android:layout_height="wrap_content"
-         	android:gravity="center"
-         	android:id="@+id/txtCurAdd"
-         	android:textColor="@color/title_blue"
-         	android:text="@string/cur_loca"/>
          	
 </LinearLayout>

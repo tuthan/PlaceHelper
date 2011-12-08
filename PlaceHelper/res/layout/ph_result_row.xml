@@ -4,7 +4,7 @@
   android:orientation="horizontal"
   android:layout_width="fill_parent"
   android:background="@drawable/list_row_state"  
-  android:layout_height="70dp" 
+  android:layout_height="55dp" 
   >
   
   <ImageView 
@@ -43,17 +43,6 @@
   			android:textColor="@color/white"
   			android:textSize="10dp"
   			android:text="123 Hàm Nghi, P3, Q1, ádh adklasd kjhasjdh a ádjhkasd jahs kd HCM"/>
-
-
-
-  <RatingBar
-      android:id="@+id/ratingBar1"
-      style="?android:attr/ratingBarStyleSmall"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:numStars="5"
-      android:rating="2.5" 
-      android:isIndicator="true"/>
       
   </LinearLayout>
   
@@ -65,10 +54,10 @@
 
   			<TextView
   			    android:id="@+id/rs_distance"
-  			    android:layout_width="wrap_content"
+  			    android:layout_width="fill_parent"
   			    android:layout_height="fill_parent"
-  			    android:layout_marginTop="4dp"
-  			    android:gravity="center"
+  			    android:layout_marginLeft="5dp"
+  			    android:gravity="center_vertical"
   			    android:text="12 Km"
   			    android:textColor="@color/black"
   			    android:textSize="15dp"

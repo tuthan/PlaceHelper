@@ -1,6 +1,6 @@
 package mmt.uit.placehelper.utilities;
 
-public class Constants {
+public class ConstantsAndKey {
 
 	// *String Constant*				
 	public static final String PREF_NAME = "savedLocation";
@@ -35,4 +35,12 @@ public class Constants {
 	public static final int LOC_NOTFOUND= 3;
 	public static final int ABOUT= 10;
 	public static final int DATABASE_VERSION = 1;
+	
+	//Double constants
+	public static final double EARTH_RADIUS=6371;
+	
+	//Status CODE
+	public static final String STATUS_OK = "OK";
+	public static final String NO_RESULT = "ZERO_RESULTS";
+	
 }

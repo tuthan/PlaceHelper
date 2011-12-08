@@ -3,7 +3,7 @@ package mmt.uit.placehelper.activities;
 import java.util.List;
 
 import mmt.uit.placehelper.models.MyAddress;
-import mmt.uit.placehelper.utilities.Constants;
+import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.utilities.LocationAdapter;
 import mmt.uit.placehelper.utilities.PointAddressUtil;
 
@@ -56,23 +56,23 @@ public class ChangeLocationActivity extends ListActivity {
 	protected Dialog onCreateDialog(int id) {
 		// TODO Auto-generated method stub
 		switch (id){
-		case Constants.CHANGE_LOC: 
+		case ConstantsAndKey.CHANGE_LOC: 
 			return new AlertDialog.Builder(this)
             .setIcon(R.drawable.app_icon)
             .setTitle("Do you want set to this location")
             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
 
-                    SharedPreferences mSharePref = getSharedPreferences(Constants.PREF_NAME, 0);
+                    SharedPreferences mSharePref = getSharedPreferences(ConstantsAndKey.PREF_NAME, 0);
                     SharedPreferences.Editor mEditor = mSharePref.edit();
-                    mEditor.putFloat(Constants.KEY_LAT, new Float(lstAd.get(0).getLat()));
-                    mEditor.putFloat(Constants.KEY_LNG, new Float(lstAd.get(0).getLng()));
+                    mEditor.putFloat(ConstantsAndKey.KEY_LAT, new Float(lstAd.get(0).getLat()));
+                    mEditor.putFloat(ConstantsAndKey.KEY_LNG, new Float(lstAd.get(0).getLng()));
                     mEditor.commit();
                     Toast.makeText(getApplicationContext(), "Your Location was saved!", Toast.LENGTH_SHORT).show();
                     Intent mIntent = new Intent(getApplicationContext(), CategoriesActivity.class);
                     Bundle mBundle = new Bundle();
-                    mBundle.putDouble(Constants.KEY_LAT, lstAd.get(0).getLat());
-                    mBundle.putDouble(Constants.KEY_LNG, lstAd.get(0).getLng());
+                    mBundle.putDouble(ConstantsAndKey.KEY_LAT, lstAd.get(0).getLat());
+                    mBundle.putDouble(ConstantsAndKey.KEY_LNG, lstAd.get(0).getLng());
                     mIntent.putExtras(mBundle);
                     startActivity(mIntent);
                     ChangeLocationActivity.this.finish();
@@ -92,7 +92,7 @@ public class ChangeLocationActivity extends ListActivity {
 		@Override
 		protected void onListItemClick(ListView l, View v, int position, long id) {
 			// TODO Auto-generated method stub
-			showDialog(Constants.CHANGE_LOC);
+			showDialog(ConstantsAndKey.CHANGE_LOC);
 			
 		}
     static final String[] COUNTRIES = new String[] {

@@ -1,7 +1,7 @@
 package mmt.uit.placehelper.activities;
 
 
-import mmt.uit.placehelper.utilities.Constants;
+import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.utilities.PointAddressUtil;
 import com.google.android.maps.GeoPoint;
 import mmt.uit.placehelper.R;
@@ -71,8 +71,8 @@ public class CategoriesActivity extends Activity {
 		if (mBundle!=null)
 		{
 			currentLoc = new Location("network");
-			currentLoc.setLatitude(mBundle.getDouble(Constants.KEY_LAT));
-			currentLoc.setLongitude(mBundle.getDouble(Constants.KEY_LNG));
+			currentLoc.setLatitude(mBundle.getDouble(ConstantsAndKey.KEY_LAT));
+			currentLoc.setLongitude(mBundle.getDouble(ConstantsAndKey.KEY_LNG));
 		}
 		if (currentLoc ==null)
 			getCurrentLocation();
@@ -85,39 +85,39 @@ public class CategoriesActivity extends Activity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			if (btnAirport.isPressed()){
-				startSearch(Constants.KEY_AIRPORT);
+				startSearch(ConstantsAndKey.KEY_AIRPORT);
 			}
 			
 			if(btnAtm.isPressed()){
-				startSearch(Constants.KEY_ATM);
+				startSearch(ConstantsAndKey.KEY_ATM);
 			} 
 			
 			if(btnAttraction.isPressed()){
-				startSearch(Constants.KEY_ATTRACTION);
+				startSearch(ConstantsAndKey.KEY_ATTRACTION);
 			}
 			
 			if(btnBank.isPressed()){
-				startSearch(Constants.KEY_BANK);
+				startSearch(ConstantsAndKey.KEY_BANK);
 			}
 			
 			if(btnGas.isPressed()){
-				startSearch(Constants.KEY_GAS);
+				startSearch(ConstantsAndKey.KEY_GAS);
 			}
 
 			if(btnHotel.isPressed()){
-				startSearch(Constants.KEY_HOTEL);
+				startSearch(ConstantsAndKey.KEY_HOTEL);
 			}
 
 			if(btnPlace.isPressed()){
-				startSearch(Constants.KEY_PLACE);
+				startSearch(ConstantsAndKey.KEY_PLACE);
 			}
 
 			if(btnRestaurant.isPressed()){
-				startSearch(Constants.KEY_RESTAURANT);
+				startSearch(ConstantsAndKey.KEY_RESTAURANT);
 			}
 
 			if(btnTaxi.isPressed()){
-				startSearch(Constants.KEY_TAXI);
+				startSearch(ConstantsAndKey.KEY_TAXI);
 			}
 
 		}
@@ -133,12 +133,13 @@ public class CategoriesActivity extends Activity {
 			getLocation();
 		}
 		catch (Exception e) {
-				Log.v(Constants.TAG_EXCEPTION, e.toString());
+				Log.v(ConstantsAndKey.TAG_EXCEPTION, e.toString());
 			
 			}
 	}
 	
 	private void startSearch(String place){
+		Log.v("ph_info", "Start Search");
 		if (currentLoc!=null){
 		String currentAdd;			
 		Bundle b = new Bundle();					
@@ -190,7 +191,7 @@ public class CategoriesActivity extends Activity {
 			startActivity(intent2);
 			return true;
 		case R.id.about:			
-			showDialog(Constants.ABOUT);
+			showDialog(ConstantsAndKey.ABOUT);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -206,7 +207,7 @@ public class CategoriesActivity extends Activity {
 		MyLocationListener listener = new MyLocationListener();
 		mProviderName = locMgr.getBestProvider(criteria, true);		
 		if (mProviderName == null) {
-			showDialog(Constants.CHECK_SETTING);
+			showDialog(ConstantsAndKey.CHECK_SETTING);
 			currentLoc = null;
 			
 		} 
@@ -218,7 +219,7 @@ public class CategoriesActivity extends Activity {
 				}
 				else {
 				locMgr.requestLocationUpdates(mProviderName, 0, 0, listener);
-				showDialog(Constants.WAIT_MSG);
+				showDialog(ConstantsAndKey.WAIT_MSG);
 				new Thread(new Runnable() {
 					public void run() {
 						Looper.prepare();
@@ -226,9 +227,9 @@ public class CategoriesActivity extends Activity {
 						while ((currentLoc == null)
 								&& (System.currentTimeMillis() < (start + 60000))) {
 						}
-						dismissDialog(Constants.WAIT_MSG);
+						dismissDialog(ConstantsAndKey.WAIT_MSG);
 						if (currentLoc == null) {
-							showDialog(Constants.LOC_NOTFOUND);
+							showDialog(ConstantsAndKey.LOC_NOTFOUND);
 							
 						}
 						Looper.loop();
@@ -246,7 +247,7 @@ public class CategoriesActivity extends Activity {
 	protected Dialog onCreateDialog(int id) {
 
 		switch (id) {
-		case Constants.CHECK_SETTING:
+		case ConstantsAndKey.CHECK_SETTING:
 			return new AlertDialog.Builder(this).setTitle(R.string.alert).setMessage(
 					R.string.gps_off)
 					.setPositiveButton(R.string.setting,
@@ -264,22 +265,22 @@ public class CategoriesActivity extends Activity {
 									
 								}
 							}).create();
-		case Constants.WAIT_MSG:
+		case ConstantsAndKey.WAIT_MSG:
 			return new ProgressDialog(this).show(this,getResources().getText(R.string.wait_plz),getResources().getText(R.string.get_location), true,true);
-		case Constants.LOC_NOTFOUND:
+		case ConstantsAndKey.LOC_NOTFOUND:
 			return new AlertDialog.Builder(this)
 					.setMessage(
 							R.string.get_loca_error)
 					.setNegativeButton(R.string.ok, null).show();
-		case Constants.RESTORE_LOC: 
+		case ConstantsAndKey.RESTORE_LOC: 
 			return new AlertDialog.Builder(this)
             .setIcon(R.drawable.app_icon)
             .setTitle(R.string.ask_save)
             .setPositiveButton("CĂ³", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                 	currentLoc = new Location("network");
-                    currentLoc.setLatitude(mSharePref.getFloat(Constants.KEY_LAT, 0));
-                    currentLoc.setLongitude(mSharePref.getFloat(Constants.KEY_LNG, 0));
+                    currentLoc.setLatitude(mSharePref.getFloat(ConstantsAndKey.KEY_LAT, 0));
+                    currentLoc.setLongitude(mSharePref.getFloat(ConstantsAndKey.KEY_LNG, 0));
                 }
             })
             .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -289,13 +290,13 @@ public class CategoriesActivity extends Activity {
                     	getLocation();
                     }
                     catch (Exception e){
-                    	Log.v(Constants.TAG_EXCEPTION, e.toString());
+                    	Log.v(ConstantsAndKey.TAG_EXCEPTION, e.toString());
                     }
                 }
             })
             .create();
 			
-		case Constants.ABOUT:
+		case ConstantsAndKey.ABOUT:
             return new AlertDialog.Builder(this)
                 .setIcon(R.drawable.about)
                 .setTitle(R.string.about_title)
@@ -303,7 +304,7 @@ public class CategoriesActivity extends Activity {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
     
-                        dismissDialog(Constants.ABOUT);
+                        dismissDialog(ConstantsAndKey.ABOUT);
                     }
                 })
                 

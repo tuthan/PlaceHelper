@@ -1,22 +1,34 @@
 package mmt.uit.placehelper.activities;
 
+import java.util.Collections;
+
 import mmt.uit.placehelper.MainActivity;
 import mmt.uit.placehelper.models.FavoriteModel;
+import mmt.uit.placehelper.models.Place;
+import mmt.uit.placehelper.models.PlaceDetail;
+import mmt.uit.placehelper.models.PlaceDetailRs;
 import mmt.uit.placehelper.models.PlaceModel;
+import mmt.uit.placehelper.models.PlacesList;
 import mmt.uit.placehelper.services.DataService;
+import mmt.uit.placehelper.services.SearchPlace;
 import mmt.uit.placehelper.services.SearchService;
-import mmt.uit.placehelper.utilities.Constants;
+import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.utilities.LoadImage;
 import mmt.uit.placehelper.utilities.MyLocation;
+import mmt.uit.placehelper.utilities.RslistAdapter;
+import mmt.uit.placehelper.utilities.SortPlace;
 
 import mmt.uit.placehelper.R;
 import mmt.uit.placehelper.R.id;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,8 +36,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.DownloadListener;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,42 +49,53 @@ public class DetailPlaceActivity extends Activity {
 	//Button Bar
 	private ImageButton btnCall, btnWeb, btnEmail, btnMap, btnFavorite; 
 	//Textview
-	private TextView txtPlaceName, txtAddress;
+	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite;
 	//Image View
 	private ImageView imgMap;
 	//other
 	private Bitmap mBitmap;
+	private RatingBar ratBar;
+	private WebView mWebView;
 	private PlaceModel place;
 	private double curLon, curLat, lng,lat;
 	private int placeId;
 	private Boolean fromFv;
 	private DataService dataService;
 	private Bundle b;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ph_detail_place);
+		setContentView(R.layout.ph_detail_place2);
 	//Get instance from view
 		btnWeb = (ImageButton)findViewById(id.btnFacebook);
 		btnCall = (ImageButton) findViewById(R.id.btnCall);
 		btnEmail = (ImageButton) findViewById(R.id.btnEmail);
 		btnMap = (ImageButton) findViewById(R.id.btnMap);
-		btnFavorite = (ImageButton) findViewById(R.id.btnFavorite);
-		imgMap = (ImageView) findViewById(R.id.st_map);
-		txtPlaceName = (TextView)findViewById(R.id.place_name);
+		btnFavorite = (ImageButton) findViewById(R.id.btnFavorite);		
+		/*txtPlaceName = (TextView)findViewById(R.id.de_place_name);
+		txtPhone = (TextView)findViewById(R.id.de_phone);
+		txtWebsite = (TextView)findViewById(R.id.de_website);
+		ratBar = (RatingBar)findViewById(R.id.de_rate_bar);*/
 		//txtAddressFull = (TextView)findViewById(R.id.address_full);		
 		//txtPhoneNumber = (TextView)findViewById(R.id.phone_number);
 		//txtDistance = (TextView)findViewById(R.id.distance);
-		txtAddress = (TextView)findViewById(R.id.address);
-	//Set Listener for button		
-		btnWeb.setOnClickListener(mClickListener);
+		//txtAddress = (TextView)findViewById(R.id.de_address);
+		mWebView = (WebView)findViewById(R.id.webview);
+		mWebView.setWebViewClient(new WebInfoClient());
+		//Set Listener for button		
+		/*btnWeb.setOnClickListener(mClickListener);
 		btnCall.setOnClickListener(mClickListener);
 		btnEmail.setOnClickListener(mClickListener);
 		btnMap.setOnClickListener(mClickListener);
-		btnFavorite.setOnClickListener(mClickListener);
+		btnFavorite.setOnClickListener(mClickListener);*/
 		
-		b = getIntent().getExtras();
+		Bundle mBundle = getIntent().getExtras();
+		Place pl = mBundle.getParcelable("place");
+		GetDetail gd = new GetDetail();
+		gd.execute(pl);
+		/*b = getIntent().getExtras();
 		fromFv = b.getBoolean("fromFv");
 		if (fromFv == false){
 		placeId = b.getInt("posittion");
@@ -115,13 +141,73 @@ public class DetailPlaceActivity extends Activity {
 			FavoriteModel fv = new FavoriteModel(b.getString("lat"), b.getString("lng"));
 			//txtDistance.setText("Khoáº£ng cĂ¡ch: " + fv.getDistance(curLat, curLon) + " km");
 			//txtDistance.setText("Distance: " + place.getDistance() + " km");
+*/		}
+	
+		//Create Task to make request and get places detail
+		private class GetDetail extends AsyncTask<Place,Void, PlaceDetailRs>{
+			private String keyword;//keyword to search 
+			
+			
+			@Override
+			protected PlaceDetailRs doInBackground(Place... params) {
+				// TODO Auto-generated method stub
+								
+				PlaceDetailRs pd=null; //initialize place detail result				
+				pd = SearchPlace.getDetail(params[0].reference);
+				return pd;				
+			}
+			
+			@Override
+			protected void onPostExecute(PlaceDetailRs result) {
+				// TODO Auto-generated method stub
+				if (result!=null && result.status.contentEquals(ConstantsAndKey.STATUS_OK)){	
+					/*txtPlaceName.setText(result.result.name);
+					txtAddress.setText(result.result.address);
+					ratBar.setRating(result.result.rating);
+					txtPhone.setText(result.result.phone);
+					txtWebsite.setText(result.result.website);*/
+					mWebView.getSettings().setJavaScriptEnabled(true);			
+					mWebView.getSettings().setDomStorageEnabled(true);	
+					
+					String reviewURL = result.result.url + "&view=feature&mcsrc=google_reviews&num=10&start=0";
+					mWebView.loadUrl(reviewURL);
+					
+							
+				}
+				else
+					Toast.makeText(getApplicationContext(), getResources().getText(R.string.seact_rq_error), Toast.LENGTH_SHORT).show();
+			}
 		}
-	}
+		
+		private class WebInfoClient extends WebViewClient {
+			@Override
+		    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+		        view.loadUrl(url);
+		        view.setClickable(false);
+		        return true;
+		    }
+			
+			/*@Override
+			public void onPageFinished(WebView view, String url) {
+				// TODO Auto-generated method stub
+				view.loadUrl("javascript:window.HTMLOUT.showHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+			}*/
+		}	
+		
+	/*	class MyJavaScriptInterface  
+		{  
+		    
+		    public void showHTML(String html)  
+		    {  
+		        Log.v("html", html);
+		    }  
+		}  */
+}
 	
 	
 	
 	//Button Click Listener
-		private View.OnClickListener mClickListener = new View.OnClickListener() {
+		/*private View.OnClickListener mClickListener = new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -184,8 +270,8 @@ public class DetailPlaceActivity extends Activity {
 					mBundle.putBoolean("showall", false);
 					mBundle.putDouble("curlon", curLon);
 					mBundle.putDouble("curlat", curLat);
-					mBundle.putDouble(Constants.KEY_LAT, lat);
-					mBundle.putDouble(Constants.KEY_LNG, lng);
+					mBundle.putDouble(ConstantsAndKey.KEY_LAT, lat);
+					mBundle.putDouble(ConstantsAndKey.KEY_LNG, lng);
 					Intent mMapIntent = new Intent(getApplicationContext(), ViewOnMapActivity.class);
 					mMapIntent.putExtras(mBundle);
 					startActivity(mMapIntent);
@@ -223,11 +309,11 @@ public class DetailPlaceActivity extends Activity {
 				}
 				}
 			}
-		};
+		};*/
 		
 		
 		//Menu creation
-	    @Override
+	    /*@Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
 	    	// TODO Auto-generated method stub    	
 	    	MenuInflater inflater = getMenuInflater();
@@ -243,8 +329,8 @@ public class DetailPlaceActivity extends Activity {
 			case R.id.mn_home:
 				Intent mIntent = new Intent(DetailPlaceActivity.this,CategoriesActivity.class);				
 				Bundle mBundle = new Bundle();
-                mBundle.putDouble(Constants.KEY_LAT,curLat);
-                mBundle.putDouble(Constants.KEY_LNG, curLon);
+                mBundle.putDouble(ConstantsAndKey.KEY_LAT,curLat);
+                mBundle.putDouble(ConstantsAndKey.KEY_LNG, curLon);
                 mIntent.putExtras(mBundle);
                 DetailPlaceActivity.this.startActivity(mIntent);
 				DetailPlaceActivity.this.finish();
@@ -261,5 +347,5 @@ public class DetailPlaceActivity extends Activity {
 				return super.onOptionsItemSelected(item);
 			}
 			
-		}
-}
+		}*/
+//}

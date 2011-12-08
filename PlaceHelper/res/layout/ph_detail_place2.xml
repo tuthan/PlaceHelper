@@ -6,115 +6,19 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:background="@drawable/app_bg2">
-    <ScrollView 
-		    android:layout_height="440dp"
-		    android:layout_width="fill_parent"		    
-		    android:fillViewport="false">
-
-		    <LinearLayout
-		        android:layout_width="wrap_content"
-		        android:layout_height="fill_parent"		        
-		        android:orientation="vertical" >
-
-  			<!-- Brief info  -->
-  			<LinearLayout
-  			    		
-  						android:layout_width="fill_parent"
-  						android:layout_height="wrap_content"
-  						android:orientation="vertical"
-  						android:layout_marginLeft="8dp"
-  						android:layout_marginRight="8dp"
-  						android:layout_marginTop="10dp"
+    
   						
-  						android:background="@drawable/brief_bg">
-  						
-  						
-
-  				<RatingBar
-  				    android:id="@+id/de_rate_bar"
-  				    android:layout_marginTop="10dp"
-  				    android:layout_marginRight="10dp"
-  				    android:layout_gravity="right"
-  				    android:numStars="5"
-  				    android:rating="4.6"
-  				    style="?android:attr/ratingBarStyleSmall"
-  				    android:layout_width="wrap_content"
-  				    android:layout_height="wrap_content" />
-
-  				<!--Place Name-->
-  						 <TextView
-  						 	android:id="@+id/de_place_name"  						 	 
-				  			android:layout_width="fill_parent"
-				  			android:layout_height="wrap_content"				  			
-				  			android:textColor="@color/title_blue"
-				  			android:textStyle="bold"				  			
-				  			android:layout_marginLeft="15dp"
-				  			android:text="Swiss-BelHotel Wooshu"/>
-				  		  <!--Address-->
-
-						<TextView 
-							android:id="@+id/de_address"
-				  			android:layout_width="fill_parent"
-				  			android:layout_height="wrap_content"				  			
-				  			android:layout_marginLeft="15dp"
-				  			android:textColor="@color/black"										  													  			
-				  			android:text="Address: 253 Pham Van Thuan"/>
-
-						<TextView
-						    android:id="@+id/de_phone"
-						    android:layout_width="fill_parent"
-				  			android:layout_height="wrap_content"				  			
-				  			android:layout_marginLeft="15dp"
-				  			android:textColor="@color/black"
-				  			android:inputType="phone"
-						    android:text="+84987645872" />
-
-						<TextView
-						    android:id="@+id/de_website"
-						    android:layout_width="fill_parent"
-				  			android:layout_height="wrap_content"				  			
-				  			android:layout_marginLeft="15dp"
-				  			android:textColor="@color/black"
-				  			android:autoLink="web"
-						    android:text="www.google.com" />
-										
-  						</LinearLayout>
-  			<!--End of brief info-->
-  						
-  						
-			<!-- Detail info-->
-			<LinearLayout 
-			   
-			    android:orientation="vertical"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"
-			    android:layout_marginTop="10dp"
-			    android:layout_marginLeft="8dp"
-  				android:layout_marginRight="8dp"  	
-  						  					    			 
-			    android:background="@drawable/detail_bg">
-			
-			 </LinearLayout>
-<!-- End of info -->
-<!-- Rewiew -->
+  					<LinearLayout 
+  					    android:layout_width="fill_parent"
+  					    android:layout_height="fill_parent">	
 		
-		<LinearLayout 
-			    android:orientation="vertical"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"				    
-			    android:layout_marginTop="10dp"
-				android:layout_marginLeft="8dp"
-	  			android:layout_marginRight="8dp"	  			  		    				 						    		
-			    >
 						<WebView 
-  		android:id="@+id/webview"
+  		android:id="@+id/webview"  		
   		android:layout_width="fill_parent"
   		android:layout_height="fill_parent"
   		android:scrollbars="none"
   		/>
-						</LinearLayout>
-		</LinearLayout>
-		</ScrollView>						
+									</LinearLayout>		
 <!-- End of Rewiew -->
 <!-- Button bar -->
 
