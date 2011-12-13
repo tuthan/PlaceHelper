@@ -28,6 +28,11 @@ public class PlaceLocation  implements Parcelable{
 		
 	}
 	
+	public PlaceLocation(double lat, double lng){
+		this.lat = lat;
+		this.lng = lng;
+	}
+	
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub

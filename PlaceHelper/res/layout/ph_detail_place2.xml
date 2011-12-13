@@ -7,30 +7,19 @@
   android:layout_height="fill_parent"
   android:background="@drawable/app_bg2">
     
-  						
-  					<LinearLayout 
-  					    android:layout_width="fill_parent"
-  					    android:layout_height="fill_parent">	
-		
-						<WebView 
-  		android:id="@+id/webview"  		
-  		android:layout_width="fill_parent"
-  		android:layout_height="fill_parent"
-  		android:scrollbars="none"
-  		/>
-									</LinearLayout>		
-<!-- End of Rewiew -->
-<!-- Button bar -->
+    
+    			<!-- Button bar -->
 
 			<LinearLayout
 			    style="@android:style/ButtonBar"
+			    android:id="@+id/dt_bottom_bar"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
 			    android:layout_marginLeft="8dp"
 			    android:layout_marginRight="8dp"
 			    android:layout_marginBottom="4dp"			    
 			    android:layout_alignParentBottom="true"			   
-			    android:background="@drawable/dt_botom_bar_bg"
+			    android:background="@drawable/bottom_bar_bg"
 			    android:orientation="horizontal" >
 
 			    <LinearLayout
@@ -159,5 +148,21 @@
 			            android:textSize="10dp" />
 			    </LinearLayout>
 			</LinearLayout>
-<!-- End of Button Bar -->
+<!-- End of Button Bar -->			
+    
+  					<LinearLayout 
+  					    android:layout_width="fill_parent"
+  					    android:layout_height="fill_parent"
+  					    android:layout_above="@id/dt_bottom_bar"
+  					    >
+						<WebView 
+				  		android:id="@+id/webview"  		
+				  		android:layout_width="fill_parent"
+				  		android:layout_height="fill_parent"
+				  		android:scrollbars="none"
+				  		
+				  		/>
+					</LinearLayout>
+
+
 </RelativeLayout>

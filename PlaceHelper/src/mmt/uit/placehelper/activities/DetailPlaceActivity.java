@@ -9,7 +9,7 @@ import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.models.PlaceDetailRs;
 import mmt.uit.placehelper.models.PlaceModel;
 import mmt.uit.placehelper.models.PlacesList;
-import mmt.uit.placehelper.services.DataService;
+import mmt.uit.placehelper.services.FavDataService;
 import mmt.uit.placehelper.services.SearchPlace;
 import mmt.uit.placehelper.services.SearchService;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
@@ -27,6 +27,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.media.FaceDetector;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -60,7 +61,7 @@ public class DetailPlaceActivity extends Activity {
 	private double curLon, curLat, lng,lat;
 	private int placeId;
 	private Boolean fromFv;
-	private DataService dataService;
+	private PlaceDetail plDetail;
 	private Bundle b;
 	
 	@Override
@@ -68,7 +69,7 @@ public class DetailPlaceActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ph_detail_place2);
-	//Get instance from view
+		//Get instance from view
 		btnWeb = (ImageButton)findViewById(id.btnFacebook);
 		btnCall = (ImageButton) findViewById(R.id.btnCall);
 		btnEmail = (ImageButton) findViewById(R.id.btnEmail);
@@ -88,8 +89,8 @@ public class DetailPlaceActivity extends Activity {
 		/*btnWeb.setOnClickListener(mClickListener);
 		btnCall.setOnClickListener(mClickListener);
 		btnEmail.setOnClickListener(mClickListener);
-		btnMap.setOnClickListener(mClickListener);
-		btnFavorite.setOnClickListener(mClickListener);*/
+		btnMap.setOnClickListener(mClickListener);*/
+		btnFavorite.setOnClickListener(mClickListener);
 		
 		Bundle mBundle = getIntent().getExtras();
 		Place pl = mBundle.getParcelable("place");
@@ -161,6 +162,7 @@ public class DetailPlaceActivity extends Activity {
 			protected void onPostExecute(PlaceDetailRs result) {
 				// TODO Auto-generated method stub
 				if (result!=null && result.status.contentEquals(ConstantsAndKey.STATUS_OK)){	
+					plDetail = result.result;
 					/*txtPlaceName.setText(result.result.name);
 					txtAddress.setText(result.result.address);
 					ratBar.setRating(result.result.rating);
@@ -202,12 +204,12 @@ public class DetailPlaceActivity extends Activity {
 		        Log.v("html", html);
 		    }  
 		}  */
-}
+
 	
 	
 	
 	//Button Click Listener
-		/*private View.OnClickListener mClickListener = new View.OnClickListener() {
+		private View.OnClickListener mClickListener = new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
@@ -278,42 +280,25 @@ public class DetailPlaceActivity extends Activity {
 				}
 				//Button Favorite
 				if(btnFavorite.isPressed()){
-					String pPhone=null;
-					if (fromFv==true)
-					{Toast.makeText(getApplicationContext(), "Ä�Ă£ cĂ³ trong má»¥c yĂªu thĂ­ch", Toast.LENGTH_LONG).show();
-					}
-					else {
-					String pName = place.getTitle();
-					String pMapUrl = place.getStaticMapUrl();
-					if (place.getPhoneNumbers()!=null)
-					{
-						pPhone = place.getPhoneNumbers().get(0).getNumber();
-					}
-					String pAddress = place.getAddressLines().get(0).toString();
-					String lng = ""+place.getLng();
-					String lat = ""+place.getLat();
-					String address = "";
-					String webUrl = place.getUrl();
-					for (String s : place.getAddressLines()) {
-						address += s + " ";
-					}
-					dataService = new DataService(getApplicationContext());
+					FavDataService dataService = new FavDataService(getApplicationContext());
 					dataService.open();
 					
-					if(dataService.isExisted(lat, lng, address)){
-						Toast.makeText(getApplicationContext(), "Ä�Ă£ cĂ³ trong má»¥c yĂªu thĂ­ch", Toast.LENGTH_LONG).show();
+					if(dataService.isExisted(plDetail.id)){
+						Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
+						dataService.close();
 					}else{
-						dataService.insertFavorite(pName, pAddress,	address, pPhone, lng, lat, pMapUrl, webUrl);
-						Toast.makeText(getApplicationContext(), "ThĂªm thĂ nh cĂ´ng", Toast.LENGTH_LONG).show();
+						dataService.createFav(plDetail.id, plDetail.name, plDetail.address, plDetail.phone, plDetail.rating, plDetail.geometry.location.lng, plDetail.geometry.location.lat, plDetail.url, plDetail.website);
+						dataService.close();
+						Toast.makeText(getApplicationContext(), "Successed", Toast.LENGTH_LONG).show();
 					}
 				}
 				}
-			}
-		};*/
+			
+		};
 		
 		
 		//Menu creation
-	    /*@Override
+	    @Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
 	    	// TODO Auto-generated method stub    	
 	    	MenuInflater inflater = getMenuInflater();
@@ -337,15 +322,15 @@ public class DetailPlaceActivity extends Activity {
 				return true;
 			case R.id.mn_lstfavorite:
 				Intent intent = new Intent(getApplicationContext(), ListFavoriteActivity.class);
-				Bundle mBundle1 = new Bundle();
+				/*Bundle mBundle1 = new Bundle();
 					mBundle1.putDouble("curlat", curLat);			
 					mBundle1.putDouble("curlon", curLon);
-				intent.putExtras(mBundle1);
+				intent.putExtras(mBundle1);*/
 				startActivity(intent);
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 			}
 			
-		}*/
-//}
+		}
+}

@@ -2,7 +2,8 @@ package mmt.uit.placehelper.utilities;
 
 import java.util.List;
 
-import mmt.uit.placehelper.models.FavoriteModel;
+
+import mmt.uit.placehelper.models.PlaceDetail;
 
 import mmt.uit.placehelper.R;
 
@@ -11,51 +12,53 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
-public class FavoriteAdapter extends ArrayAdapter<FavoriteModel> {
+public class FavoriteAdapter extends ArrayAdapter<PlaceDetail> {
 
 	Context context;
 	int resourceId;
-	List<FavoriteModel> array;
-	private static double curLng = -1, curLat = -1;
+	List<PlaceDetail> array;
+	boolean isMultiSl = false;
+	
 	
 	public FavoriteAdapter(Context context, int textViewResourceId,
-			List<FavoriteModel> objects) {
+			List<PlaceDetail> objects, boolean multi) {
 		super(context, textViewResourceId, objects);
 		// TODO Auto-generated constructor stub
 		this.context = context;
 		this.resourceId = textViewResourceId;
 		this.array = objects;
+		this.isMultiSl = multi;
 	}
 	
-	public static void setLng(double lng) {
-		curLng = lng;
-	}	
-	
-	public static void setLat(double lat) {
-		curLat = lat;
-	}	
+		
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
+	public View getView(int position, View convertView, ViewGroup parent) {		
 		View view = convertView;
+		
 		if(view == null) {
 			LayoutInflater li = (LayoutInflater)this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);			
 			view = li.inflate(resourceId, null);
 		}
 		
-		FavoriteModel place = array.get(position);
+		PlaceDetail place = array.get(position);
 		if(place != null) {
+			if(isMultiSl){
+				CheckBox mCb = (CheckBox)view.findViewById(R.id.fav_checkbox);
+				mCb.setVisibility(View.VISIBLE);
+			}
+			TextView name = (TextView) view.findViewById(R.id.fav_name);
+			//TextView dis = (TextView) view.findViewById(R.id.fav_distance);	
+			TextView add = (TextView) view.findViewById(R.id.fav_address);
+			ImageView imgItem = (ImageView)view.findViewById(R.id.fav_img);
+			RatingBar rateBar = (RatingBar)view.findViewById(R.id.fav_rate_bar);
 			
-			TextView name = (TextView) view.findViewById(R.id.rs_name);
-			TextView dis = (TextView) view.findViewById(R.id.rs_distance);	
-			TextView add = (TextView) view.findViewById(R.id.rs_address);
-			ImageView imgItem = (ImageView)view.findViewById(R.id.rs_img);
-			
-			String s = array.get(position).getTitle();
+			String s = array.get(position).name;
 			if (s.contains("Bank") || s.contains("bank") || s.contains("Union") || s.contains("Credit")) {
 				imgItem.setImageResource(R.drawable.banks);
 			}
@@ -72,22 +75,11 @@ public class FavoriteAdapter extends ArrayAdapter<FavoriteModel> {
 				imgItem.setImageResource(R.drawable.app_icon);
 			}
 			
-//			if (s.startsWith("Bank")) {
-//				imgItem.setImageResource(R.drawable.banks);
-//			} else {
-//				imgItem.setImageResource(R.drawable.hotel);
-//			}
+	
+			name.setText(place.name);
+			add.setText(place.address);
+			rateBar.setRating(place.rating);
 			
-			name.setText(place.getTitle());
-			
-			//ko thay roi vao day, chac la set mac dinh # -1 roi
-			if(curLat==-1 && curLng==-1){
-				dis.setText("???" + "km");
-			}else{
-				dis.setText(place.getDistance(curLat, curLng) + "km");
-			}
-			
-			add.setText(place.getAddressLines().toString());
 		}
 		
 		return view;

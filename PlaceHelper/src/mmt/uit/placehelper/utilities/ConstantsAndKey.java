@@ -4,17 +4,17 @@ public class ConstantsAndKey {
 
 	// *String Constant*				
 	public static final String PREF_NAME = "savedLocation";
+	public static final String KEY_ID = "_id";
 	public static final String KEY_LAT = "lat";
     public static final String KEY_LNG = "lng";
-    public static final String KEY_ADDRESS = "address";
-    public static final String KEY_ADDRESS_LINES = "addresslines";
+    public static final String KEY_ADDRESS = "address";    
     public static final String KEY_PHONENUMBER = "phone";
-    public static final String KEY_MAPURL = "mapurl";
+    public static final String KEY_URL = "mapurl";
     public static final String KEY_WEBURL = "weburl";
-    public static final String KEY_ROWID = "_id";	    
-    public static final String KEY_TITLE = "title";
-    public static final String DATABASE_NAME = "Favorites";
-    public static final String DATABASE_TABLE = "FavoritesTbl";   
+    public static final String KEY_RATE = "rating";
+    public static final String KEY_NAME = "name";
+    public static final String DATABASE_NAME = "PlaceHelper";    
+    public static final String DATABASE_TABLE = "PlaceHelperTbl";   
     public static final String KEY_AIRPORT = "airport";
     public static final String KEY_ATM = "atm";
     public static final String KEY_HOTEL = "hotel";

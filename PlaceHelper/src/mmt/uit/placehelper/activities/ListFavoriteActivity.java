@@ -3,12 +3,10 @@ package mmt.uit.placehelper.activities;
 import java.util.List;
 
 import mmt.uit.placehelper.models.FavoriteModel;
-import mmt.uit.placehelper.services.DataService;
+import mmt.uit.placehelper.models.PlaceDetail;
+import mmt.uit.placehelper.services.FavDataService;
 import mmt.uit.placehelper.utilities.FavoriteAdapter;
-
-
 import mmt.uit.placehelper.R;
-
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
@@ -20,54 +18,56 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnCreateContextMenuListener;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 
 public class ListFavoriteActivity extends ListActivity {
 
-	private DataService dataService;
+	private FavDataService dataService;
 	private FavoriteAdapter rsAdapter;
 	private ListView listFavorites;
-	private List<FavoriteModel> favoriteModel;
+	private List<PlaceDetail> favoriteModel;
 	protected static final int CONTEXTMENU_DELETEITEM = 0;
 	protected static final int CONTEXTMENU_DELETEALL = 1;
-	FavoriteModel favContexted;
-	double curLat, curLon; 
+	private PlaceDetail favContexted;
+	private double curLat, curLon; 
+	private CheckBox checkBox;
+	private ImageButton btnMulti;
+	private boolean isMultiSl = false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ph_list_favorite);
-
-		listFavorites = getListView();
-		registerForContextMenu(listFavorites);
-		listFavorites.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
-
-					@Override
-					public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-						// TODO Auto-generated method stub
-						menu.setHeaderIcon(R.drawable.del36);
-						menu.setHeaderTitle("XĂ³a danh má»¥c yĂªu thĂ­ch");
-						menu.add(0, CONTEXTMENU_DELETEITEM, 0, "XĂ³a má»¥c Ä‘Æ°Æ¡c chá»�n");
-						menu.add(1, CONTEXTMENU_DELETEALL, 1, "XĂ³a táº¥t cáº£");
-						
-					}
-				});
-
-		// OK
-		dataService = new DataService(getApplicationContext());
-		dataService.open();
-		Bundle bGet = getIntent().getExtras();
-		curLat = bGet.getDouble("curlat");
-		curLon = bGet.getDouble("curlon");		
-		FavoriteAdapter.setLat(curLat);
-		FavoriteAdapter.setLng(curLon);		
+		listFavorites = getListView();		
+		dataService = new FavDataService(getApplicationContext());
+		dataService.open();			
 		favoriteModel = dataService.getListFavorites();
 		rsAdapter = new FavoriteAdapter(getApplicationContext(),
-				R.layout.ph_favorite_row, favoriteModel);
+				R.layout.ph_favorite_row, favoriteModel,isMultiSl);
 		setListAdapter(rsAdapter);
+		dataService.close();
+		btnMulti = (ImageButton)findViewById(R.id.btnMultiselect);
+		btnMulti.setOnClickListener(setCheckBox);
+		
 	}
+	
+	View.OnClickListener setCheckBox = new View.OnClickListener() {
+		
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			isMultiSl = !isMultiSl;
+			rsAdapter = new FavoriteAdapter(getApplicationContext(),
+					R.layout.ph_favorite_row, favoriteModel,isMultiSl);
+			setListAdapter(rsAdapter);
+			
+		}
+	};
 
 	@Override
 	public boolean onContextItemSelected(MenuItem aItem) {
@@ -79,7 +79,7 @@ public class ListFavoriteActivity extends ListActivity {
 		switch (aItem.getItemId()) {
 		case CONTEXTMENU_DELETEITEM:
 			/* Get the selected item out of the Adapter by its position. */
-			favContexted = (FavoriteModel) listFavorites.getAdapter().getItem(menuInfo.position);
+			favContexted = (PlaceDetail) listFavorites.getAdapter().getItem(menuInfo.position);
 			alertBox.setMessage("Báº¡n cĂ³ muá»‘n xĂ³a má»¥c nĂ y khĂ´ng?");
 			//Yes
 			alertBox.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
@@ -87,7 +87,7 @@ public class ListFavoriteActivity extends ListActivity {
 //					Toast.makeText(getApplicationContext(),"Yes clicked", Toast.LENGTH_SHORT).show();
 					try {
 						/* Remove it from the list. */
-						dataService.deleteFavorite(favContexted.getPlaceId());
+						dataService.deleteFav(favContexted.id);
 						refreshFavListItems();
 						Toast.makeText(getApplicationContext(),"Ä�Ă£ xĂ³a", Toast.LENGTH_SHORT).show();
 					} catch (Exception e) {
@@ -139,11 +139,12 @@ public class ListFavoriteActivity extends ListActivity {
 
 	private void refreshFavListItems() {
 		favoriteModel = dataService.getListFavorites();
-		setListAdapter(new FavoriteAdapter(getApplicationContext(),
-				R.layout.ph_favorite_row, favoriteModel));
+		rsAdapter = new FavoriteAdapter(getApplicationContext(),
+				R.layout.ph_favorite_row, favoriteModel,isMultiSl);
+		setListAdapter(rsAdapter);
 	}
 
-	@Override
+	/*@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		// Get the item that was clicked
@@ -166,5 +167,5 @@ public class ListFavoriteActivity extends ListActivity {
 		mIntent.putExtras(b);
 		startActivity(mIntent);
 		
-	}
+	}*/
 }

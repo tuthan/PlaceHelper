@@ -19,6 +19,15 @@ public class MyGeometry implements Parcelable{
 		
 	}
 	
+	public MyGeometry (PlaceLocation pl){
+		this.location = pl;
+	}
+	
+	public MyGeometry (double lat, double lng){
+		this.location.lat = lat;
+		this.location.lng = lng;
+	}
+	
 	@Override
 	public int describeContents() {
 		// TODO Auto-generated method stub

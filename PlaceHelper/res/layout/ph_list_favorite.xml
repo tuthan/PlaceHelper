@@ -1,17 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:background="@drawable/app_bg2">
     
+    <!-- Button bar -->
+
+			<LinearLayout
+			    style="@android:style/ButtonBar"
+			    android:id="@+id/fav_top_bar"
+			    android:layout_alignParentBottom="true"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_marginLeft="8dp"
+			    android:layout_marginRight="8dp"
+			    android:layout_marginBottom="4dp"			       			    		  
+			    android:background="@drawable/bottom_bar_bg"
+			    android:orientation="horizontal" >
+
+			    <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="30dp"
+			        android:layout_gravity="center_vertical"
+			        android:orientation="vertical" >
+
+			        <ImageButton
+			            android:id="@+id/btnMultiselect"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:layout_marginTop="4dp"			            
+			            android:background="@drawable/transparent_bg"
+			            android:src="@drawable/fav_multiselect" />
+
+			        <TextView
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:text="Multi Select"
+			            android:textColor="@color/black"
+			            android:textSize="10dp" />
+
+			    </LinearLayout>
+
+			    <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="40dp"
+			        android:layout_gravity="center_vertical"
+			        android:orientation="vertical" >
+
+			        <ImageButton
+			            android:id="@+id/btnDelete"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:layout_marginTop="4dp"			            
+			            android:src="@drawable/fav_delete"
+			            android:background="@android:color/transparent" />
+
+			        <TextView
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:text="Delete"
+			            android:textColor="@color/black"
+			            android:textSize="10dp" />
+			    </LinearLayout>
+
+			    <LinearLayout
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_marginLeft="40dp"
+			        android:layout_gravity="center_vertical"
+			        android:orientation="vertical" >
+
+			        <ImageButton
+			            android:id="@+id/btnDeleteAll"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:layout_marginTop="4dp"			            
+			            android:src="@drawable/fav_delete_all"
+			            android:background="@android:color/transparent" />
+
+			        <TextView
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:layout_gravity="center"
+			            android:text="Delete All"
+			            android:textColor="@color/black"
+			            android:textSize="10dp" />
+			    </LinearLayout>
+
+			   
+			</LinearLayout>
+<!-- End of Button Bar -->
  
     <ListView  android:id="@id/android:list"   
                android:layout_width="fill_parent"
-               android:layout_height="fill_parent"
+               android:layout_height="fill_parent"               
                android:layout_weight="1"
+               android:layout_above="@id/fav_top_bar"
                android:cacheColorHint="@android:color/transparent"
                android:drawSelectorOnTop="false"/>
       
+    
                
-</LinearLayout>
+</RelativeLayout>
