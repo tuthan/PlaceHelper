@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="about">About</string>
+    <string name="favorite">Favorites</string>
+    <string name="all_map">Show Map</string>
+
+    
+</resources>

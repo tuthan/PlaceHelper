@@ -7,6 +7,7 @@ import mmt.uit.placehelper.models.FavoriteModel;
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.models.PlaceDetailRs;
+import mmt.uit.placehelper.models.PlaceLocation;
 import mmt.uit.placehelper.models.PlaceModel;
 import mmt.uit.placehelper.models.PlacesList;
 import mmt.uit.placehelper.services.FavDataService;
@@ -15,7 +16,6 @@ import mmt.uit.placehelper.services.SearchService;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.utilities.LoadImage;
 import mmt.uit.placehelper.utilities.MyLocation;
-import mmt.uit.placehelper.utilities.RslistAdapter;
 import mmt.uit.placehelper.utilities.SortPlace;
 
 import mmt.uit.placehelper.R;
@@ -57,12 +57,14 @@ public class DetailPlaceActivity extends Activity {
 	private Bitmap mBitmap;
 	private RatingBar ratBar;
 	private WebView mWebView;
-	private PlaceModel place;
-	private double curLon, curLat, lng,lat;
+	
+	private double curLng, curLat, lng,lat;
 	private int placeId;
 	private Boolean fromFv;
-	private PlaceDetail plDetail;
-	private Bundle b;
+	private PlaceDetail plDetail;	
+	private Place place;
+	PlaceLocation curLoc;
+	Bundle mBundle;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -91,11 +93,12 @@ public class DetailPlaceActivity extends Activity {
 		btnEmail.setOnClickListener(mClickListener);
 		btnMap.setOnClickListener(mClickListener);*/
 		btnFavorite.setOnClickListener(mClickListener);
-		
-		Bundle mBundle = getIntent().getExtras();
-		Place pl = mBundle.getParcelable("place");
+		btnMap.setOnClickListener(mClickListener);
+		mBundle = getIntent().getExtras();
+		place = mBundle.getParcelable("place");
+		curLoc = mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);
 		GetDetail gd = new GetDetail();
-		gd.execute(pl);
+		gd.execute(place);
 		/*b = getIntent().getExtras();
 		fromFv = b.getBoolean("fromFv");
 		if (fromFv == false){
@@ -215,21 +218,9 @@ public class DetailPlaceActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//Button Web
-				if (btnWeb.isPressed()){
-					Bundle mBundle = new Bundle();
-					if(fromFv==false){
-						mBundle.putString("url", place.getUrl());
-					}
-					else 
-					{
-						mBundle.putString("url", b.getString("webUrl"));
-					}
-				Intent mWebIntent = new Intent(getApplicationContext(), WebInfoActivity.class);
-				mWebIntent.putExtras(mBundle);
-				startActivity(mWebIntent);
-				}
+				
 				//Button Call
-				if(btnCall.isPressed()){
+				/*if(btnCall.isPressed()){
 					try {
 					   	Intent intent = new Intent(Intent.ACTION_CALL);
 					   	String phoneNumber=null;
@@ -248,10 +239,10 @@ public class DetailPlaceActivity extends Activity {
 		            	Toast.makeText(getApplicationContext(), 
 		            			"KhĂ´ng gá»�i Ä‘Æ°á»£c", Toast.LENGTH_SHORT).show();
 						}
-					}
+					}*/
 				//Button Email
 				//Call extra email application to send mail
-				if (btnEmail.isPressed()){
+				/*if (btnEmail.isPressed()){
 					final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);                
 	                emailIntent.setType("plain/text");           
 	                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, "friends@domainl.com");         
@@ -265,16 +256,11 @@ public class DetailPlaceActivity extends Activity {
 					}
 	                 
 	                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-				}
+				}*/
 				//Button Map
 				if(btnMap.isPressed()){
-					Bundle mBundle = new Bundle();
-					mBundle.putBoolean("showall", false);
-					mBundle.putDouble("curlon", curLon);
-					mBundle.putDouble("curlat", curLat);
-					mBundle.putDouble(ConstantsAndKey.KEY_LAT, lat);
-					mBundle.putDouble(ConstantsAndKey.KEY_LNG, lng);
 					Intent mMapIntent = new Intent(getApplicationContext(), ViewOnMapActivity.class);
+					mBundle.putBoolean(ConstantsAndKey.KEY_SHOW_ALL, false);
 					mMapIntent.putExtras(mBundle);
 					startActivity(mMapIntent);
 				}
@@ -315,7 +301,7 @@ public class DetailPlaceActivity extends Activity {
 				Intent mIntent = new Intent(DetailPlaceActivity.this,CategoriesActivity.class);				
 				Bundle mBundle = new Bundle();
                 mBundle.putDouble(ConstantsAndKey.KEY_LAT,curLat);
-                mBundle.putDouble(ConstantsAndKey.KEY_LNG, curLon);
+                mBundle.putDouble(ConstantsAndKey.KEY_LNG, curLng);
                 mIntent.putExtras(mBundle);
                 DetailPlaceActivity.this.startActivity(mIntent);
 				DetailPlaceActivity.this.finish();

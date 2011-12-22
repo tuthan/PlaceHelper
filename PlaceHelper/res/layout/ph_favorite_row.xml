@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" 
         android:visibility="gone"
+        android:button="@drawable/checkbox_state"
         android:layout_gravity="center_vertical"/>
   
   <ImageView 
@@ -20,7 +21,7 @@
 	 android:layout_height="50dp"
 	 android:layout_marginLeft="4dp"	 
 	 android:layout_gravity="center_vertical"
-	 android:scaleType="centerCrop"
+	 android:scaleType="centerCrop"	 
 	 android:src="@drawable/app_icon"/>
   
   <!-- Center linerlayout: get current demension and set width by percentage -->

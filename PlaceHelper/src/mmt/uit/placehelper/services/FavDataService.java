@@ -1,9 +1,7 @@
 package mmt.uit.placehelper.services;
 
-import java.sql.SQLClientInfoException;
 import java.util.ArrayList;
 
-import mmt.uit.placehelper.models.FavoriteModel;
 import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
 
@@ -115,16 +113,19 @@ public class FavDataService {
 	      }
     	}
     	
+    	mCursor.close();
       return mArrayList;
     }
 	
 	public boolean isExisted(String id) {
 		Cursor c = getFavoriteById(id);
 		if(c.moveToFirst() == false) {
-		return false;
+			c.close();
+			return false;
 		}
 		else{
-		return true;
+			c.close();
+			return true;
 		}
 		}
 

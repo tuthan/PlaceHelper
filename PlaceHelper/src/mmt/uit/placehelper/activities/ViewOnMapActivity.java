@@ -2,9 +2,9 @@
 package mmt.uit.placehelper.activities;
 
 import java.util.*;
-import java.lang.Iterable;
-import java.lang.reflect.*;
 
+import mmt.uit.placehelper.models.Place;
+import mmt.uit.placehelper.models.PlaceLocation;
 import mmt.uit.placehelper.models.PlaceModel;
 import mmt.uit.placehelper.services.SearchService;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
@@ -33,21 +33,20 @@ public class ViewOnMapActivity extends MapActivity
 	MyOverlay itemizedOverlay;
 	List<PlaceModel > placemodels;
 	MapController mapController;
-	PlaceModel mPlace;
+	Place place;
 	
 	double curlat, curlon;	
-	
+	private PlaceLocation curLoc;
 	private Handler handler;
 	
 	@Override
-	protected void onCreate(Bundle icicle) {
+	protected void onCreate(Bundle b) {
 		// TODO Auto-generated method stub
-		super.onCreate(icicle);
+		super.onCreate(b);
 		setContentView(R.layout.ph_map_view);
-		Bundle b = getIntent().getExtras();
-		curlat = b.getDouble("curlat");
-		curlon = b.getDouble("curlon");
-		
+		Bundle mBundle = getIntent().getExtras();
+		curLoc = mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);
+		place = mBundle.getParcelable("place");
 		mapView = (MapView) findViewById(R.id.mapView);
 	    mapView.setBuiltInZoomControls(true);
 	        
@@ -57,43 +56,52 @@ public class ViewOnMapActivity extends MapActivity
 		mapController.setZoom(14);
 	    
 		
-		showCurrentPosition();
+		/*showCurrentPosition();
 		if (b.getBoolean("showall")){
 		showAllPlace();
 		}
 		else{
 			showCurrentPlace(b.getDouble(ConstantsAndKey.KEY_LNG),b.getDouble(ConstantsAndKey.KEY_LAT));
-		}
+		}*/
+		
+		showCurrent(curLoc);
+		showALocation(place.geometry.location);
 			
 	}	
-	// hien thi vi tri cua nguoi dung qua GPS len map
-	private void showCurrentPosition()
+	
+	//Show current location on map
+	private void showCurrent(PlaceLocation curloc)
 	{
-		drawable = this.getResources().getDrawable(R.drawable.myplcace);
-        itemizedOverlay = new MyOverlay(drawable);
-		GeoPoint point = new GeoPoint((int)(curlat * 1e6),(int)(curlon * 1e6));
-    	OverlayItem overlayitem = new OverlayItem(point, "", "You're here");	    	
+		drawable = this.getResources().getDrawable(R.drawable.marker_current);
+        itemizedOverlay = new MyOverlay(drawable);        
+		GeoPoint point = new GeoPoint((int)( curloc.lat* 1e6),(int)(curloc.lng * 1e6));
+    	OverlayItem overlayitem = new OverlayItem(point, "", "your here");	    	
     	mapController.setCenter(point);
     	itemizedOverlay.addOverlay(overlayitem);
     	mapOverlays.add(itemizedOverlay);
+    	
 	}
-	// hien thi vi tri can tim len map
-	private void showCurrentPlace(Double lng, Double lat)
+	
+	// Show a place on map
+	private void showALocation(PlaceLocation ploc)
 	{
-		drawable = this.getResources().getDrawable(R.drawable.mark_current);
+		if(place.getIsFavorite()){
+			drawable = this.getResources().getDrawable(R.drawable.marker_fav);
+		}
+		else{
+		drawable = this.getResources().getDrawable(R.drawable.marker_normal);
+		}
         itemizedOverlay = new MyOverlay(drawable);        
-		GeoPoint point = new GeoPoint((int)( lat* 1e6),(int)(lng * 1e6));
-    	OverlayItem overlayitem = new OverlayItem(point, "", "Place here");	    	
-    	//mapController.setCenter(point);
+		GeoPoint point = new GeoPoint((int)( ploc.lat* 1e6),(int)(ploc.lng * 1e6));
+    	OverlayItem overlayitem = new OverlayItem(point, "", "Place");	    	    	
     	itemizedOverlay.addOverlay(overlayitem);
     	mapOverlays.add(itemizedOverlay);
     	
-    	 
 	}
 	
 	private void showAllPlace()
 	{		  
-       	 //test hien thi nhieu diem len map
+       	 
       	  placemodels = SearchService.placeModel;
       	  int max = placemodels.size();
       	  if (max >10) max=10;

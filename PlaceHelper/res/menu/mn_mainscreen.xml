@@ -2,6 +2,6 @@
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/mn_changle_location" android:icon="@drawable/settings_location_icon" android:title="Đổi Vị Trí"></item>
-    <item android:id="@+id/mn_lstfavorite" android:icon="@drawable/favorites_icon" android:title="Yêu Thích"></item>
-    <item android:id="@+id/about" android:icon="@drawable/about" android:title="Thông Tin"></item>
+    <item android:id="@+id/mn_lstfavorite" android:icon="@drawable/favorites_icon" android:title="@string/favorite"></item>
+    <item android:id="@+id/mn_about" android:icon="@drawable/about" android:title="@string/about"></item>
 </menu>

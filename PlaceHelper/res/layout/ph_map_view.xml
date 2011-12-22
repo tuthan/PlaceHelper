@@ -15,14 +15,7 @@
         android:layout_height="fill_parent"
         android:enabled="true"
         android:clickable="true"
-       	android:apiKey ="@string/map_key"/>        
+       	android:apiKey ="@string/map_key2"/>        
         <!-- "0gsH7HyCwtbh2J2BmWh6VpqxyjKq6nQPZzy5Mgg"-->
-        
-     <LinearLayout android:id="@+id/zoom" 
-        android:layout_width="wrap_content" 
-        android:layout_height="wrap_content" 
-        android:layout_alignParentBottom="true" 
-        android:layout_centerHorizontal="true" 
-        />
       
 </RelativeLayout >

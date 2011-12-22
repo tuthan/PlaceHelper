@@ -24,6 +24,9 @@ public class ConstantsAndKey {
     public static final String KEY_BANK = "bank";
     public static final String KEY_RESTAURANT = "restaurant";
     public static final String KEY_TAXI = "taxi";
+    public static final String KEY_CURLOC = "curloc";
+    public static final String KEY_LST_PLACES = "place list";
+    public static final String KEY_SHOW_ALL = "show all";
     public static final String TAG_EXCEPTION = "exception";
     
 	// *Integer Constant*

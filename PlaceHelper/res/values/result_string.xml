@@ -3,6 +3,7 @@
     <string name="seact_nors">There no result for :</string>
     <string name="seact_rq_error">There some errors when search</string>
     <string name="seact_result">Result for :</string>
+    <string name="seact_connect_error">There are problems when search, please check your network connection.</string>
 
     
 </resources>

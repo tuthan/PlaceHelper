@@ -1,14 +1,12 @@
 package mmt.uit.placehelper.services;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 
 import mmt.uit.placehelper.models.Place;
-import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.models.PlaceDetailRs;
 import mmt.uit.placehelper.models.PlacesList;
 
-import android.net.Uri;
-import android.net.Uri.Builder;
 import android.util.Log;
 
 import com.google.api.client.googleapis.GoogleHeaders;
@@ -16,7 +14,7 @@ import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.client.http.HttpResponseException;
+import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.http.json.JsonHttpParser;
@@ -47,6 +45,7 @@ public class SearchPlace {
 			    request.setHeaders(headers);
 			    JsonHttpParser parser = new JsonHttpParser(new JacksonFactory()) ;			    			    
 			    request.addParser(parser);
+			    
 			   }
 			});
 		}
@@ -65,14 +64,24 @@ public class SearchPlace {
 				mUrl.put("key", API_KEY);
 				Log.v(LOG_KEY, "url= " + mUrl);
 				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
-				rs_list = request.execute().parseAs(PlacesList.class);
-				Log.v(LOG_KEY, rs_list.status);
+				HttpResponse response = request.execute();
+				int sttCode = response.getStatusCode();
+				if(sttCode==200){								
+				rs_list = response.parseAs(PlacesList.class);
 				
 				for (Place pl:rs_list.results)
 				{
 					pl.setDistance(lat, lng);
-					//Log.v(LOG_KEY, String.valueOf(pl.getDistance()));
+					Log.v(LOG_KEY, pl.name + ":" + pl.id);
 				}
+				Log.v(LOG_KEY, rs_list.status);
+				}
+				
+				Log.v(LOG_KEY, String.valueOf(sttCode));
+				
+				
+				
+				
 				
 			}
 			
@@ -80,6 +89,8 @@ public class SearchPlace {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+			
 			return rs_list;
 			
 			

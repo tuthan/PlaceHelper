@@ -1,6 +1,7 @@
 package mmt.uit.placehelper.activities;
 
 
+import mmt.uit.placehelper.utilities.CheckConnection;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.utilities.PointAddressUtil;
 import com.google.android.maps.GeoPoint;
@@ -15,6 +16,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,11 +41,14 @@ public class CategoriesActivity extends Activity {
 	private Location currentLoc=null;
 	private String mProviderName;	
 	private SharedPreferences mSharePref;
+	private Context mContext;
+	
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ph_list_categories);
+        mContext = this;
         //Get button 
         btnRestaurant = (Button)findViewById(R.id.btnrestaurant);                
         btnHotel = (Button)findViewById(R.id.btnhotel);       
@@ -140,12 +145,13 @@ public class CategoriesActivity extends Activity {
 	
 	private void startSearch(String place){
 		Log.v("ph_info", "Start Search");
+		if (CheckConnection.checkInternet(mContext)){
 		if (currentLoc!=null){
 		String currentAdd;			
 		Bundle b = new Bundle();					
 		b.putString("search", place);		
 			b.putDouble("curlat", currentLoc.getLatitude());			
-			b.putDouble("curlon", currentLoc.getLongitude());		
+			b.putDouble("curlng", currentLoc.getLongitude());		
 			GeoPoint point = new GeoPoint(
 			          (int) (currentLoc.getLatitude() * 1E6), 
 			          (int) (currentLoc.getLongitude() * 1E6));
@@ -160,6 +166,9 @@ public class CategoriesActivity extends Activity {
 		}
 		else
 			getCurrentLocation();
+		}
+		else 
+			Toast.makeText(mContext, "Please check you network setting", Toast.LENGTH_LONG);
 		}					
 	
 	
@@ -190,7 +199,7 @@ public class CategoriesActivity extends Activity {
 			Intent intent2 = new Intent(getApplicationContext(), ChangeLocationActivity.class);
 			startActivity(intent2);
 			return true;
-		case R.id.about:			
+		case R.id.mn_about:			
 			showDialog(ConstantsAndKey.ABOUT);
 			return true;
 		default:

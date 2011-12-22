@@ -26,6 +26,8 @@ public class Place implements Parcelable{
 
 	private double distance;
 	
+	private boolean isFavorite;
+	
 	//Constructor
 	private Place(Parcel in){
 		readFromParcel(in);
@@ -35,6 +37,15 @@ public class Place implements Parcelable{
 	public Place()
 	{
 		
+	}
+	
+	//Set-get 
+	public void setIsFavorite(boolean isFav){
+		this.isFavorite = isFav;
+	}
+	
+	public boolean getIsFavorite(){
+		return this.isFavorite;
 	}
 	
 	public void setDistance(double lat, double lng) {
@@ -50,6 +61,10 @@ public class Place implements Parcelable{
 	
 	public double getDistance(){
 		return round (distance,3);
+	}
+	
+	public void setDistance(double dis){
+		distance = dis;
 	}
 	
 	//Function to round a double
@@ -81,6 +96,7 @@ public class Place implements Parcelable{
 		dest.writeString(vicinity);
 		dest.writeDouble(distance);
 		dest.writeParcelable(geometry, flags);
+		dest.writeByte((byte)(isFavorite?1:0));
 	}
 	
 	private void readFromParcel (Parcel in){
@@ -91,6 +107,7 @@ public class Place implements Parcelable{
 		this.vicinity = in.readString();
 		this.distance = in.readDouble();
 		this.geometry = in.readParcelable(MyGeometry.class.getClassLoader());
+		this.isFavorite = in.readByte()==1;
 	}
 	
     public static final Parcelable.Creator<Place> CREATOR = new Parcelable.Creator<Place>() {
