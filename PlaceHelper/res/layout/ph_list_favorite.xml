@@ -59,13 +59,14 @@
 			            android:layout_gravity="center"
 			            android:layout_marginTop="4dp"			            
 			            android:src="@drawable/fav_delete"
+			            android:clickable="false"
 			            android:background="@android:color/transparent" />
 
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:text="Delete"
+			            android:text="@string/delete"
 			            android:textColor="@color/black"
 			            android:textSize="10dp" />
 			    </LinearLayout>
@@ -90,7 +91,7 @@
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:text="Delete All"
+			            android:text="@string/del_all"
 			            android:textColor="@color/black"
 			            android:textSize="10dp" />
 			    </LinearLayout>

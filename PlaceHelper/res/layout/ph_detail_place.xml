@@ -27,30 +27,39 @@
   						android:layout_marginTop="10dp"
   						
   						android:background="@drawable/brief_bg">
-  						
-  						
 
-  				<RatingBar
-  				    android:id="@+id/de_rate_bar"
-  				    android:layout_marginTop="10dp"
-  				    android:layout_marginRight="10dp"
-  				    android:layout_gravity="right"
-  				    android:numStars="5"
-  				    android:rating="4.6"
-  				    style="?android:attr/ratingBarStyleSmall"
-  				    android:layout_width="wrap_content"
-  				    android:layout_height="wrap_content" />
-
-  				<!--Place Name-->
+  					<RelativeLayout
+  			    		
+  						android:layout_width="fill_parent"
+  						android:layout_height="wrap_content"
+  						android:orientation="horizontal">
+		  				<ImageView
+		  				    android:id="@+id/de_add_fav"
+		  				    android:layout_width="wrap_content"
+		  				    android:layout_height="wrap_content"
+		  				    android:src="@drawable/add_fav" 
+		  				    android:layout_alignParentRight="true"
+		  				    android:layout_marginRight="10dp"
+		  				    android:layout_marginLeft="5dp"
+						    android:layout_marginTop="10dp"/>
+  					    <!--Place Name-->
   						 <TextView
   						 	android:id="@+id/de_place_name"  						 	 
-				  			android:layout_width="fill_parent"
+				  			android:layout_width="wrap_content"
 				  			android:layout_height="wrap_content"				  			
 				  			android:textColor="@color/title_blue"
 				  			android:textStyle="bold"				  			
 				  			android:layout_marginLeft="15dp"
-				  			android:text="Swiss-BelHotel Wooshu"/>
-				  		  <!--Address-->
+				  			android:layout_marginTop="10dp"
+				  			android:layout_alignParentLeft="true"
+				  			android:layout_toLeftOf="@id/de_add_fav"
+				  			android:text="Swiss-BelHotel Wooshu "/>
+  						 
+		  				
+						
+				  		 </RelativeLayout>
+  						 
+  						 <!--Address-->
 
 						<TextView 
 							android:id="@+id/de_address"
@@ -71,12 +80,22 @@
 
 						<TextView
 						    android:id="@+id/de_website"
-						    android:layout_width="fill_parent"
-				  			android:layout_height="wrap_content"				  			
-				  			android:layout_marginLeft="15dp"
-				  			android:textColor="@color/black"
-				  			android:autoLink="web"
-						    android:text="www.google.com" />
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:layout_marginLeft="15dp"
+						    android:autoLink="web"						    
+						    android:maxLines="1"
+						    android:text="Go to website"
+						    android:textColor="@color/black" />
+
+						<RatingBar
+						    android:id="@+id/de_rate_bar"
+						    style="?android:attr/ratingBarStyleSmall"
+						    android:layout_width="wrap_content"
+						    android:layout_height="wrap_content"
+						    android:layout_marginLeft="15dp"						    
+						    android:numStars="5"
+						    android:rating="4.6" />
 										
   						</LinearLayout>
   			<!--End of brief info-->
@@ -106,12 +125,6 @@
 				android:layout_marginLeft="8dp"
 	  			android:layout_marginRight="8dp"	  			  		    				 						    		
 			    >
-						<WebView 
-  		android:id="@+id/webview"
-  		android:layout_width="fill_parent"
-  		android:layout_height="fill_parent"
-  		android:scrollbars="none"
-  		/>
 						</LinearLayout>
 		</LinearLayout>
 		</ScrollView>						

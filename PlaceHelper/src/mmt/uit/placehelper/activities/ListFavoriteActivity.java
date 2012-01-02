@@ -6,8 +6,10 @@ import java.util.List;
 import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.services.FavDataService;
 import mmt.uit.placehelper.R;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -48,6 +50,7 @@ public class ListFavoriteActivity extends ListActivity {
 		btnMulti.setOnClickListener(toggleCheckBox);
 		btnDelete =(ImageButton)findViewById(R.id.btnDelete);
 		btnDelete.setOnClickListener(delete);
+		btnDelete.setClickable(false);
 		btnDelAll =(ImageButton)findViewById(R.id.btnDeleteAll);
 		btnDelAll.setOnClickListener(deleteAll);
 		GetFavorite gfl = new GetFavorite();
@@ -73,12 +76,65 @@ public class ListFavoriteActivity extends ListActivity {
 		
 		@Override
 		public void onClick(View arg0) {
-			// TODO Auto-generated method stub
-			GetFavorite gfl = new GetFavorite();
-			gfl.execute(DELETE_ALL);
+			
+			AlertDialog.Builder alertBox = new AlertDialog.Builder(mContext);
+			
+			alertBox.setMessage(R.string.fav_del_all);
+			//Yes
+			alertBox.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {						
+					GetFavorite gfl = new GetFavorite();
+					gfl.execute(DELETE_ALL);
+				}
+			});
+			//No
+			alertBox.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+			//Show dialog
+			if(listFavorites.getChildCount()!=0)
+			alertBox.show();
 		}
 	};
 	
+	View.OnClickListener delete = new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				AlertDialog.Builder alertBox = new AlertDialog.Builder(mContext);
+				alertBox.setMessage(R.string.fav_delete);
+				//Yes
+				alertBox.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {						
+						GetFavorite gfl = new GetFavorite();
+						gfl.execute(DELETE_FAV);
+					}
+				});
+				//No
+				alertBox.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				//Show dialog
+				alertBox.show();
+				
+			}
+		};
+		
+		
 
 	//Create Task to get favorite list from database 
 	private class GetFavorite extends AsyncTask<Integer, Void, List<PlaceDetail>>{
@@ -131,15 +187,7 @@ public class ListFavoriteActivity extends ListActivity {
 		
 	}
 	
-	View.OnClickListener delete = new View.OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			GetFavorite gfl = new GetFavorite();
-			gfl.execute(DELETE_FAV);
-		}
-	};
+	
 
 	/*@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {

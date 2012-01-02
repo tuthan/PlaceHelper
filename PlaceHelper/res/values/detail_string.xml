@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="de_success">Add successed!</string>
+    <string name="de_exist">Already in your list!!</string>
+    <string name="de_webhint">Click to goto place website for more information!</string>
+
+    
+</resources>

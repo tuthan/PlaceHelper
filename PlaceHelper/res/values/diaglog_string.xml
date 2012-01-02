@@ -6,6 +6,6 @@
     <string name="get_location">Getting current location.</string>
     <string name="get_loca_error">There are errors when get current location. Please try again.</string>
     <string name="ask_save">Do you want use saved location</string>
-
+   
     
 </resources>

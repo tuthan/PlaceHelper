@@ -1,6 +1,7 @@
 package mmt.uit.placehelper.activities;
 
 import java.util.Collections;
+import java.util.regex.Pattern;
 
 import mmt.uit.placehelper.MainActivity;
 import mmt.uit.placehelper.models.FavoriteModel;
@@ -31,11 +32,13 @@ import android.media.FaceDetector;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.DownloadListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -51,15 +54,12 @@ public class DetailPlaceActivity extends Activity {
 	private ImageButton btnCall, btnWeb, btnEmail, btnMap, btnFavorite; 
 	//Textview
 	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite;
-	//Image View
-	private ImageView imgMap;
+	//Image Viewav
+	private ImageView add_fav;
 	//other
 	private Bitmap mBitmap;
-	private RatingBar ratBar;
-	private WebView mWebView;
-	
-	private double curLng, curLat, lng,lat;
-	private int placeId;
+	private RatingBar ratBar;	
+	private WebView mWebView;	
 	private Boolean fromFv;
 	private PlaceDetail plDetail;	
 	private Place place;
@@ -70,28 +70,19 @@ public class DetailPlaceActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.ph_detail_place2);
+		setContentView(R.layout.ph_detail_place);
 		//Get instance from view
 		btnWeb = (ImageButton)findViewById(id.btnFacebook);
 		btnCall = (ImageButton) findViewById(R.id.btnCall);
 		btnEmail = (ImageButton) findViewById(R.id.btnEmail);
 		btnMap = (ImageButton) findViewById(R.id.btnMap);
-		btnFavorite = (ImageButton) findViewById(R.id.btnFavorite);		
-		/*txtPlaceName = (TextView)findViewById(R.id.de_place_name);
+		btnFavorite = (ImageButton) findViewById(R.id.btnFavorite);
+		txtPlaceName = (TextView)findViewById(R.id.de_place_name);
+		txtAddress = (TextView)findViewById(R.id.de_address);
 		txtPhone = (TextView)findViewById(R.id.de_phone);
 		txtWebsite = (TextView)findViewById(R.id.de_website);
-		ratBar = (RatingBar)findViewById(R.id.de_rate_bar);*/
-		//txtAddressFull = (TextView)findViewById(R.id.address_full);		
-		//txtPhoneNumber = (TextView)findViewById(R.id.phone_number);
-		//txtDistance = (TextView)findViewById(R.id.distance);
-		//txtAddress = (TextView)findViewById(R.id.de_address);
-		mWebView = (WebView)findViewById(R.id.webview);
-		mWebView.setWebViewClient(new WebInfoClient());
-		//Set Listener for button		
-		/*btnWeb.setOnClickListener(mClickListener);
-		btnCall.setOnClickListener(mClickListener);
-		btnEmail.setOnClickListener(mClickListener);
-		btnMap.setOnClickListener(mClickListener);*/
+		ratBar = (RatingBar)findViewById(R.id.de_rate_bar);
+		add_fav = (ImageView)findViewById(R.id.de_add_fav);
 		btnFavorite.setOnClickListener(mClickListener);
 		btnMap.setOnClickListener(mClickListener);
 		mBundle = getIntent().getExtras();
@@ -99,57 +90,12 @@ public class DetailPlaceActivity extends Activity {
 		curLoc = mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);
 		GetDetail gd = new GetDetail();
 		gd.execute(place);
-		/*b = getIntent().getExtras();
-		fromFv = b.getBoolean("fromFv");
-		if (fromFv == false){
-		placeId = b.getInt("posittion");
-		curLat = b.getDouble("curlat");
-		curLon = b.getDouble("curlon");
-		place = SearchService.placeModel.get(placeId);
-		lng = place.getLng();
-		lat = place.getLat();
-	//Load Place Map
-		mBitmap = LoadImage.downloadImage(place.getStaticMapUrl());
-		if (mBitmap!=null)
-		imgMap.setImageBitmap(mBitmap);
-	//Load data to view
-		txtPlaceName.setText(place.getTitle());
-		txtAddress.setText(place.getAddressLines().get(0).toString());
-		String address = "";
-    	for (String s : place.getAddressLines()) {
-    		address += s + " ";
-    	}
-		//txtAddressFull.setText("Ä�ia chá»‰: " + address);
-		//if(place.getPhoneNumbers()!=null){
-		//	txtPhoneNumber.setText("Ä�iá»‡n thoáº¡i: "+ place.getPhoneNumbers().get(0).getNumber());
-		//}
 		
-		//txtDistance.setText("Khoáº£ng cĂ¡ch: " + place.getDistance() + " km");
 		}
-		else {
-			curLat = b.getDouble("curlat");
-			curLon = b.getDouble("curlon");
-			lng = Double.parseDouble(b.getString("lng"));
-			lat = Double.parseDouble(b.getString("lat"));
-		//Load Place Map
-			mBitmap = LoadImage.downloadImage(b.getString("map"));
-			if (mBitmap!=null)
-			imgMap.setImageBitmap(mBitmap);
-		//Load data to view
-			txtPlaceName.setText(b.getString("title"));
-			txtAddress.setText(b.getString("address"));
-			//txtAddressFull.setText("Ä�ia chá»‰: " + b.getString("addressFull"));
-			//if (b.getString("phone")!=null){
-			//txtPhoneNumber.setText("Ä�iá»‡n thoáº¡i: "+ b.getString("phone"));
-			//}
-			FavoriteModel fv = new FavoriteModel(b.getString("lat"), b.getString("lng"));
-			//txtDistance.setText("Khoáº£ng cĂ¡ch: " + fv.getDistance(curLat, curLon) + " km");
-			//txtDistance.setText("Distance: " + place.getDistance() + " km");
-*/		}
 	
 		//Create Task to make request and get places detail
 		private class GetDetail extends AsyncTask<Place,Void, PlaceDetailRs>{
-			private String keyword;//keyword to search 
+			
 			
 			
 			@Override
@@ -166,16 +112,41 @@ public class DetailPlaceActivity extends Activity {
 				// TODO Auto-generated method stub
 				if (result!=null && result.status.contentEquals(ConstantsAndKey.STATUS_OK)){	
 					plDetail = result.result;
-					/*txtPlaceName.setText(result.result.name);
+					txtPlaceName.setText(result.result.name);
 					txtAddress.setText(result.result.address);
 					ratBar.setRating(result.result.rating);
 					txtPhone.setText(result.result.phone);
-					txtWebsite.setText(result.result.website);*/
-					mWebView.getSettings().setJavaScriptEnabled(true);			
+					txtWebsite.setText(result.result.website);					
+					if (place.getIsFavorite()){
+						add_fav.setImageResource(R.drawable.ic_rsfavorite);
+					}
+					else {
+						add_fav.setOnClickListener(new OnClickListener() {
+							
+							@Override
+							public void onClick(View v) {
+								// TODO Auto-generated method stub
+								FavDataService dataService = new FavDataService(getApplicationContext());
+								dataService.open();
+								
+								if(dataService.isExisted(plDetail.id)){
+									Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
+									dataService.close();
+								}else{
+									dataService.createFav(plDetail.id, plDetail.name, plDetail.address, plDetail.phone, plDetail.rating, plDetail.geometry.location.lng, plDetail.geometry.location.lat, plDetail.url, plDetail.website);
+									dataService.close();
+									Toast.makeText(getApplicationContext(), getResources().getString(R.string.de_success), Toast.LENGTH_LONG).show();
+									add_fav.setImageResource(R.drawable.ic_rsfavorite);
+									add_fav.setClickable(false);
+								}
+							}
+						});
+					}
+					/*mWebView.getSettings().setJavaScriptEnabled(true);			
 					mWebView.getSettings().setDomStorageEnabled(true);	
 					
 					String reviewURL = result.result.url + "&view=feature&mcsrc=google_reviews&num=10&start=0";
-					mWebView.loadUrl(reviewURL);
+					mWebView.loadUrl(reviewURL);*/
 					
 							
 				}
@@ -300,8 +271,8 @@ public class DetailPlaceActivity extends Activity {
 			case R.id.mn_home:
 				Intent mIntent = new Intent(DetailPlaceActivity.this,CategoriesActivity.class);				
 				Bundle mBundle = new Bundle();
-                mBundle.putDouble(ConstantsAndKey.KEY_LAT,curLat);
-                mBundle.putDouble(ConstantsAndKey.KEY_LNG, curLng);
+                //mBundle.putDouble(ConstantsAndKey.KEY_LAT,curLat);
+                //mBundle.putDouble(ConstantsAndKey.KEY_LNG, curLng);
                 mIntent.putExtras(mBundle);
                 DetailPlaceActivity.this.startActivity(mIntent);
 				DetailPlaceActivity.this.finish();

@@ -31,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class SearchResultActivity extends ListActivity {
     private PlaceLocation curLoc = new PlaceLocation();
     private PlacesList lsPlace = null;
     private Context mContext;
+    private ProgressBar search_progress;
       
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,7 @@ public class SearchResultActivity extends ListActivity {
         mContext = getApplicationContext();
         setContentView(R.layout.ph_list_results);                
         txtrs = (TextView)findViewById(R.id.txt_result);
+        search_progress = (ProgressBar)findViewById(R.id.rs_progress);
         
         //Get value from ListCategoriesActivity
         Bundle b = getIntent().getExtras();
@@ -84,6 +87,14 @@ public class SearchResultActivity extends ListActivity {
 			return pl; //Return list Place				
 		}
 		
+		@Override
+		protected void onPreExecute() {
+			// TODO Auto-generated method stub
+			super.onPreExecute();
+			search_progress.setVisibility(View.VISIBLE);
+			txtrs.setText(getResources().getText(R.string.seact_load));
+			
+		}
 		//Display result to the screen after finish getting place list
 		@Override
 		protected void onPostExecute(PlacesList result) {
@@ -118,6 +129,9 @@ public class SearchResultActivity extends ListActivity {
 				}
 				else 
 					Toast.makeText(mContext, getResources().getText(R.string.seact_rq_error), Toast.LENGTH_SHORT).show();
+			
+			search_progress.setVisibility(View.GONE);
+			
 		}
 	}
 	

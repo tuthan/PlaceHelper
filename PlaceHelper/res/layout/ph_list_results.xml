@@ -5,13 +5,28 @@
   android:layout_height="fill_parent"
   android:orientation="vertical"
   android:background="@drawable/app_bg2">
-
-	<TextView
-	    android:id="@+id/txt_result"
+	<LinearLayout 
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:gravity="center"	    
-	    android:text="@string/seact_result" />
+	    android:orientation="horizontal"
+	    android:gravity="center">
+	  
+	    <ProgressBar
+        android:id="@+id/rs_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+		<TextView
+	    android:id="@+id/txt_result"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:gravity="center"	
+	    android:layout_marginLeft="5dp"    
+	    android:textStyle="bold"	   
+	    android:text="@string/seact_load" />
+	    
+	</LinearLayout>
+	
 		
 		 <ListView 
 		 	 android:id="@id/android:list"   

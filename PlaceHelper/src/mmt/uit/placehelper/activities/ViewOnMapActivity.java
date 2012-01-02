@@ -6,10 +6,14 @@ import java.util.*;
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceLocation;
 import mmt.uit.placehelper.models.PlaceModel;
+import mmt.uit.placehelper.models.PlacesList;
 import mmt.uit.placehelper.services.SearchService;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
+import mmt.uit.placehelper.utilities.CustomOverlay;
 import mmt.uit.placehelper.utilities.MyOverlay;
+import mmt.uit.placehelper.utilities.PointAddressUtil;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.LinearLayout;
@@ -30,23 +34,26 @@ public class ViewOnMapActivity extends MapActivity
 	MapView mapView;
 	List<Overlay> mapOverlays;
 	Drawable drawable;
-	MyOverlay itemizedOverlay;
-	List<PlaceModel > placemodels;
+	CustomOverlay itemizedOverlay;
+	PlacesList lsplaces;
 	MapController mapController;
 	Place place;
+	boolean showall;
 	
 	double curlat, curlon;	
 	private PlaceLocation curLoc;
 	private Handler handler;
+	private Bundle mBundle;
 	
 	@Override
 	protected void onCreate(Bundle b) {
 		// TODO Auto-generated method stub
 		super.onCreate(b);
 		setContentView(R.layout.ph_map_view);
-		Bundle mBundle = getIntent().getExtras();
-		curLoc = mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);
-		place = mBundle.getParcelable("place");
+		mBundle = getIntent().getExtras();
+		curLoc = mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);		
+		showall = mBundle.getBoolean(ConstantsAndKey.KEY_SHOW_ALL);
+		
 		mapView = (MapView) findViewById(R.id.mapView);
 	    mapView.setBuiltInZoomControls(true);
 	        
@@ -54,6 +61,7 @@ public class ViewOnMapActivity extends MapActivity
 	    
 	    mapController = mapView.getController(); 
 		mapController.setZoom(14);
+		
 	    
 		
 		/*showCurrentPosition();
@@ -64,8 +72,8 @@ public class ViewOnMapActivity extends MapActivity
 			showCurrentPlace(b.getDouble(ConstantsAndKey.KEY_LNG),b.getDouble(ConstantsAndKey.KEY_LAT));
 		}*/
 		
-		showCurrent(curLoc);
-		showALocation(place.geometry.location);
+		ShowMark shMark = new ShowMark();
+		shMark.execute();
 			
 	}	
 	
@@ -73,9 +81,13 @@ public class ViewOnMapActivity extends MapActivity
 	private void showCurrent(PlaceLocation curloc)
 	{
 		drawable = this.getResources().getDrawable(R.drawable.marker_current);
-        itemizedOverlay = new MyOverlay(drawable);        
+        itemizedOverlay = new CustomOverlay(drawable, mapView);        
 		GeoPoint point = new GeoPoint((int)( curloc.lat* 1e6),(int)(curloc.lng * 1e6));
-    	OverlayItem overlayitem = new OverlayItem(point, "", "your here");	    	
+		GeoPoint curPoint = new GeoPoint(
+		          (int) (curloc.lat * 1E6), 
+		          (int) (curloc.lng * 1E6));
+		String currentAdd = PointAddressUtil.ConvertPointToAddress(curPoint, getBaseContext());
+    	OverlayItem overlayitem = new OverlayItem(point, "You Here", currentAdd);	    	
     	mapController.setCenter(point);
     	itemizedOverlay.addOverlay(overlayitem);
     	mapOverlays.add(itemizedOverlay);
@@ -83,42 +95,29 @@ public class ViewOnMapActivity extends MapActivity
 	}
 	
 	// Show a place on map
-	private void showALocation(PlaceLocation ploc)
+	private void showALocation(Place pl)
 	{
-		if(place.getIsFavorite()){
+		if(pl.getIsFavorite()){
 			drawable = this.getResources().getDrawable(R.drawable.marker_fav);
 		}
 		else{
 		drawable = this.getResources().getDrawable(R.drawable.marker_normal);
 		}
-        itemizedOverlay = new MyOverlay(drawable);        
-		GeoPoint point = new GeoPoint((int)( ploc.lat* 1e6),(int)(ploc.lng * 1e6));
-    	OverlayItem overlayitem = new OverlayItem(point, "", "Place");	    	    	
+        itemizedOverlay = new CustomOverlay(drawable,mapView);        
+		GeoPoint point = new GeoPoint((int)( pl.geometry.location.lat* 1e6),(int)(pl.geometry.location.lng * 1e6));
+    	OverlayItem overlayitem = new OverlayItem(point, pl.name, pl.vicinity);	    	    	
     	itemizedOverlay.addOverlay(overlayitem);
     	mapOverlays.add(itemizedOverlay);
     	
 	}
 	
-	private void showAllPlace()
+	private void showAllPlace(PlacesList places)
 	{		  
        	 
-      	  placemodels = SearchService.placeModel;
-      	  int max = placemodels.size();
-      	  if (max >10) max=10;
-        for (int j=0;j<max;j++)
-        { 
-        	GeoPoint point = new GeoPoint((int)( placemodels.get(j).getLat()* 1e6),(int)(placemodels.get(j).getLng() * 1e6));
-            OverlayItem overlayitem = new OverlayItem(point, "", "");
-            
-            drawable = this.getResources().getDrawable(this.getResources().getIdentifier("mark"+j, "drawable", "mmt.uit.placehelper"));
-        	itemizedOverlay = new MyOverlay(drawable);
-        	itemizedOverlay.addOverlay(overlayitem);
-        	mapOverlays.add(itemizedOverlay);
-        }
-               
-    	
-        
-        
+      	  
+      	 for(Place pl:lsplaces.results){
+      		 showALocation(pl);
+      	 }
     	 
 	}
 	
@@ -126,5 +125,33 @@ public class ViewOnMapActivity extends MapActivity
     protected boolean isRouteDisplayed() {
         return false;
     }
+	
+	private class ShowMark extends AsyncTask<Void, Void, Void>{
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			showCurrent(curLoc);
+			if(showall){
+				lsplaces = mBundle.getParcelable(ConstantsAndKey.KEY_LST_PLACES);
+				showAllPlace(lsplaces);
+			}
+			else{	
+				place = mBundle.getParcelable("place");
+				showALocation(place);
+			}
+		}
+	}
 	
 }
