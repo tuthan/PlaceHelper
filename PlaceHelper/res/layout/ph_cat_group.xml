@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/group_bg"    
+    android:layout_marginTop="3dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"    
+    android:padding="5dp"
+    
+    >
+
+    
+
+        <ImageView
+            android:id="@+id/iv_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/ic_mainmenu_edu"/>
+
+        <TextView
+            android:id="@+id/tv_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giáo dục"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_group"
+            android:textAppearance="?android:attr/textAppearanceLarge" 
+            android:layout_marginLeft="10dp"/>
+		<ImageView 
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:id="@+id/gr_indicator"
+		    android:src="@drawable/indicator"		    
+		    android:layout_centerVertical="true"
+		    android:layout_alignParentRight="true"		    
+		    />
+   
+
+</RelativeLayout>
+</LinearLayout>

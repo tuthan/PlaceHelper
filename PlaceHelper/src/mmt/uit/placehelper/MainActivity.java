@@ -2,6 +2,7 @@ package mmt.uit.placehelper;
 
 
 import mmt.uit.placehelper.activities.CategoriesActivity;
+import mmt.uit.placehelper.activities.CategoriesListActivity;
 import mmt.uit.placehelper.activities.DetailPlaceActivity;
 import mmt.uit.placehelper.activities.ViewOnMapActivity;
 import mmt.uit.placehelper.activities.WebInfoActivity;
@@ -36,12 +37,11 @@ public class MainActivity extends Activity {
         new Handler().postDelayed(new Runnable(){
         	 
             @Override
-
             public void run() {
 
                     /* Create an Intent that will start the Menu-Activity. */
 
-                    Intent mainIntent = new Intent(MainActivity.this,CategoriesActivity.class);
+                    Intent mainIntent = new Intent(MainActivity.this,CategoriesListActivity.class);
 
                     MainActivity.this.startActivity(mainIntent);
                     overridePendingTransition(R.anim.zoom_in, R.anim.zoom_out);

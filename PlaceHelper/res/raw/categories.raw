@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Category>
+	<!-- Group 1 -->
+	<Group>		
+		<Id>100</Id>
+		<Name>string/mg_education</Name>
+		<Image>drawable/ic_mainmenu_edu</Image>		
+		<Child>
+			<Id>101</Id>
+			<Name>string/ch_highschool</Name>
+			<Image>drawable/ic_mainmenu_highschool</Image>
+		</Child>
+		<Child>
+			<Id>102</Id>
+			<Name>string/ch_university</Name>
+			<Image>drawable/ic_mainmenu_university</Image>
+		</Child>			
+	</Group>
+	<!-- Group 2 -->
+	<Group>
+		<Id>200</Id>
+		<Name>string/mg_bank</Name>
+		<Image>drawable/ic_mainmenu_bank</Image>
+		<Child>
+			<Id>201</Id>
+			<Name>string/ch_atm</Name>
+			<Image>drawable/ic_mainmenu_atm</Image>
+		</Child>
+		<Child>
+			<Id>202</Id>
+			<Name>string/ch_bank_office</Name>
+			<Image>drawable/ic_mainmenu_tradeoffice</Image>			
+		</Child>
+	</Group>
+	<!-- Group 3 -->
+	<Group>
+		<Id>300</Id>
+		<Name>string/mg_hotel</Name>
+		<Image>drawable/ic_mainmenu_hotel</Image>		
+	</Group>
+	<!-- Group 4 -->
+	<Group>
+		<Id>400</Id>
+		<Name>string/mg_food</Name>
+		<Image>drawable/ic_mainmenu_food</Image>
+		<Child>
+			<Id>401</Id>
+			<Name>string/ch_restaurant</Name>
+			<Image>drawable/ic_mainmenu_restaurant</Image>			
+		</Child>
+		<Child>
+			<Id>402</Id>
+			<Name>string/ch_coffee</Name>
+			<Image>drawable/ic_mainmenu_coffee</Image>
+		</Child>
+	</Group>
+	<!-- Group 5 -->
+	<Group>
+		<Id>500</Id>
+		<Name>string/mg_transport</Name>
+		<Image>drawable/ic_mainmenu_transport</Image>
+		<Child>
+			<Id>501</Id>
+			<Name>string/ch_airport</Name>
+			<Image>drawable/ic_mainmenu_airport</Image>
+		</Child>
+		<Child>
+			<Id>502</Id>
+			<Name>string/ch_train</Name>
+			<Image>drawable/ic_mainmenu_train</Image>			
+		</Child>
+		<Child>
+			<Id>503</Id>
+			<Name>string/ch_gas</Name>
+			<Image>drawable/ic_mainmenu_gas</Image>			
+		</Child>		
+		<Child>
+			<Id>504</Id>
+			<Name>string/ch_bus</Name>
+			<Image>drawable/ic_mainmenu_bus</Image>
+		</Child>		
+	</Group>
+	<!-- Group 6 -->
+	<Group>
+		<Id>600</Id>
+		<Name>string/mg_entertain</Name>
+		<Image>drawable/ic_mainmenu_entertain</Image>
+		<Child>
+			<Id>601</Id>
+			<Name>string/ch_cine</Name>
+			<Image>drawable/ic_mainmenu_cinema</Image>			
+		</Child>
+		<Child>
+			<Id>602</Id>
+			<Name>string/ch_park</Name>
+			<Image>drawable/ic_mainmenu_park</Image>			
+		</Child>
+		<Child>
+			<Id>603</Id>
+			<Name>string/ch_shopping</Name>
+			<Image>drawable/ic_mainmenu_shopping</Image>
+		</Child>		
+	</Group>
+	<!-- Group 7 -->
+	<Group>
+		<Id>700</Id>
+		<Name>string/mg_favorite</Name>
+		<Image>drawable/ic_mainmenu_favorite</Image>
+	</Group>
+</Category>
