@@ -157,7 +157,7 @@ public class ListFavoriteActivity extends ListActivity {
 				for (int i=0; i< listCount; i++){
 					CheckBox mCBox = (CheckBox)(View)listFavorites.getChildAt(i).findViewById(R.id.fav_checkbox);
 					if (mCBox.isChecked()){
-						dataService.deleteFav(favList.get(i).id);
+						dataService.deleteFav(favList.get(i).getId());
 						Log.v("ph_info", "Deleted " + i);					
 						
 					}
@@ -256,7 +256,7 @@ public class ListFavoriteActivity extends ListActivity {
 				RatingBar rateBar = (RatingBar)view.findViewById(R.id.fav_rate_bar);
 				
 				
-				String s = array.get(position).name;
+				String s = array.get(position).getName();
 				if (s.contains("Bank") || s.contains("bank") || s.contains("Union") || s.contains("Credit")) {
 					imgItem.setImageResource(R.drawable.banks);
 				}
@@ -274,9 +274,9 @@ public class ListFavoriteActivity extends ListActivity {
 				}
 				
 		
-				name.setText(place.name);
-				add.setText(place.address);
-				rateBar.setRating(place.rating);
+				name.setText(place.getName());
+				add.setText(place.getAddress());
+				rateBar.setRating(place.getRating());
 				
 			}
 			

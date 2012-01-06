@@ -3,7 +3,6 @@ package mmt.uit.placehelper.utilities;
 import java.util.Comparator;
 
 import mmt.uit.placehelper.models.Place;
-import mmt.uit.placehelper.models.PlaceModel;
 
 //Class to help sort place by distance
 public class SortPlace implements Comparator<Place> {

@@ -1,45 +1,25 @@
 package mmt.uit.placehelper.activities;
 
-import java.util.Collections;
-import java.util.regex.Pattern;
-
-import mmt.uit.placehelper.MainActivity;
-import mmt.uit.placehelper.models.FavoriteModel;
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.models.PlaceDetailRs;
 import mmt.uit.placehelper.models.PlaceLocation;
-import mmt.uit.placehelper.models.PlaceModel;
-import mmt.uit.placehelper.models.PlacesList;
 import mmt.uit.placehelper.services.FavDataService;
 import mmt.uit.placehelper.services.SearchPlace;
-import mmt.uit.placehelper.services.SearchService;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
-import mmt.uit.placehelper.utilities.LoadImage;
-import mmt.uit.placehelper.utilities.MyLocation;
-import mmt.uit.placehelper.utilities.SortPlace;
-
 import mmt.uit.placehelper.R;
 import mmt.uit.placehelper.R.id;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
-import android.media.FaceDetector;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.util.Linkify;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.DownloadListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageButton;
@@ -103,21 +83,21 @@ public class DetailPlaceActivity extends Activity {
 				// TODO Auto-generated method stub
 								
 				PlaceDetailRs pd=null; //initialize place detail result				
-				pd = SearchPlace.getDetail(params[0].reference);
+				pd = SearchPlace.getDetail(params[0].getReference());
 				return pd;				
 			}
 			
 			@Override
 			protected void onPostExecute(PlaceDetailRs result) {
 				// TODO Auto-generated method stub
-				if (result!=null && result.status.contentEquals(ConstantsAndKey.STATUS_OK)){	
-					plDetail = result.result;
-					txtPlaceName.setText(result.result.name);
-					txtAddress.setText(result.result.address);
-					ratBar.setRating(result.result.rating);
-					txtPhone.setText(result.result.phone);
-					txtWebsite.setText(result.result.website);					
-					if (place.getIsFavorite()){
+				if (result!=null && result.getStatus().contentEquals(ConstantsAndKey.STATUS_OK)){	
+					plDetail = result.getResult();
+					txtPlaceName.setText(result.getResult().getName());
+					txtAddress.setText(result.getResult().getAddress());
+					ratBar.setRating(result.getResult().getRating());
+					txtPhone.setText(result.getResult().getPhone());
+					txtWebsite.setText(result.getResult().getWebsite());					
+					if (place.isFavorite()){
 						add_fav.setImageResource(R.drawable.ic_rsfavorite);
 					}
 					else {
@@ -129,11 +109,11 @@ public class DetailPlaceActivity extends Activity {
 								FavDataService dataService = new FavDataService(getApplicationContext());
 								dataService.open();
 								
-								if(dataService.isExisted(plDetail.id)){
+								if(dataService.isExisted(plDetail.getId())){
 									Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
 									dataService.close();
 								}else{
-									dataService.createFav(plDetail.id, plDetail.name, plDetail.address, plDetail.phone, plDetail.rating, plDetail.geometry.location.lng, plDetail.geometry.location.lat, plDetail.url, plDetail.website);
+									dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().location.getLng(), plDetail.getGeometry().location.getLat(), plDetail.getUrl(), plDetail.getWebsite());
 									dataService.close();
 									Toast.makeText(getApplicationContext(), getResources().getString(R.string.de_success), Toast.LENGTH_LONG).show();
 									add_fav.setImageResource(R.drawable.ic_rsfavorite);
@@ -240,11 +220,11 @@ public class DetailPlaceActivity extends Activity {
 					FavDataService dataService = new FavDataService(getApplicationContext());
 					dataService.open();
 					
-					if(dataService.isExisted(plDetail.id)){
+					if(dataService.isExisted(plDetail.getId())){
 						Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
 						dataService.close();
 					}else{
-						dataService.createFav(plDetail.id, plDetail.name, plDetail.address, plDetail.phone, plDetail.rating, plDetail.geometry.location.lng, plDetail.geometry.location.lat, plDetail.url, plDetail.website);
+						dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().location.getLng(), plDetail.getGeometry().location.getLat(), plDetail.getUrl(), plDetail.getWebsite());
 						dataService.close();
 						Toast.makeText(getApplicationContext(), "Successed", Toast.LENGTH_LONG).show();
 					}

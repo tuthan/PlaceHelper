@@ -5,12 +5,9 @@ import java.util.*;
 
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceLocation;
-import mmt.uit.placehelper.models.PlaceModel;
 import mmt.uit.placehelper.models.PlacesList;
-import mmt.uit.placehelper.services.SearchService;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.utilities.CustomOverlay;
-import mmt.uit.placehelper.utilities.MyOverlay;
 import mmt.uit.placehelper.utilities.PointAddressUtil;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -82,10 +79,10 @@ public class ViewOnMapActivity extends MapActivity
 	{
 		drawable = this.getResources().getDrawable(R.drawable.marker_current);
         itemizedOverlay = new CustomOverlay(drawable, mapView);        
-		GeoPoint point = new GeoPoint((int)( curloc.lat* 1e6),(int)(curloc.lng * 1e6));
+		GeoPoint point = new GeoPoint((int)( curloc.getLat()* 1e6),(int)(curloc.getLng() * 1e6));
 		GeoPoint curPoint = new GeoPoint(
-		          (int) (curloc.lat * 1E6), 
-		          (int) (curloc.lng * 1E6));
+		          (int) (curloc.getLat() * 1E6), 
+		          (int) (curloc.getLng() * 1E6));
 		String currentAdd = PointAddressUtil.ConvertPointToAddress(curPoint, getBaseContext());
     	OverlayItem overlayitem = new OverlayItem(point, "You Here", currentAdd);	    	
     	mapController.setCenter(point);
@@ -97,15 +94,15 @@ public class ViewOnMapActivity extends MapActivity
 	// Show a place on map
 	private void showALocation(Place pl)
 	{
-		if(pl.getIsFavorite()){
+		if(pl.isFavorite()){
 			drawable = this.getResources().getDrawable(R.drawable.marker_fav);
 		}
 		else{
 		drawable = this.getResources().getDrawable(R.drawable.marker_normal);
 		}
         itemizedOverlay = new CustomOverlay(drawable,mapView);        
-		GeoPoint point = new GeoPoint((int)( pl.geometry.location.lat* 1e6),(int)(pl.geometry.location.lng * 1e6));
-    	OverlayItem overlayitem = new OverlayItem(point, pl.name, pl.vicinity);	    	    	
+		GeoPoint point = new GeoPoint((int)( pl.getGeometry().location.getLat()* 1e6),(int)(pl.getGeometry().location.getLng() * 1e6));
+    	OverlayItem overlayitem = new OverlayItem(point, pl.getName(), pl.getVicinity());	    	    	
     	itemizedOverlay.addOverlay(overlayitem);
     	mapOverlays.add(itemizedOverlay);
     	
@@ -115,7 +112,7 @@ public class ViewOnMapActivity extends MapActivity
 	{		  
        	 
       	  
-      	 for(Place pl:lsplaces.results){
+      	 for(Place pl:lsplaces.getResults()){
       		 showALocation(pl);
       	 }
     	 

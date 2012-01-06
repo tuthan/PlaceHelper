@@ -32,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class SearchResultActivity extends ListActivity {
     private PlacesList lsPlace = null;
     private Context mContext;
     private ProgressBar search_progress;
+    private int img;
       
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,9 +62,9 @@ public class SearchResultActivity extends ListActivity {
         //Get value from ListCategoriesActivity
         Bundle b = getIntent().getExtras();
         keyWord = b.getString("search");               
-        curLoc.lat= b.getDouble("curlat");
-        curLoc.lng = b.getDouble("curlng");        
-        
+        curLoc.setLat(b.getDouble("curlat"));
+        curLoc.setLng(b.getDouble("curlng"));        
+        img = b.getInt("img");
         //Task to get place result from google place service
         FindPlace fp = new FindPlace(keyWord);
         fp.execute(curLoc);      
@@ -83,7 +85,7 @@ public class SearchResultActivity extends ListActivity {
 		protected PlacesList doInBackground(PlaceLocation... params) {		
 					
 			PlacesList pl=null; //initialize list result
-			pl = SearchPlace.getPlaceList(params[0].lat, params[0].lng,keyword);
+			pl = SearchPlace.getPlaceList(params[0].getLat(), params[0].getLng(),keyword);
 			return pl; //Return list Place				
 		}
 		
@@ -103,26 +105,26 @@ public class SearchResultActivity extends ListActivity {
 				txtrs.setText(getResources().getText(R.string.seact_connect_error));
 				return;
 			}
-			if (result!=null && result.status.contentEquals(ConstantsAndKey.STATUS_OK)){			
+			if (result!=null && result.getStatus().contentEquals(ConstantsAndKey.STATUS_OK)){			
 				FavDataService dataSrv = new FavDataService(mContext);
 				dataSrv.open();
 				txtrs.setText(getResources().getText(R.string.seact_result)+ keyWord);
 				lsPlace = result;				
-				Collections.sort(lsPlace.results, new SortPlace());
-				for (int i=0;i<lsPlace.results.size();i++){
-					if (dataSrv.isExisted(lsPlace.results.get(i).id)){
-						lsPlace.results.get(i).setIsFavorite(true);
+				Collections.sort(lsPlace.getResults(), new SortPlace());
+				for (int i=0;i<lsPlace.getResults().size();i++){
+					if (dataSrv.isExisted(lsPlace.getResults().get(i).getId())){
+						lsPlace.getResults().get(i).setFavorite(true);
 					}
 					else {
-						lsPlace.results.get(i).setIsFavorite(false);
+						lsPlace.getResults().get(i).setFavorite(false);
 					}
 				}
-				rsAdapter = new RslistAdapter(mContext, R.layout.ph_result_row,  lsPlace.results);
+				rsAdapter = new RslistAdapter(mContext, R.layout.ph_result_row,  lsPlace.getResults(), img);
 				setListAdapter(rsAdapter);
 				dataSrv.close();
 			}
 			else
-				if (result.status.contentEquals(ConstantsAndKey.NO_RESULT))
+				if (result.getStatus().contentEquals(ConstantsAndKey.NO_RESULT))
 					//Toast.makeText(getApplicationContext(), getResources().getText(R.string.seact_nors), Toast.LENGTH_SHORT).show();
 				{									
 					txtrs.setText(getResources().getText(R.string.seact_nors) + keyWord);
@@ -141,7 +143,7 @@ public class SearchResultActivity extends ListActivity {
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub
 		Intent mIntent = new Intent(this, DetailPlaceActivity.class);
-		Place pl = lsPlace.results.get(position);
+		Place pl = lsPlace.getResults().get(position);
 		Bundle mBundle = new Bundle();
 		mBundle.putParcelable("place", pl);
 		mBundle.putParcelable(ConstantsAndKey.KEY_CURLOC, curLoc);
@@ -179,17 +181,17 @@ public class SearchResultActivity extends ListActivity {
 		
 		int resourceId;
 		List<Place> array;
-		
+		int imgType;
 		
 		
 		public RslistAdapter(Context context, int textViewResourceId,
-				List<Place> objects) {
+				List<Place> objects, int img) {
 			super(context, textViewResourceId, objects);
 			// TODO Auto-generated constructor stub
 			
 			this.resourceId = textViewResourceId;
 			this.array = objects;
-			
+			this.imgType = img;
 		}
 		
 			
@@ -207,18 +209,22 @@ public class SearchResultActivity extends ListActivity {
 			if(place != null) {
 				
 				TextView name = (TextView) view.findViewById(R.id.rs_name);					
-				name.setText(place.name);
+				name.setText(place.getName());
 				
 				TextView address = (TextView)view.findViewById(R.id.rs_address);
-				address.setText(place.vicinity);
+				address.setText(place.getVicinity());
 				
 				TextView distance = (TextView)view.findViewById(R.id.rs_distance);
 				distance.setText(String.valueOf(place.getDistance()));
 				ImageView img = (ImageView)view.findViewById(R.id.rs_infavorite);
-				if(place.getIsFavorite()){				
+				if(place.isFavorite()){				
 				img.setImageResource(R.drawable.ic_rsfavorite);
 				}
 				else img.setImageResource(R.drawable.ic_no_rsfavorite);
+				RatingBar rate = (RatingBar)view.findViewById(R.id.rs_rate_bar);
+				rate.setRating(place.getRating());
+				ImageView type = (ImageView)view.findViewById(R.id.rs_img);
+				type.setImageResource(imgType);
 			}
 			
 			return view;

@@ -11,21 +11,21 @@ import com.google.api.client.util.Key;
 public class PlacesList implements Parcelable{
 
 	@Key
-	public String status;
+	private String status;
 
 	
 	
 	@Key
-	public List<Place> results;
+	private List<Place> results;
 	
 	public PlacesList(){
 		
 	}
 	
 	public PlacesList(Parcel in){
-		status = in.readString();
-		results = new ArrayList<Place>(); //Initialize list
-		in.readTypedList(results, Place.CREATOR);
+		setStatus(in.readString());
+		setResults(new ArrayList<Place>()); //Initialize list
+		in.readTypedList(getResults(), Place.CREATOR);
 	}
 	
 	@Override
@@ -36,12 +36,40 @@ public class PlacesList implements Parcelable{
 	
 	@Override
 	public void writeToParcel(Parcel dest, int flag) {
-		dest.writeString(status);
-		dest.writeTypedList(results);
+		dest.writeString(getStatus());
+		dest.writeTypedList(getResults());
 		
 	}
 	
-	 public static final Parcelable.Creator<PlacesList> CREATOR = new Parcelable.Creator<PlacesList>() {
+	 /**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return the results
+	 */
+	public List<Place> getResults() {
+		return results;
+	}
+
+	/**
+	 * @param results the results to set
+	 */
+	public void setResults(List<Place> results) {
+		this.results = results;
+	}
+
+	public static final Parcelable.Creator<PlacesList> CREATOR = new Parcelable.Creator<PlacesList>() {
 	    	public PlacesList createFromParcel(Parcel source) {
 	    		return new PlacesList(source);
 	    	}

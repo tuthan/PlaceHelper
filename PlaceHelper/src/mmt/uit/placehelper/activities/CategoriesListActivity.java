@@ -77,7 +77,7 @@ public class CategoriesListActivity extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView expLv, View v, int groupPos, int childPos, long id)
             {
-                startSearch(getResources().getString(lsGroup.get(groupPos).getChild().get(childPos).getName()));
+                startSearch(getResources().getString(lsGroup.get(groupPos).getChild().get(childPos).getName()),lsGroup.get(groupPos).getChild().get(childPos).getImgID());
                 return true;
             }
         });
@@ -94,7 +94,7 @@ public class CategoriesListActivity extends Activity {
         			return true;
             	}
             	if(lsGroup.get(groupPos).getChild().size()==0){
-                	startSearch(getResources().getString(lsGroup.get(groupPos).getName()));
+                	startSearch(getResources().getString(lsGroup.get(groupPos).getName()),lsGroup.get(groupPos).getImgID());
                 	return true;
                 }
                 
@@ -106,7 +106,7 @@ public class CategoriesListActivity extends Activity {
         
     }
     
-    private void startSearch(String place){
+    private void startSearch(String place, int img){
 		Log.v("ph_info", "Start Search");
 		if (CheckConnection.checkInternet(mContext)){
 		if (currentLoc!=null){
@@ -114,7 +114,8 @@ public class CategoriesListActivity extends Activity {
 		Bundle b = new Bundle();					
 		b.putString("search", place);		
 			b.putDouble("curlat", currentLoc.getLatitude());			
-			b.putDouble("curlng", currentLoc.getLongitude());		
+			b.putDouble("curlng", currentLoc.getLongitude());
+			b.putInt("img", img);
 			GeoPoint point = new GeoPoint(
 			          (int) (currentLoc.getLatitude() * 1E6), 
 			          (int) (currentLoc.getLongitude() * 1E6));

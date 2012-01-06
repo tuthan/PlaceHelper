@@ -24,8 +24,8 @@ public class MyGeometry implements Parcelable{
 	}
 	
 	public MyGeometry (double lat, double lng){
-		this.location.lat = lat;
-		this.location.lng = lng;
+		this.location.setLat(lat);
+		this.location.setLng(lng);
 	}
 	
 	@Override

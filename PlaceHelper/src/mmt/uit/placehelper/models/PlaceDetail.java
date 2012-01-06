@@ -1,34 +1,21 @@
 package mmt.uit.placehelper.models;
 
-import mmt.uit.placehelper.utilities.MyLocation;
-
 import com.google.api.client.util.Key;
 
-public class PlaceDetail {
+public class PlaceDetail extends BasePlace {
 
 
 	@Key("formatted_address")
-	public String address;
-	
-	@Key
-	public String id;
+	private String address;
 	
 	@Key("international_phone_number")
-	public String phone;
+	private String phone;
 	
 	@Key
-	public String name;
+	private String url;
 	
 	@Key
-	public float rating;
-	
-	@Key
-	public String url;
-	
-	@Key
-	public MyGeometry geometry;
-	@Key 
-	public String website;
+	private String website;
 	
 	public PlaceDetail(){
 		
@@ -39,17 +26,69 @@ public class PlaceDetail {
 			 this.id = id;
 			 this.name = name;
 			 this.address = address;
-			 this.rating = rating;
-			 this.url = url;			 
 			 this.phone = phone;
-			 this.geometry = new MyGeometry(pl);
+			 this.rating = rating;
+			 this.geometry = new MyGeometry();
+			 this.geometry.location = pl;
+			 this.url =url;
 			 this.website = weburl;
 			 }
 	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return address + id + name + phone + rating + url + website;
+		return getAddress() +" - "+ getName() +" - "+ getPhone() +" - "+ getRating() +" - "+ getUrl() +" - "+ getWebsite();
+	}
+	/**
+	 * @return the address
+	 */
+	public String getAddress() {
+		return address;
+	}
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	/**
+	 * @return the phone
+	 */
+	public String getPhone() {
+		return phone;
+	}
+	/**
+	 * @param phone the phone to set
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
+	/**
+	 * @return the website
+	 */
+	public String getWebsite() {
+		return website;
+	}
+	/**
+	 * @param website the website to set
+	 */
+	public void setWebsite(String website) {
+		this.website = website;
 	}
 
 	

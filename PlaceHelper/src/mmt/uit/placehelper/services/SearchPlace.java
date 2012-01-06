@@ -29,7 +29,8 @@ public class SearchPlace {
 		private static final String API_KEY = "AIzaSyCRmej3hzfD4HeYcjO4yjZRSrYxhq_OuuQ";
 		
 		//Log Tag
-		private static final String LOG_KEY = "pl_request";
+		private static final String LOG_GETLIST = "pl_place_list";
+		private static final String LOG_GETDETAIL = "pl_place_detail";
 		
 		// URL for different request
 		private static final String PLACES_SEARCH_URL =  "https://maps.googleapis.com/maps/api/place/search/json?";
@@ -62,22 +63,22 @@ public class SearchPlace {
 				mUrl.put("location", lat + "," + lng);
 				mUrl.put("sensor", "false");
 				mUrl.put("key", API_KEY);
-				Log.v(LOG_KEY, "url= " + mUrl);
+				Log.v(LOG_GETLIST, "url= " + mUrl);
 				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
 				HttpResponse response = request.execute();
 				int sttCode = response.getStatusCode();
 				if(sttCode==200){								
 				rs_list = response.parseAs(PlacesList.class);
 				
-				for (Place pl:rs_list.results)
+				for (Place pl:rs_list.getResults())
 				{
 					pl.setDistance(lat, lng);
-					Log.v(LOG_KEY, pl.name + ":" + pl.id);
+					Log.v(LOG_GETLIST, pl.toString());
 				}
-				Log.v(LOG_KEY, rs_list.status);
+				Log.v(LOG_GETLIST, rs_list.getStatus());
 				}
 				
-				Log.v(LOG_KEY, String.valueOf(sttCode));
+				Log.v(LOG_GETLIST, String.valueOf(sttCode));
 				
 				
 				
@@ -106,10 +107,10 @@ public class SearchPlace {
 				mUrl.put("reference", reference);				
 				mUrl.put("sensor", "false");
 				mUrl.put("key", API_KEY);
-				Log.v(LOG_KEY, "url= " + mUrl);
+				Log.v(LOG_GETDETAIL, "url= " + mUrl);
 				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
 				pld = request.execute().parseAs(PlaceDetailRs.class);
-				Log.v(LOG_KEY, pld.status + pld.result.toString());
+				Log.v(LOG_GETDETAIL, "Result: " + pld.getStatus() + pld.getResult().toString());
 			}
 			
 			catch (IOException e) {

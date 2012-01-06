@@ -12,15 +12,15 @@ public class PlaceLocation  implements Parcelable{
 		
 	
 	@Key
-	public double lat;
+	private double lat;
 	
 	@Key
-	public double lng;
+	private double lng;
 	
 	//Constructor 
 	private PlaceLocation(Parcel in){
-		this.lat = in.readDouble();
-		this.lng = in.readDouble();
+		this.setLat(in.readDouble());
+		this.setLng(in.readDouble());
 				
 	}
 	
@@ -29,8 +29,8 @@ public class PlaceLocation  implements Parcelable{
 	}
 	
 	public PlaceLocation(double lat, double lng){
-		this.lat = lat;
-		this.lng = lng;
+		this.setLat(lat);
+		this.setLng(lng);
 	}
 	
 	@Override
@@ -42,10 +42,38 @@ public class PlaceLocation  implements Parcelable{
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		// TODO Auto-generated method stub
-		dest.writeDouble(lat);
-		dest.writeDouble(lng);
+		dest.writeDouble(getLat());
+		dest.writeDouble(getLng());
 	}
 	
+	/**
+	 * @return the lat
+	 */
+	public double getLat() {
+		return lat;
+	}
+
+	/**
+	 * @param lat the lat to set
+	 */
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	/**
+	 * @return the lng
+	 */
+	public double getLng() {
+		return lng;
+	}
+
+	/**
+	 * @param lng the lng to set
+	 */
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
 	//CREATOR
 	public static final Parcelable.Creator<PlaceLocation> CREATOR = new Creator<PlaceLocation>() {
 		
