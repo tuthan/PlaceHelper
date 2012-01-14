@@ -26,7 +26,7 @@ public class SearchPlace {
 		private static final HttpTransport transport = new ApacheHttpTransport();
 		
 		// Fill in the API key you want to use.
-		private static final String API_KEY = "AIzaSyCRmej3hzfD4HeYcjO4yjZRSrYxhq_OuuQ";
+		private static final String API_KEY = "AIzaSyBwWstg6SSW3wE8JUEw6ELP-J40tZr8vjw";
 		
 		//Log Tag
 		private static final String LOG_GETLIST = "pl_place_list";

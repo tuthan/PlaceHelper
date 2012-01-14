@@ -100,10 +100,30 @@
 			<Name>string/ch_shopping</Name>
 			<Image>drawable/ic_mainmenu_shopping</Image>
 		</Child>		
-	</Group>
-	<!-- Group 7 -->
+		</Group>
+		
+		<!-- Group 7 -->
 	<Group>
 		<Id>700</Id>
+		<Name>string/mg_custom</Name>
+		<Image>drawable/ic_group_custom</Image>
+		<Child>
+			<Id>701</Id>
+			<Name>string/ch_add</Name>
+			<Image>drawable/ic_child_add</Image>			
+		</Child>			
+		</Group>
+		
+	<!-- Group 8 -->
+	<Group>
+		<Id>800</Id>
+		<Name>string/mg_setting</Name>
+		<Image>drawable/ic_settings</Image>
+	</Group>
+	
+	<!-- Group 9 -->
+	<Group>
+		<Id>900</Id>
 		<Name>string/mg_favorite</Name>
 		<Image>drawable/ic_mainmenu_favorite</Image>
 	</Group>

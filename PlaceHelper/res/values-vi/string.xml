@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="cur_loca">Current Location</string>    
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name">PlaceHelper</string>
+    <string name="version">0.5</string>    
+    <string name="cur_loca">Vị trí hiện tại</string>    
     <string name="about_title">Thông tin</string>
-    <string name="about_msg ">Sản Phẩm </string>
-    
+    <string name="about_msg ">Đại Học Công Nghệ Thông Tin \n Khoa Mạng Máy Tính Và Truyền Thông \n Lớp MMT02 \n Võ Trung Hưng \n Đỗ Huy Hưng</string>
+    <string name="cancel">Bỏ qua</string>
+    <string name="ok">OK</string>
+    <string name="alert">Cảnh báo</string>
+    <string name="no">Không</string>
+    <string name="yes">Có</string>
 </resources>

@@ -2,6 +2,7 @@ package mmt.uit.placehelper.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import com.google.android.maps.GeoPoint;
 
@@ -20,6 +21,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -27,7 +29,11 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
@@ -45,11 +51,22 @@ public class CategoriesListActivity extends Activity {
 	private Location currentLoc=null;
 	private String mProviderName;	
 	private SharedPreferences mSharePref;	
+	private static final int FAVORITE_GROUP = 900;
+	private static final int SETTING_GROUP = 800;
+	private static final int CHILD_ADD = 701;
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
     	super.onCreate(savedInstanceState);
+    	Configuration mConfig = new Configuration(getResources().getConfiguration());
+    	SharedPreferences mSharePref = PreferenceManager.getDefaultSharedPreferences(mContext);
+    	if(mSharePref!=null){
+    	String lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);
+    	mConfig.locale = new Locale(lang);
+    	getResources().updateConfiguration(mConfig, getResources().getDisplayMetrics());
+    	}
+    	
         setContentView(R.layout.ph_catlist);
         
         // Retrive the ExpandableListView from the layout
@@ -63,8 +80,8 @@ public class CategoriesListActivity extends Activity {
         	public void onGroupExpand(int groupPosition) {
         		int len = adapter.getGroupCount();
         	    for (int i = 0; i < len; i++) {
-        	    	if (i != groupPosition || i == 2 || i == 6) {
-        	    		listView.collapseGroup(i);
+        	    	if (i!=groupPosition || lsGroup.get(i).getChild().size()==0) {
+        	    		listView.collapseGroup(i);        	    		
         	        }
         	    }
         	    
@@ -77,8 +94,10 @@ public class CategoriesListActivity extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView expLv, View v, int groupPos, int childPos, long id)
             {
-                startSearch(getResources().getString(lsGroup.get(groupPos).getChild().get(childPos).getName()),lsGroup.get(groupPos).getChild().get(childPos).getImgID());
-                return true;
+                if(lsGroup.get(groupPos).getChild().get(childPos).getId()!=CHILD_ADD){
+            	startSearch(getResources().getString(lsGroup.get(groupPos).getChild().get(childPos).getName()),lsGroup.get(groupPos).getChild().get(childPos).getImgID());            	
+                return true;}
+                return false;
             }
         });
         
@@ -88,10 +107,16 @@ public class CategoriesListActivity extends Activity {
             @Override
             public boolean onGroupClick(ExpandableListView expLv, View v, int groupPos, long id)
             {
-            	if(lsGroup.get(groupPos).getId()==700){
+            	            	
+            	if(lsGroup.get(groupPos).getId()==FAVORITE_GROUP){
             		Intent intent = new Intent(getApplicationContext(), ListFavoriteActivity.class);        			
         			startActivity(intent);
         			return true;
+            	}
+            	if(lsGroup.get(groupPos).getId()==SETTING_GROUP){
+            		Intent intSetting = new Intent(getApplicationContext(),SettingsActivity.class);
+        			startActivity(intSetting);
+            		return true;
             	}
             	if(lsGroup.get(groupPos).getChild().size()==0){
                 	startSearch(getResources().getString(lsGroup.get(groupPos).getName()),lsGroup.get(groupPos).getImgID());
@@ -179,6 +204,45 @@ public class CategoriesListActivity extends Activity {
 		}
 	}
     
+    //Create menu
+    
+    @Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.mn_mainscreen, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId())
+		{
+		case R.id.mn_lstfavorite:
+			Intent intent = new Intent(getApplicationContext(), ListFavoriteActivity.class);
+			Bundle b = new Bundle();
+			if (currentLoc!=null){
+				b.putDouble("curlat", currentLoc.getLatitude());			
+				b.putDouble("curlon", currentLoc.getLongitude());
+			}
+			intent.putExtras(b);
+			startActivity(intent);
+			return true;
+		case R.id.mn_changle_location:
+			Intent intent2 = new Intent(getApplicationContext(), ChangeLocationActivity.class);
+			startActivity(intent2);
+			return true;
+		case R.id.mn_about:			
+			showDialog(ConstantsAndKey.ABOUT);
+			return true;
+		case R.id.setting:
+			Intent intSetting = new Intent(getApplicationContext(),SettingsActivity.class);
+			startActivity(intSetting);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
     
     private void getCurrentLocation(){
 		//mSharePref = getSharedPreferences(Constants.PREF_NAME,0);

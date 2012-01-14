@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+	<PreferenceCategory android:title="@string/display_cat">
+        
 	<ListPreference
 		android:title="@string/lang"
+		android:summary="@string/lang_summary"		
+		android:key="@string/prefkey_lang"
+		android:entries="@array/arr_lang"
+		android:entryValues="@array/arr_lang_value"
+		android:defaultValue="1"
 		
 		/>
     
-
+	<ListPreference
+		android:title="@string/num_rs"
+		android:summary="@string/num_rs_sum"		
+		android:key="@string/prefkey_rs"
+		android:entries="@array/arr_num_rs"
+		android:entryValues="@array/arr_num_rs"
+		android:defaultValue="1"
+		
+		/>
+	
+</PreferenceCategory>
+<PreferenceCategory android:title="@string/sys_cat">
+    <CheckBoxPreference
+        android:title="@string/img_from_gg"
+        android:key="@string/prefkey_load_img"
+        android:summary="@string/load_img_sum"
+        android:defaultValue="false" 
+        />
+    <EditTextPreference  	
+        android:dialogTitle="@string/radius"
+        android:dialogMessage="@string/rad_sum"        
+        android:key="@string/prefkey_radius"
+        android:title="@string/radius"
+        android:summary="@string/rad_sum"
+        android:defaultValue="5"/>   
+    </PreferenceCategory>
 </PreferenceScreen>

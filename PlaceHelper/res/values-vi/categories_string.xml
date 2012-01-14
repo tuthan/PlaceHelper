@@ -10,4 +10,24 @@
     <string name="btn_attractions">Cinema</string>
     <string name="btn_airports">Airports</string>
     <string name="cat_select">Please Chose A Category</string>    
+    <string name="mg_education">Giáo Dục</string>
+    <string name="mg_bank">Ngân Hàng</string>
+    <string name="mg_hotel">Khách Sạn</string>
+    <string name="mg_food">Ẩm Thực</string>
+    <string name="mg_transport">Đi Lại</string>
+    <string name="mg_entertain">Giải Trí</string>
+    <string name="mg_favorite">Yêu Thích</string>
+    <string name="ch_highschool">Trung Học</string>
+    <string name="ch_university">Đại Học</string>
+    <string name="ch_atm">ATM</string>
+    <string name="ch_bank_office">Trụ Sở Ngân Hàng</string>
+    <string name="ch_restaurant">Nhà Hàng</string>
+    <string name="ch_coffee">Cà Phê</string>
+    <string name="ch_airport">Sân Bay</string>
+    <string name="ch_bus">Trạm Xe Buýt</string>
+    <string name="ch_gas">Cây Xăng</string>
+    <string name="ch_train">Ga Xe Lửa</string>
+    <string name="ch_cine">Rạp Phim</string>
+    <string name="ch_park">Công Viên</string>
+    <string name="ch_shopping">Mua Sắm</string>    
 </resources>

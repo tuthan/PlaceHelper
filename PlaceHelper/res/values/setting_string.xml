@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="lang">Languages</string>
-    <string-array name="arr_lang">
-        <item >Vietnamese</item>
+    <string-array name="arr_lang">        
         <item >English</item>
+        <item >Vietnamese</item>
+    </string-array>
+    <string name="lang_summary">Change display language </string>
+    <string name="setting">Settings</string>
+    <string name="display_cat">Display Options</string>
+    <string name="display_sum">Change display settings</string>
+    <string-array name="arr_num_rs">
+        <item >5</item>
+        <item >10</item>
+        <item >15</item>
+        <item >20</item>
+    </string-array>
+    <string name="num_rs">Results</string>
+    <string name="num_rs_sum">Change number of search results</string>
+    <string name="sys_cat">System</string>
+    <string name="prefkey_lang">List_Lang</string>
+    <string name="prefkey_rs">Number_Results</string>
+    <string name="radius">Search Radius</string>
+    <string name="rad_sum">Radius of search (km)</string>
+    <string name="prefkey_radius">Search_Radius</string>
+    <string name="prefkey_load_img">Img_From_GG</string>
+    <string name="img_from_gg">Image from Google</string>
+    <string name="load_img_sum">Load place type image from internet (It may slow)</string>
+    <string-array name="arr_lang_value">
+        <item >en</item>
+        <item >vi</item>
     </string-array>
 
     

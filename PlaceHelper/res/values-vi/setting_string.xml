@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="lang">Ngôn Ngữ</string>
+    <string-array name="arr_lang">        
+        <item >Tiếng Anh</item>
+        <item >Tiếng Việt</item>
+    </string-array>
+    <string name="lang_summary">Thay đổi ngôn ngữ hiển thị </string>
+    <string name="setting">Thiết lập</string>
+    <string name="display_cat">Hiển thị</string>
+    <string name="display_sum">Thay đổi tùy chọn hiển thị</string>
+    <string name="num_rs">Kết quả</string>
+    <string name="num_rs_sum">Thay dổi số kết quả trả về</string>
+    <string name="sys_cat">Hệ thống</string>    
+    <string name="radius">Phạm vi tìm kiếm</string>
+    <string name="rad_sum">Phạm vi tìm kiếm (km)</string>    
+    <string name="img_from_gg">Lấy ảnh từ Google</string>
+    <string name="load_img_sum">Hiển thị ảnh từ google (Có thể gây chậm)</string>
+    
+
+    
+</resources>

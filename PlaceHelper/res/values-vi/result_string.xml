@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="seact_nors">There no result for :</string>
+    <string name="seact_rq_error">There some errors when search</string>
+    <string name="seact_result">Kết quả: </string>
+    <string name="seact_connect_error">There are problems when search, please check your network connection.</string>
+    <string name="seact_load">Đang xử lý</string>
+
+    
+</resources>

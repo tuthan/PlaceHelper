@@ -17,6 +17,8 @@
     <string name="mg_transport">Transport</string>
     <string name="mg_entertain">Entertainment</string>
     <string name="mg_favorite">Favorites</string>
+    <string name="mg_setting">Settings</string>
+    <string name="mg_custom">Add by User</string>
     <string name="ch_highschool">Highschool</string>
     <string name="ch_university">University</string>
     <string name="ch_atm">ATM</string>
@@ -29,5 +31,6 @@
     <string name="ch_train">Train Station</string>
     <string name="ch_cine">Cinema</string>
     <string name="ch_park">Park</string>
-    <string name="ch_shopping">Shopping</string>    
+    <string name="ch_shopping">Shopping</string>
+    <string name="ch_add">Add...</string>      
 </resources>

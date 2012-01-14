@@ -28,6 +28,7 @@
         <activity android:name=".activities.SearchResultActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name=".activities.ListFavoriteActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity android:name=".activities.CategoriesListActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
+        <activity android:name=".activities.SettingsActivity" android:theme="@android:style/Theme.NoTitleBar"></activity>
 
     </application>
 </manifest>
