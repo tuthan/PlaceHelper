@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="de_success">Thêm vào thành công!</string>
+    <string name="de_exist">Đã có trong danh sách của bạn!!</string>
+    <string name="de_webhint">Bấm vào xem thông tin trên trang web!</string>
+
+    
+</resources>

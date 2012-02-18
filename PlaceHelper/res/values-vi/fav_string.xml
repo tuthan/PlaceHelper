@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="delete">Xóa</string>
+    <string name="del_all">Xóa tất cả</string>
+	<string name="fav_delete">Bạn có thực sự muốn xóa không?</string>
+	<string name="fav_del_all">Bạn muốn xóa tất cả mục yêu thích?</string>
+            
+</resources>

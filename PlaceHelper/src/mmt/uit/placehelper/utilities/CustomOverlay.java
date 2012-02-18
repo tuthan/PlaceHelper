@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.widget.Toast;
-
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
 import com.readystatesoftware.mapviewballoons.BalloonItemizedOverlay;
@@ -35,10 +33,10 @@ public class CustomOverlay extends BalloonItemizedOverlay<OverlayItem>{
 		return m_overlays.size();
 	}
 
-	@Override
+	/*@Override
 	protected boolean onBalloonTap(int index) {
 		Toast.makeText(c, "onBalloonTap for overlay index " + index,
 				Toast.LENGTH_LONG).show();
 		return true;
-	}
+	}*/
 }

@@ -6,7 +6,6 @@ import mmt.uit.placehelper.R;
 import mmt.uit.placehelper.models.Child;
 import mmt.uit.placehelper.models.MainGroup;
 
-import android.R.drawable;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;

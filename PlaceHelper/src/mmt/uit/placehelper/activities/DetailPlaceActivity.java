@@ -249,7 +249,7 @@ public class DetailPlaceActivity extends Activity {
 			switch (item.getItemId())
 			{
 			case R.id.mn_home:
-				Intent mIntent = new Intent(DetailPlaceActivity.this,CategoriesActivity.class);				
+				Intent mIntent = new Intent(DetailPlaceActivity.this,CategoriesListActivity.class);				
 				Bundle mBundle = new Bundle();
                 //mBundle.putDouble(ConstantsAndKey.KEY_LAT,curLat);
                 //mBundle.putDouble(ConstantsAndKey.KEY_LNG, curLng);

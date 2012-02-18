@@ -1,8 +1,6 @@
 package mmt.uit.placehelper.services;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
-
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceDetailRs;
 import mmt.uit.placehelper.models.PlacesList;

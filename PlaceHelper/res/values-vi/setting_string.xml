@@ -5,7 +5,7 @@
         <item >Tiếng Anh</item>
         <item >Tiếng Việt</item>
     </string-array>
-    <string name="lang_summary">Thay đổi ngôn ngữ hiển thị </string>
+    <string name="lang_summary">Thay đổi ngôn ngữ hiển thị (Cần khởi động lại) </string>
     <string name="setting">Thiết lập</string>
     <string name="display_cat">Hiển thị</string>
     <string name="display_sum">Thay đổi tùy chọn hiển thị</string>

@@ -5,7 +5,7 @@
         <item >English</item>
         <item >Vietnamese</item>
     </string-array>
-    <string name="lang_summary">Change display language </string>
+    <string name="lang_summary">Change display language (Restart required) </string>
     <string name="setting">Settings</string>
     <string name="display_cat">Display Options</string>
     <string name="display_sum">Change display settings</string>
