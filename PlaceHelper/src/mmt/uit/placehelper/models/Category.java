@@ -8,6 +8,8 @@ public class Category {
 
 	private int imgID;
 	
+	private String types;
+	
 	public Category (){
 		
 	}
@@ -59,6 +61,22 @@ public class Category {
 		sb.append("ID: "+id);
 		sb.append("\n");
 		sb.append("IMG: "+imgID);
+		sb.append("\n");
+		sb.append("Types: "+types);
 		return sb.toString();
+	}
+
+	/**
+	 * @return the types
+	 */
+	public String getTypes() {
+		return types;
+	}
+
+	/**
+	 * @param types the types to set
+	 */
+	public void setTypes(String types) {
+		this.types = types;
 	}
 }

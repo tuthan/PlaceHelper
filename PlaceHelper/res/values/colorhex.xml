@@ -11,4 +11,5 @@
     <color name="background_cl">#568DCE</color>
     <color name="btn_clicked">#AB3E71</color>
     <color name="btn_focus">#E8E85A</color>
+    <color name="green">#0a6012</color>
 </resources>

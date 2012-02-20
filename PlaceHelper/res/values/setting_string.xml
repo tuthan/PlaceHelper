@@ -30,6 +30,19 @@
         <item >en</item>
         <item >vi</item>
     </string-array>
+    <string name="search_op">Search Option</string>
+    <string name="search_op_sum">Change search parameters (May change the accuracy of result)</string>
+    <string name="prefkey_search">Search_Options</string>
+    <string-array name="arr_search_op">
+        <item >Only search in name</item>
+        <item >Only search by type</item>
+        <item >Search in both name and types</item>
+    </string-array>
+    <string-array name="arr_search_op_value">
+        <item >1</item>
+        <item >2</item>
+        <item >3</item>
+    </string-array>
 
     
 </resources>

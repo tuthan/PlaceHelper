@@ -34,6 +34,7 @@ public class CatParser {
 	static final String NAME ="Name";
 	static final String IMAGE = "Image";	
 	static final String CHILD = "Child";
+	static final String TYPE = "Types";
 		
 	//Context
 	Context mContext;
@@ -68,6 +69,9 @@ public class CatParser {
 					else if (name.equalsIgnoreCase(IMAGE)){
 						current.setImgID(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+property.getFirstChild().getNodeValue(), null, null));
 					}
+					else if(name.equalsIgnoreCase(TYPE)){
+						current.setTypes(property.getFirstChild().getNodeValue());
+					}
 					else if (name.equalsIgnoreCase(CHILD)){
 						NodeList childpros = property.getChildNodes();
 						Child currentChild = new Child();
@@ -83,6 +87,9 @@ public class CatParser {
 							}
 							else if (childname.equalsIgnoreCase(IMAGE)){
 								currentChild.setImgID(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+childpro.getFirstChild().getNodeValue(), null, null));
+							}
+							else if (childname.equalsIgnoreCase(TYPE)){
+								currentChild.setTypes(childpro.getFirstChild().getNodeValue());
 							}
 						}
 						current.addChild(currentChild);

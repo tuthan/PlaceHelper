@@ -32,8 +32,9 @@ public class SearchPlace {
 		
 		// URL for different request
 		private static final String PLACES_SEARCH_URL =  "https://maps.googleapis.com/maps/api/place/search/json?";
-		private static final String PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?";
+		//private static final String PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?";
 		private static final String PLACES_DETAILS_URL = "https://maps.googleapis.com/maps/api/place/details/json?";
+		
 				
 		private static HttpRequestFactory createRequestFactory(final HttpTransport transport) {
 			   
@@ -50,17 +51,20 @@ public class SearchPlace {
 		}
 		
 		
-		public static PlacesList getPlaceList (double lat,double lng, String keyword){
+		public static PlacesList getPlaceList (double lat,double lng, String keyword, String lang, int radius, String types){
 			PlacesList rs_list = null; //Store list result places
-			GenericUrl mUrl = new GenericUrl(PLACES_SEARCH_URL);
-			
+			GenericUrl mUrl = new GenericUrl(PLACES_SEARCH_URL);						
 			HttpRequestFactory httpRequestFactory = createRequestFactory(transport);
 			try {
-				mUrl.put("keyword", keyword);
-				mUrl.put("radius", 5000);
+				if(keyword!=null){
+				mUrl.put("name", keyword);}
+				mUrl.put("radius", radius);
 				mUrl.put("location", lat + "," + lng);
-				mUrl.put("sensor", "false");
-				mUrl.put("key", API_KEY);
+				mUrl.put("sensor", "true");
+				mUrl.put("lang", lang);
+				if(types!=null){
+				mUrl.put("types",types);}
+				mUrl.put("key", API_KEY);				
 				Log.v(LOG_GETLIST, "url= " + mUrl);
 				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
 				HttpResponse response = request.execute();
@@ -96,15 +100,16 @@ public class SearchPlace {
 			
 		}
 		
-		public static PlaceDetailRs getDetail (String reference){
+		public static PlaceDetailRs getDetail (String reference, String lang){
 			GenericUrl mUrl = new GenericUrl(PLACES_DETAILS_URL);
 			PlaceDetailRs pld = null;
 			HttpRequestFactory httpRequestFactory = createRequestFactory(transport);
 			try {
 				
 				mUrl.put("reference", reference);				
-				mUrl.put("sensor", "false");
+				mUrl.put("sensor", "true");
 				mUrl.put("key", API_KEY);
+				mUrl.put("lang", lang);
 				Log.v(LOG_GETDETAIL, "url= " + mUrl);
 				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
 				pld = request.execute().parseAs(PlaceDetailRs.class);

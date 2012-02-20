@@ -16,7 +16,13 @@
     <string name="rad_sum">Phạm vi tìm kiếm (km)</string>    
     <string name="img_from_gg">Lấy ảnh từ Google</string>
     <string name="load_img_sum">Hiển thị ảnh từ google (Có thể gây chậm)</string>
-    
+    <string name="search_op">Tùy chọn tìm kiếm</string>
+    <string name="search_op_sum">Thay đổi các tham số (Sẽ ảnh hưởng đến kết quả tìm kiếm)</string>    
+    <string-array name="arr_search_op">
+        <item >Chỉ tìm bằng tên</item>
+        <item >Chỉ tìm theo loại địa điểm</item>
+        <item >Tìm cả bằng tên và loại</item>
+    </string-array>
 
     
 </resources>

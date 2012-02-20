@@ -4,16 +4,19 @@
 	<Group>		
 		<Id>100</Id>
 		<Name>string/mg_education</Name>
-		<Image>drawable/ic_mainmenu_edu</Image>		
+		<Image>drawable/ic_mainmenu_edu</Image>
+		<Types>MG</Types>		
 		<Child>
 			<Id>101</Id>
 			<Name>string/ch_highschool</Name>
 			<Image>drawable/ic_mainmenu_highschool</Image>
+			<Types>school</Types>
 		</Child>
 		<Child>
 			<Id>102</Id>
 			<Name>string/ch_university</Name>
 			<Image>drawable/ic_mainmenu_university</Image>
+			<Types>university</Types>
 		</Child>			
 	</Group>
 	<!-- Group 2 -->
@@ -21,37 +24,44 @@
 		<Id>200</Id>
 		<Name>string/mg_bank</Name>
 		<Image>drawable/ic_mainmenu_bank</Image>
+		<Types>MG</Types>
 		<Child>
 			<Id>201</Id>
 			<Name>string/ch_atm</Name>
 			<Image>drawable/ic_mainmenu_atm</Image>
+			<Types>atm</Types>
 		</Child>
 		<Child>
 			<Id>202</Id>
 			<Name>string/ch_bank_office</Name>
-			<Image>drawable/ic_mainmenu_tradeoffice</Image>			
+			<Image>drawable/ic_mainmenu_tradeoffice</Image>		
+			<Types>bank</Types>	
 		</Child>
 	</Group>
 	<!-- Group 3 -->
 	<Group>
 		<Id>300</Id>
 		<Name>string/mg_hotel</Name>
-		<Image>drawable/ic_mainmenu_hotel</Image>		
+		<Image>drawable/ic_mainmenu_hotel</Image>
+		<Types>lodging</Types>		
 	</Group>
 	<!-- Group 4 -->
 	<Group>
 		<Id>400</Id>
 		<Name>string/mg_food</Name>
 		<Image>drawable/ic_mainmenu_food</Image>
+		<Types>MG</Types>
 		<Child>
 			<Id>401</Id>
 			<Name>string/ch_restaurant</Name>
-			<Image>drawable/ic_mainmenu_restaurant</Image>			
+			<Image>drawable/ic_mainmenu_restaurant</Image>
+			<Types>restaurant</Types>			
 		</Child>
 		<Child>
 			<Id>402</Id>
 			<Name>string/ch_coffee</Name>
 			<Image>drawable/ic_mainmenu_coffee</Image>
+			<Types>bank</Types>
 		</Child>
 	</Group>
 	<!-- Group 5 -->
@@ -59,25 +69,30 @@
 		<Id>500</Id>
 		<Name>string/mg_transport</Name>
 		<Image>drawable/ic_mainmenu_transport</Image>
+		<Types>MG</Types>
 		<Child>
 			<Id>501</Id>
 			<Name>string/ch_airport</Name>
 			<Image>drawable/ic_mainmenu_airport</Image>
+			<Types>airport</Types>
 		</Child>
 		<Child>
 			<Id>502</Id>
 			<Name>string/ch_train</Name>
-			<Image>drawable/ic_mainmenu_train</Image>			
+			<Image>drawable/ic_mainmenu_train</Image>	
+			<Types>train_station|subway_station</Types>		
 		</Child>
 		<Child>
 			<Id>503</Id>
 			<Name>string/ch_gas</Name>
-			<Image>drawable/ic_mainmenu_gas</Image>			
+			<Image>drawable/ic_mainmenu_gas</Image>	
+			<Types>gas_station</Types>		
 		</Child>		
 		<Child>
 			<Id>504</Id>
 			<Name>string/ch_bus</Name>
 			<Image>drawable/ic_mainmenu_bus</Image>
+			<Types>bus_station</Types>	
 		</Child>		
 	</Group>
 	<!-- Group 6 -->
@@ -85,20 +100,24 @@
 		<Id>600</Id>
 		<Name>string/mg_entertain</Name>
 		<Image>drawable/ic_mainmenu_entertain</Image>
+		<Types>MG</Types>	
 		<Child>
 			<Id>601</Id>
 			<Name>string/ch_cine</Name>
-			<Image>drawable/ic_mainmenu_cinema</Image>			
+			<Image>drawable/ic_mainmenu_cinema</Image>		
+			<Types>movie_theater</Types>		
 		</Child>
 		<Child>
 			<Id>602</Id>
 			<Name>string/ch_park</Name>
-			<Image>drawable/ic_mainmenu_park</Image>			
+			<Image>drawable/ic_mainmenu_park</Image>
+			<Types>park</Types>				
 		</Child>
 		<Child>
 			<Id>603</Id>
 			<Name>string/ch_shopping</Name>
 			<Image>drawable/ic_mainmenu_shopping</Image>
+			<Types>shoe_store|shopping_mall|store</Types>	
 		</Child>		
 		</Group>
 		
@@ -107,10 +126,12 @@
 		<Id>700</Id>
 		<Name>string/mg_custom</Name>
 		<Image>drawable/ic_group_custom</Image>
+		<Types>MG</Types>
 		<Child>
 			<Id>701</Id>
 			<Name>string/ch_add</Name>
-			<Image>drawable/ic_child_add</Image>			
+			<Image>drawable/ic_child_add</Image>	
+			<Types>CH</Types>		
 		</Child>			
 		</Group>
 		
@@ -119,6 +140,7 @@
 		<Id>800</Id>
 		<Name>string/mg_setting</Name>
 		<Image>drawable/ic_settings</Image>
+		<Types>ST</Types>
 	</Group>
 	
 	<!-- Group 9 -->
@@ -126,5 +148,6 @@
 		<Id>900</Id>
 		<Name>string/mg_favorite</Name>
 		<Image>drawable/ic_mainmenu_favorite</Image>
+		<Types>FV</Types>
 	</Group>
 </Category>

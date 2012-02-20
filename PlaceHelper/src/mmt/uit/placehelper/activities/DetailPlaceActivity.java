@@ -1,5 +1,7 @@
 package mmt.uit.placehelper.activities;
 
+import java.util.Locale;
+
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.models.PlaceDetailRs;
@@ -12,9 +14,11 @@ import mmt.uit.placehelper.R.id;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -45,6 +49,8 @@ public class DetailPlaceActivity extends Activity {
 	private Place place;
 	PlaceLocation curLoc;
 	Bundle mBundle;
+	private String lang = "en";
+	private SharedPreferences mSharePref;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,22 +74,30 @@ public class DetailPlaceActivity extends Activity {
 		mBundle = getIntent().getExtras();
 		place = mBundle.getParcelable("place");
 		curLoc = mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);
-		GetDetail gd = new GetDetail();
+		mSharePref = PreferenceManager.getDefaultSharedPreferences(this);
+    	if(mSharePref!=null){
+    	lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);    	
+    	}
+		GetDetail gd = new GetDetail(lang);
 		gd.execute(place);
 		
 		}
 	
 		//Create Task to make request and get places detail
 		private class GetDetail extends AsyncTask<Place,Void, PlaceDetailRs>{
+			private String lang;
 			
+			public GetDetail(String lang){
+				this.lang = lang;
+			}
 			
 			
 			@Override
 			protected PlaceDetailRs doInBackground(Place... params) {
 				// TODO Auto-generated method stub
 								
-				PlaceDetailRs pd=null; //initialize place detail result				
-				pd = SearchPlace.getDetail(params[0].getReference());
+				PlaceDetailRs pd=null; //initialize place detail result						
+				pd = SearchPlace.getDetail(params[0].getReference(),lang);
 				return pd;				
 			}
 			

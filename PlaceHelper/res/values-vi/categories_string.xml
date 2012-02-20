@@ -4,14 +4,14 @@
     <string name="btn_hotels">Hotel</string>
     <string name="btn_places">Coffee</string>
     <string name="btn_atms">ATM</string>
-    <string name="btn_banks">Banks</string>
+    <string name="btn_banks">Tài chính</string>
     <string name="btn_gas_stations">Gas Station</string>
     <string name="btn_cab_taxis">Taxis</string>
     <string name="btn_attractions">Cinema</string>
     <string name="btn_airports">Airports</string>
     <string name="cat_select">Hãy chọn danh mục</string>    
     <string name="mg_education">Giáo Dục</string>
-    <string name="mg_bank">Ngân Hàng</string>
+    <string name="mg_bank">Tài chính</string>
     <string name="mg_hotel">Khách Sạn</string>
     <string name="mg_food">Ẩm Thực</string>
     <string name="mg_transport">Đi Lại</string>
@@ -22,9 +22,9 @@
     <string name="ch_highschool">Trung Học</string>
     <string name="ch_university">Đại Học</string>
     <string name="ch_atm">ATM</string>
-    <string name="ch_bank_office">Trụ Sở Ngân Hàng</string>
+    <string name="ch_bank_office">Ngân Hàng</string>
     <string name="ch_restaurant">Nhà Hàng</string>
-    <string name="ch_coffee">Cà Phê</string>
+    <string name="ch_coffee">Cafe</string>
     <string name="ch_airport">Sân Bay</string>
     <string name="ch_bus">Trạm Xe Buýt</string>
     <string name="ch_gas">Cây Xăng</string>
@@ -33,4 +33,7 @@
     <string name="ch_park">Công Viên</string>
     <string name="ch_shopping">Mua Sắm</string>    
     <string name="ch_add">Thêm...</string>  
+    <string name="error_network">Hãy kiểm tra lại kết nối mạng</string>
+    <string name="near">Gần: </string>
+    <string name="err_address">Không tìm thấy</string>   
 </resources>

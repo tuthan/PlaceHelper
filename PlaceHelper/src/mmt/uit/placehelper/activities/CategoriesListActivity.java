@@ -1,6 +1,7 @@
 package mmt.uit.placehelper.activities;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -12,6 +13,8 @@ import mmt.uit.placehelper.utilities.CatParser;
 import mmt.uit.placehelper.utilities.CheckConnection;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.utilities.ExpListAdapter;
+import mmt.uit.placehelper.utilities.LocationHelper;
+import mmt.uit.placehelper.utilities.LocationHelper.LocationResult;
 import mmt.uit.placehelper.utilities.PointAddressUtil;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,6 +39,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
@@ -45,24 +50,31 @@ public class CategoriesListActivity extends Activity {
 	private List<MainGroup> lsGroup = new ArrayList<MainGroup>();    
 	private ExpListAdapter adapter;
 	private ExpandableListView listView ;
+	private TextView cur_add;
+	private ProgressBar loc_progress;
 	private Context mContext;
 	boolean gps_enabled = false;
 	boolean network_enabled = false;	
 	private Location currentLoc=null;
 	private String mProviderName;	
-	private SharedPreferences mSharePref;	
+	private SharedPreferences mSharePref;
+	private boolean hasLocation=false;	
+	private LocationHelper locHelper;
+	private GetLocation getLoc;
+	private String lang = "en";	
 	private static final int FAVORITE_GROUP = 900;
 	private static final int SETTING_GROUP = 800;
 	private static final int CHILD_ADD = 701;
+	private static final int MAX_AGE = 2*60*1000;//Max age of location cache
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mContext = this;
     	super.onCreate(savedInstanceState);
     	Configuration mConfig = new Configuration(getResources().getConfiguration());
-    	SharedPreferences mSharePref = PreferenceManager.getDefaultSharedPreferences(mContext);
+    	mSharePref = PreferenceManager.getDefaultSharedPreferences(mContext);
     	if(mSharePref!=null){
-    	String lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);
+    	lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);    	
     	mConfig.locale = new Locale(lang);
     	getResources().updateConfiguration(mConfig, getResources().getDisplayMetrics());
     	}
@@ -72,7 +84,9 @@ public class CategoriesListActivity extends Activity {
         // Retrive the ExpandableListView from the layout
         listView = (ExpandableListView) findViewById(R.id.explist);
         listView.setDividerHeight(0);
-        
+        cur_add = (TextView)findViewById(R.id.cur_address);
+        loc_progress = (ProgressBar)findViewById(R.id.loc_progress);
+        //Call task to create category list.
         CreateCat cc = new CreateCat();
         cc.execute();
         // Collapse all groups that are not clicked        
@@ -95,7 +109,8 @@ public class CategoriesListActivity extends Activity {
             public boolean onChildClick(ExpandableListView expLv, View v, int groupPos, int childPos, long id)
             {
                 if(lsGroup.get(groupPos).getChild().get(childPos).getId()!=CHILD_ADD){
-            	startSearch(getResources().getString(lsGroup.get(groupPos).getChild().get(childPos).getName()),lsGroup.get(groupPos).getChild().get(childPos).getImgID());            	
+            	startSearch(getResources().getString(lsGroup.get(groupPos).getChild().get(childPos).getName()),lsGroup.get(groupPos).getChild().get(childPos).getImgID(),
+            			lsGroup.get(groupPos).getChild().get(childPos).getTypes());            	
                 return true;}
                 return false;
             }
@@ -119,7 +134,7 @@ public class CategoriesListActivity extends Activity {
             		return true;
             	}
             	if(lsGroup.get(groupPos).getChild().size()==0){
-                	startSearch(getResources().getString(lsGroup.get(groupPos).getName()),lsGroup.get(groupPos).getImgID());
+                	startSearch(getResources().getString(lsGroup.get(groupPos).getName()),lsGroup.get(groupPos).getImgID(),lsGroup.get(groupPos).getTypes());
                 	return true;
                 }
                 
@@ -127,40 +142,56 @@ public class CategoriesListActivity extends Activity {
             }
         });
 
+        locHelper = new LocationHelper();
+        locHelper.getLocation(mContext, locResult);
+        getLoc = new GetLocation();
+        getLoc.execute(mContext);
 
         
     }
     
-    private void startSearch(String place, int img){
+    @Override
+    protected void onStop() {
+    	
+    	super.onStop();
+    	//When activity stop also stop update location and stop task too.
+    	locHelper.stopLocationUpdates();
+    	getLoc.cancel(true);
+    }
+    
+    public LocationResult locResult = new LocationResult() {
+		
+		@Override
+		public void gotLocation(Location location) {
+			currentLoc = new Location(location);
+			hasLocation = true;
+			
+		}
+	};
+    
+    private void startSearch(String place, int img, String types){
 		Log.v("ph_info", "Start Search");
 		if (CheckConnection.checkInternet(mContext)){
 		if (currentLoc!=null){
-		String currentAdd;			
+			
 		Bundle b = new Bundle();					
 		b.putString("search", place);		
 			b.putDouble("curlat", currentLoc.getLatitude());			
 			b.putDouble("curlng", currentLoc.getLongitude());
 			b.putInt("img", img);
-			GeoPoint point = new GeoPoint(
-			          (int) (currentLoc.getLatitude() * 1E6), 
-			          (int) (currentLoc.getLongitude() * 1E6));
-			currentAdd = PointAddressUtil.ConvertPointToAddress(point, mContext);
-		if (currentAdd!=null){
-			b.putString("currentadd", currentAdd);
-		}
+			b.putString("types", types);
+			
 		Intent mIntent = new Intent(getApplicationContext(),
 				SearchResultActivity.class);
 		mIntent.putExtras(b);
 		startActivity(mIntent);
-		}
-		else
-			getCurrentLocation();
+		}		
 		}
 		else 
-			Toast.makeText(mContext, "Please check you network setting", Toast.LENGTH_LONG);
+			Toast.makeText(mContext, R.string.error_network, Toast.LENGTH_LONG);
 		}	
     //Get location 
-    private void getLocation() {
+    private Location getLocation() {
 		LocationManager locMgr = (LocationManager) getSystemService(LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
 		Location lastestLoc;
@@ -168,40 +199,21 @@ public class CategoriesListActivity extends Activity {
 		MyLocationListener listener = new MyLocationListener();
 		mProviderName = locMgr.getBestProvider(criteria, true);		
 		if (mProviderName == null) {
-			showDialog(ConstantsAndKey.CHECK_SETTING);
-			currentLoc = null;
-			
+			showDialog(ConstantsAndKey.CHECK_SETTING);			
+			return null;
 		} 
-		else
-		{
+		
 			lastestLoc = locMgr.getLastKnownLocation(mProviderName);
-			if (lastestLoc !=null && (System.currentTimeMillis() - lastestLoc.getTime() < 36000000) ){
-				currentLoc = lastestLoc;	
+			if (lastestLoc !=null && (System.currentTimeMillis() - lastestLoc.getTime() < MAX_AGE) ){
+				return lastestLoc;	
 				}
 				else {
 				locMgr.requestLocationUpdates(mProviderName, 0, 0, listener);
-				showDialog(ConstantsAndKey.WAIT_MSG);
-				new Thread(new Runnable() {
-					public void run() {
-						Looper.prepare();
-						long start = System.currentTimeMillis();
-						while ((currentLoc == null)
-								&& (System.currentTimeMillis() < (start + 60000))) {
-						}
-						dismissDialog(ConstantsAndKey.WAIT_MSG);
-						if (currentLoc == null) {
-							showDialog(ConstantsAndKey.LOC_NOTFOUND);
-							
-						}
-						Looper.loop();
-					}
-				}).start();
-				if (("network".equals(mProviderName)) && (currentLoc == null)) {
-					locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-							0, listener);
-				}
+				
 			}
-		}
+			
+			return lastestLoc;
+		
 	}
     
     //Create menu
@@ -363,8 +375,7 @@ public class CategoriesListActivity extends Activity {
     private class CreateCat extends AsyncTask<Void, Void, List<MainGroup>>{
 
 		@Override
-		protected List<MainGroup> doInBackground(Void... params) {
-			// TODO Auto-generated method stub
+		protected List<MainGroup> doInBackground(Void... params) {			
 			CatParser dp = new CatParser(mContext);
 	    	List<MainGroup> results = dp.parse();
 	    	return results;
@@ -372,9 +383,9 @@ public class CategoriesListActivity extends Activity {
 		
 		@Override
 		protected void onPostExecute(List<MainGroup> result) {
-			// TODO Auto-generated method stub
+			
 			if (result !=null){
-				lsGroup = result;
+				lsGroup = result;				
 				adapter = new ExpListAdapter(mContext, lsGroup);
 		        listView.setAdapter(adapter);
 			}
@@ -382,4 +393,51 @@ public class CategoriesListActivity extends Activity {
     	
     }
     
+    private class GetLocation extends AsyncTask<Context, Void, Void>{
+    	
+
+         protected void onPreExecute()
+         {
+             
+             loc_progress.setVisibility(View.VISIBLE);
+         }
+
+         @Override 
+         protected Void doInBackground(Context... params)
+         {
+             //Wait 30 seconds to see if we can get a location from either network or GPS, otherwise stop
+             Long t = Calendar.getInstance().getTimeInMillis();
+             while (!hasLocation && Calendar.getInstance().getTimeInMillis() - t < 15000) {
+                 try {
+                     Thread.sleep(30000);
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
+             };
+             return null;
+         }
+
+         protected void onPostExecute(final Void unused)
+         {
+             
+             if (currentLoc != null)
+             {
+            	 loc_progress.setVisibility(View.GONE);
+            	 GeoPoint point = new GeoPoint(
+   			          (int) (currentLoc.getLatitude() * 1E6), 
+   			          (int) (currentLoc.getLongitude() * 1E6));
+   			String currentAdd = mContext.getResources().getString(R.string.near);		
+   			currentAdd += PointAddressUtil.ConvertPointToAddress(point, mContext);
+	   		if (currentAdd!=null){
+	   			cur_add.setText(currentAdd);
+	   		}
+             }
+             else
+             {
+                 cur_add.setText(R.string.err_address);
+             }
+         }
+
+    	
+    }
 }

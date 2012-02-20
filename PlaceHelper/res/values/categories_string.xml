@@ -11,7 +11,7 @@
     <string name="btn_airports">Airports</string>
     <string name="cat_select">Please Chose A Category</string>    
     <string name="mg_education">Education</string>
-    <string name="mg_bank">Bank</string>
+    <string name="mg_bank">Finance</string>
     <string name="mg_hotel">Hotel</string>
     <string name="mg_food">Food</string>
     <string name="mg_transport">Transport</string>
@@ -19,12 +19,12 @@
     <string name="mg_favorite">Favorites</string>
     <string name="mg_setting">Settings</string>
     <string name="mg_custom">Add by User</string>
-    <string name="ch_highschool">Highschool</string>
+    <string name="ch_highschool">High School</string>
     <string name="ch_university">University</string>
     <string name="ch_atm">ATM</string>
-    <string name="ch_bank_office">Bank Office</string>
+    <string name="ch_bank_office">Bank</string>
     <string name="ch_restaurant">Restaurant</string>
-    <string name="ch_coffee">Coffee Shop</string>
+    <string name="ch_coffee">Cafe</string>
     <string name="ch_airport">Airport</string>
     <string name="ch_bus">Bus Stop</string>
     <string name="ch_gas">Gas Station</string>
@@ -32,5 +32,8 @@
     <string name="ch_cine">Cinema</string>
     <string name="ch_park">Park</string>
     <string name="ch_shopping">Shopping</string>
-    <string name="ch_add">Add...</string>      
+    <string name="ch_add">Add...</string>
+    <string name="error_network">Please check you network setting</string>  
+    <string name="near">Near:</string>   
+    <string name="err_address">Not available</string>    
 </resources>

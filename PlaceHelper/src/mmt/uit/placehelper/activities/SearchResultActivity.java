@@ -18,8 +18,11 @@ import mmt.uit.placehelper.R;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +51,12 @@ public class SearchResultActivity extends ListActivity {
     private Context mContext;
     private ProgressBar search_progress;
     private int img;
+    private String lang = "en";
+	private int radius=5000;
+	private SharedPreferences mSharePref;
+	private String types =null;
+	private static final int ONLY_NAME=1,ONLY_TYPES=2,BOTH_NAME_TYPES=3;
+	private int search_op=1;
       
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,10 +72,31 @@ public class SearchResultActivity extends ListActivity {
         keyWord = b.getString("search");               
         curLoc.setLat(b.getDouble("curlat"));
         curLoc.setLng(b.getDouble("curlng"));        
-        img = b.getInt("img");
+        img = b.getInt("img"); 
+        types = b.getString("types");
+    	mSharePref = PreferenceManager.getDefaultSharedPreferences(mContext);
+    	if(mSharePref!=null){
+    	lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);
+    	radius = 1000*Integer.parseInt(mSharePref.getString(getResources().getString(R.string.prefkey_radius), "5"));
+    	search_op = Integer.parseInt(mSharePref.getString(getResources().getString(R.string.prefkey_search), "1"));
+    	}
         //Task to get place result from google place service
-        FindPlace fp = new FindPlace(keyWord);
-        fp.execute(curLoc);      
+    	switch (search_op){
+    	case ONLY_NAME:
+    		FindPlace fp = new FindPlace(keyWord,lang,radius,null);            
+    		fp.execute(curLoc);  
+    		break;
+    	case ONLY_TYPES:
+    		fp = new FindPlace(null,lang,radius,types);            
+    		fp.execute(curLoc);  
+    		break;
+    	case BOTH_NAME_TYPES:
+    		types += "|establishment";
+    		fp = new FindPlace(keyWord,lang,radius,types);            
+    		fp.execute(curLoc);  
+    		break;
+    	}
+           
         
     }
 	
@@ -75,16 +105,22 @@ public class SearchResultActivity extends ListActivity {
 	//Create Task to make request and get places list
 	private class FindPlace extends AsyncTask<PlaceLocation,Void, PlacesList>{
 		private String keyword;//keyword to search 
+		private String lang;
+		private int radius;
+		private String types;
 		
-		public FindPlace(String keyword){
+		public FindPlace(String keyword, String lang, int radius,String types){
 			
 			this.keyword = keyword;
+			this.lang = lang;
+			this.radius = radius;
+			this.types = types;
 		}
 		@Override
 		protected PlacesList doInBackground(PlaceLocation... params) {		
 					
 			PlacesList pl=null; //initialize list result
-			pl = SearchPlace.getPlaceList(params[0].getLat(), params[0].getLng(),keyword);
+			pl = SearchPlace.getPlaceList(params[0].getLat(), params[0].getLng(),keyword,lang,radius,types);
 			return pl; //Return list Place				
 		}
 		

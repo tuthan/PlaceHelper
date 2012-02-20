@@ -31,7 +31,7 @@ public class MainGroup extends Category{
 	
 	@Override
 	public MainGroup copy() {
-		// TODO Auto-generated method stub
+		
 		MainGroup copy = new MainGroup();
 		copy.setId(getId());
 		copy.setImgID(getImgID());
