@@ -1,6 +1,7 @@
                              
 package mmt.uit.placehelper.activities;
 
+import java.net.UnknownHostException;
 import java.util.*;
 
 import mmt.uit.placehelper.models.Place;
@@ -83,11 +84,17 @@ public class ViewOnMapActivity extends MapActivity
 		GeoPoint curPoint = new GeoPoint(
 		          (int) (curloc.getLat() * 1E6), 
 		          (int) (curloc.getLng() * 1E6));
+		try {
 		String currentAdd = PointAddressUtil.ConvertPointToAddress(curPoint, getBaseContext());
-    	OverlayItem overlayitem = new OverlayItem(point, "You Here", currentAdd);	    	
+		OverlayItem overlayitem = new OverlayItem(point, "You Here", currentAdd);	    	
     	mapController.setCenter(point);
     	itemizedOverlay.addOverlay(overlayitem);
     	mapOverlays.add(itemizedOverlay);
+		}
+		catch (UnknownHostException e){
+			e.printStackTrace();
+		}
+    	
     	
 	}
 	

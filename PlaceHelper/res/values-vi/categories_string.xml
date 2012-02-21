@@ -32,8 +32,9 @@
     <string name="ch_cine">Rạp Phim</string>
     <string name="ch_park">Công Viên</string>
     <string name="ch_shopping">Mua Sắm</string>    
-    <string name="ch_add">Thêm...</string>  
+    <string name="ch_add">Thêm</string>  
     <string name="error_network">Hãy kiểm tra lại kết nối mạng</string>
     <string name="near">Gần: </string>
-    <string name="err_address">Không tìm thấy</string>   
+    <string name="err_address">Không tìm thấy</string>  
+    <string name="get_cur_add">Đang lấy vị trí</string>  
 </resources>

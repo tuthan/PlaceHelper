@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="gps_off">GPS bị tắt</string>
-    <string name="setting">Cài đặt</string>
-    <string name="wait_plz">Xin vui lòng đợi ...</string>
+    <string name="gps_off">GPS bị tắt</string>    
+    <string name="wait_plz">Xin vui lòng đợi..</string>
     <string name="get_location">Đang lấy vị trí hiện tại .</string>
     <string name="get_loca_error">Có lỗi xảy ra. Xin vui lòng thử lại.</string>
     <string name="ask_save">Bạn có muốn sử dụng vị trí đã lưu</string>

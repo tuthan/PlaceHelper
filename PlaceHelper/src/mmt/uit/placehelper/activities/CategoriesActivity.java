@@ -155,10 +155,10 @@ public class CategoriesActivity extends Activity {
 			GeoPoint point = new GeoPoint(
 			          (int) (currentLoc.getLatitude() * 1E6), 
 			          (int) (currentLoc.getLongitude() * 1E6));
-			currentAdd = PointAddressUtil.ConvertPointToAddress(point, getBaseContext());
+			/*currentAdd = PointAddressUtil.ConvertPointToAddress(point, getBaseContext());
 		if (currentAdd!=null){
 			b.putString("currentadd", currentAdd);
-		}
+		}*/
 		Intent mIntent = new Intent(getApplicationContext(),
 				SearchResultActivity.class);
 		mIntent.putExtras(b);

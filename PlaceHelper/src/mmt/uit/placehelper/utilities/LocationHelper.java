@@ -9,10 +9,21 @@ import android.os.Bundle;
 public class LocationHelper {
 	LocationManager locationManager;
     private LocationResult locationResult;
-    boolean gpsEnabled = false;
-    boolean networkEnabled = false;
+    private boolean gpsEnabled = false;
+    private boolean networkEnabled = false;
 
-    public boolean getLocation(Context context, LocationResult result)
+    public boolean isDisable (Context context){
+    	 if(locationManager == null)
+         {
+             locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+         }
+    	 if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)==false || 
+    			 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)==false){
+    		 return true;
+    	 }
+    	 return false;
+    }
+    public boolean getLocation(Context context, LocationResult result) 
     {       
         locationResult = result;
 

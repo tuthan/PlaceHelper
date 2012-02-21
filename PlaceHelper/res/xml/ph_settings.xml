@@ -44,7 +44,9 @@
         android:dialogMessage="@string/rad_sum"        
         android:key="@string/prefkey_radius"
         android:title="@string/radius"
-        android:summary="@string/rad_sum"
+        android:summary="@string/rad_sum"        
+        android:inputType="number"
+        android:numeric="integer"
         android:defaultValue="5"/>   
     </PreferenceCategory>
 </PreferenceScreen>

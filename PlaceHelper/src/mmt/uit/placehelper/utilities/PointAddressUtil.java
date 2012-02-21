@@ -1,6 +1,7 @@
 package mmt.uit.placehelper.utilities;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -13,7 +14,7 @@ import android.location.Geocoder;
 import com.google.android.maps.GeoPoint;
 
 public class PointAddressUtil {
-	public static String ConvertPointToAddress(GeoPoint mPoint, Context mContext) {   
+	public static String ConvertPointToAddress(GeoPoint mPoint, Context mContext) throws UnknownHostException {   
 	    String address = "";
 	    Geocoder geoCoder = new Geocoder(
 	        mContext, Locale.getDefault());

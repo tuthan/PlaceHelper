@@ -32,8 +32,9 @@
     <string name="ch_cine">Cinema</string>
     <string name="ch_park">Park</string>
     <string name="ch_shopping">Shopping</string>
-    <string name="ch_add">Add...</string>
+    <string name="ch_add">Add</string>
     <string name="error_network">Please check you network setting</string>  
     <string name="near">Near:</string>   
-    <string name="err_address">Not available</string>    
+    <string name="err_address">Not available</string>  
+    <string name="get_cur_add">Updating</string>    
 </resources>

@@ -1,5 +1,6 @@
 package mmt.uit.placehelper.activities;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -60,7 +61,7 @@ public class CategoriesListActivity extends Activity {
 	private SharedPreferences mSharePref;
 	private boolean hasLocation=false;	
 	private LocationHelper locHelper;
-	private GetLocation getLoc;
+	private GetLocation getLoc = new GetLocation();;
 	private String lang = "en";	
 	private static final int FAVORITE_GROUP = 900;
 	private static final int SETTING_GROUP = 800;
@@ -143,9 +144,13 @@ public class CategoriesListActivity extends Activity {
         });
 
         locHelper = new LocationHelper();
-        locHelper.getLocation(mContext, locResult);
-        getLoc = new GetLocation();
+        if (locHelper.isDisable(mContext)){
+        	showDialog(ConstantsAndKey.CHECK_SETTING);
+        }
+        else {
+        locHelper.getLocation(mContext, locResult);        
         getLoc.execute(mContext);
+        }
 
         
     }
@@ -186,7 +191,18 @@ public class CategoriesListActivity extends Activity {
 				SearchResultActivity.class);
 		mIntent.putExtras(b);
 		startActivity(mIntent);
-		}		
+		}
+		
+		else {
+			if (locHelper.isDisable(mContext)){
+	        	showDialog(ConstantsAndKey.CHECK_SETTING);
+	        }
+	        else {
+	        locHelper.getLocation(mContext, locResult);
+	        getLoc = new GetLocation();
+	        getLoc.execute(mContext);
+	        }
+		}
 		}
 		else 
 			Toast.makeText(mContext, R.string.error_network, Toast.LENGTH_LONG);
@@ -401,16 +417,17 @@ public class CategoriesListActivity extends Activity {
          {
              
              loc_progress.setVisibility(View.VISIBLE);
+             cur_add.setText(R.string.get_cur_add);
          }
 
          @Override 
          protected Void doInBackground(Context... params)
          {
-             //Wait 30 seconds to see if we can get a location from either network or GPS, otherwise stop
+             //Wait 15 seconds to see if we can get a location from either network or GPS, otherwise stop
              Long t = Calendar.getInstance().getTimeInMillis();
              while (!hasLocation && Calendar.getInstance().getTimeInMillis() - t < 15000) {
                  try {
-                     Thread.sleep(30000);
+                     Thread.sleep(15000);
                  } catch (InterruptedException e) {
                      e.printStackTrace();
                  }
@@ -427,8 +444,14 @@ public class CategoriesListActivity extends Activity {
             	 GeoPoint point = new GeoPoint(
    			          (int) (currentLoc.getLatitude() * 1E6), 
    			          (int) (currentLoc.getLongitude() * 1E6));
-   			String currentAdd = mContext.getResources().getString(R.string.near);		
+   			String currentAdd = mContext.getResources().getString(R.string.near);	
+   			try {
    			currentAdd += PointAddressUtil.ConvertPointToAddress(point, mContext);
+   			}
+   			catch (UnknownHostException ex){
+   				cur_add.setText(R.string.error_network);
+   				return;
+   			}
 	   		if (currentAdd!=null){
 	   			cur_add.setText(currentAdd);
 	   		}
