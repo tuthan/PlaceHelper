@@ -22,7 +22,7 @@
 	 android:layout_marginLeft="4dp"	 
 	 android:layout_gravity="center_vertical"
 	 android:scaleType="centerCrop"	 
-	 android:src="@drawable/app_icon"/>
+	 android:src="@drawable/default_icon"/>
   
   <!-- Center linerlayout: get current demension and set width by percentage -->
   <LinearLayout  

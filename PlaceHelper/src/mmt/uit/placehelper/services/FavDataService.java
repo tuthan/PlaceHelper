@@ -31,7 +31,7 @@ public class FavDataService {
 		mDbHelper.close();
 	}
 	
-	private ContentValues createContentValue (String id, String name, String address, String phone, float rating, double lng, double lat, String url, String weburl){
+	private ContentValues createContentValue (String id, String name, String address, String phone, float rating, double lng, double lat, String url, String weburl, int img){
 		ContentValues values = new ContentValues();
 		values.put(ConstantsAndKey.KEY_ID, id);
 		values.put(ConstantsAndKey.KEY_NAME, name);
@@ -42,13 +42,14 @@ public class FavDataService {
 		values.put(ConstantsAndKey.KEY_LAT, lat);
 		values.put(ConstantsAndKey.KEY_URL, url);
 		values.put(ConstantsAndKey.KEY_WEBURL, weburl);		
+		values.put(ConstantsAndKey.KEY_TYPEIMG, img);	
 		return values;
 		
 	}
 	
 	//Create new favorite row, return rowID. Return -1 if there's error
-	public long createFav (String id, String name, String address, String phone,float rating, double lng, double lat, String url, String weburl){
-		ContentValues values = createContentValue(id, name, address, phone, rating, lng, lat, url, weburl);
+	public long createFav (String id, String name, String address, String phone,float rating, double lng, double lat, String url, String weburl, int img){
+		ContentValues values = createContentValue(id, name, address, phone, rating, lng, lat, url, weburl, img);
 		return mDb.insert(ConstantsAndKey.DATABASE_TABLE, null, values);
 	}
 	
@@ -68,7 +69,7 @@ public class FavDataService {
 
 		return mDb.query(ConstantsAndKey.DATABASE_TABLE, new String[] { ConstantsAndKey.KEY_ID, ConstantsAndKey.KEY_NAME,
 				ConstantsAndKey.KEY_ADDRESS, ConstantsAndKey.KEY_PHONENUMBER, ConstantsAndKey.KEY_RATE, ConstantsAndKey.KEY_LNG, ConstantsAndKey.KEY_LAT,
-				ConstantsAndKey.KEY_URL, ConstantsAndKey.KEY_WEBURL}, ConstantsAndKey.KEY_ID + "='" + id +"'", null, null, null, null);
+				ConstantsAndKey.KEY_URL, ConstantsAndKey.KEY_WEBURL, ConstantsAndKey.KEY_TYPEIMG}, ConstantsAndKey.KEY_ID + "='" + id +"'", null, null, null, null);
 
 	}
 	
@@ -80,7 +81,7 @@ public class FavDataService {
 	public Cursor getFavoriteByAddress(String address) {
 		return mDb.query(ConstantsAndKey.DATABASE_TABLE, new String[] { ConstantsAndKey.KEY_ID, ConstantsAndKey.KEY_NAME,
 				ConstantsAndKey.KEY_ADDRESS, ConstantsAndKey.KEY_PHONENUMBER, ConstantsAndKey.KEY_LNG, ConstantsAndKey.KEY_LAT,
-				ConstantsAndKey.KEY_URL, ConstantsAndKey.KEY_WEBURL},
+				ConstantsAndKey.KEY_URL, ConstantsAndKey.KEY_WEBURL, ConstantsAndKey.KEY_TYPEIMG},
 				ConstantsAndKey.KEY_ADDRESS + " like " + "'%" + address + "%'", null, null, null,
 				ConstantsAndKey.KEY_ADDRESS);
 
@@ -90,7 +91,7 @@ public class FavDataService {
 	public Cursor getAllFavorites(){
     	return mDb.query(ConstantsAndKey.DATABASE_TABLE, new String[]{ConstantsAndKey.KEY_ID, ConstantsAndKey.KEY_NAME, 
     			ConstantsAndKey.KEY_ADDRESS, ConstantsAndKey.KEY_PHONENUMBER, ConstantsAndKey.KEY_RATE, ConstantsAndKey.KEY_LNG, 
-    			ConstantsAndKey.KEY_LAT, ConstantsAndKey.KEY_URL, ConstantsAndKey.KEY_WEBURL}, 
+    			ConstantsAndKey.KEY_LAT, ConstantsAndKey.KEY_URL, ConstantsAndKey.KEY_WEBURL,ConstantsAndKey.KEY_TYPEIMG}, 
     			null, null, null, null, null);
     }
 	
@@ -105,11 +106,11 @@ public class FavDataService {
     	if(rows>0){
     		mCursor.moveToFirst();
 	    	
-	    	mArrayList.add(new PlaceDetail(mCursor.getString(0), mCursor.getString(1), mCursor.getString(2), mCursor.getString(3), mCursor.getFloat(4), mCursor.getDouble(5), mCursor.getDouble(6), mCursor.getString(7), mCursor.getString(8)));
+	    	mArrayList.add(new PlaceDetail(mCursor.getString(0), mCursor.getString(1), mCursor.getString(2), mCursor.getString(3), mCursor.getFloat(4), mCursor.getDouble(5), mCursor.getDouble(6), mCursor.getString(7), mCursor.getString(8), mCursor.getInt(9)));
 	    	
 	      for(mCursor.moveToFirst(); mCursor.moveToNext(); mCursor.isAfterLast()) {
 	          // The Cursor is now set to the right position
-	    	  mArrayList.add(new PlaceDetail(mCursor.getString(0), mCursor.getString(1), mCursor.getString(2), mCursor.getString(3), mCursor.getFloat(4), mCursor.getDouble(5), mCursor.getDouble(6), mCursor.getString(7), mCursor.getString(8)));
+	    	  mArrayList.add(new PlaceDetail(mCursor.getString(0), mCursor.getString(1), mCursor.getString(2), mCursor.getString(3), mCursor.getFloat(4), mCursor.getDouble(5), mCursor.getDouble(6), mCursor.getString(7), mCursor.getString(8),mCursor.getInt(9)));
 	      }
     	}
     	

@@ -11,6 +11,7 @@ public class ConstantsAndKey {
     public static final String KEY_PHONENUMBER = "phone";
     public static final String KEY_URL = "mapurl";
     public static final String KEY_WEBURL = "weburl";
+    public static final String KEY_TYPEIMG = "typeimg";
     public static final String KEY_RATE = "rating";
     public static final String KEY_NAME = "name";
     public static final String DATABASE_NAME = "PlaceHelper";    
@@ -27,7 +28,10 @@ public class ConstantsAndKey {
     public static final String KEY_CURLOC = "curloc";
     public static final String KEY_LST_PLACES = "place list";
     public static final String KEY_SHOW_ALL = "show all";
+    public static final String KEY_FROM_FAV = "from favorite";
+    public static final String KEY_PL_DETAIL = "place detail";
     public static final String TAG_EXCEPTION = "exception";
+    
     
 	// *Integer Constant*
 	public static final String RADIUS = "5";

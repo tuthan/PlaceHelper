@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="delete">Delete</string>
-    <string name="del_all">Delete All</string>
+    <string name="select_all">Select All</string>
 	<string name="fav_delete">Are you sure?</string>
 	<string name="fav_del_all">Do you want to delete all favorites?</string>
         

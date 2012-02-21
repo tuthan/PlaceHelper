@@ -17,7 +17,7 @@ public class LocationHelper {
          {
              locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
          }
-    	 if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)==false || 
+    	 if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)==false && 
     			 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)==false){
     		 return true;
     	 }

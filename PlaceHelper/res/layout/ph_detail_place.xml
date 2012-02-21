@@ -53,7 +53,7 @@
 				  			android:layout_marginTop="10dp"
 				  			android:layout_alignParentLeft="true"
 				  			android:layout_toLeftOf="@id/de_add_fav"
-				  			android:text="Swiss-BelHotel Wooshu "/>
+				  			android:text="Name: "/>
   						 
 		  				
 						
@@ -67,7 +67,7 @@
 				  			android:layout_height="wrap_content"				  			
 				  			android:layout_marginLeft="15dp"
 				  			android:textColor="@color/black"										  													  			
-				  			android:text="Address: 253 Pham Van Thuan"/>
+				  			android:text="Address:"/>
 
 						<TextView
 						    android:id="@+id/de_phone"
@@ -76,7 +76,7 @@
 				  			android:layout_marginLeft="15dp"
 				  			android:textColor="@color/black"
 				  			android:inputType="phone"
-						    android:text="+84987645872" />
+						    android:text="Phone:" />
 
 						<TextView
 						    android:id="@+id/de_website"
@@ -85,7 +85,7 @@
 						    android:layout_marginLeft="15dp"
 						    android:autoLink="web"						    
 						    android:maxLines="1"
-						    android:text="Go to website"
+						    android:text="Website"
 						    android:textColor="@color/black" />
 
 						<RatingBar
@@ -95,14 +95,14 @@
 						    android:layout_height="wrap_content"
 						    android:layout_marginLeft="15dp"						    
 						    android:numStars="5"
-						    android:rating="4.6" />
+						    android:rating="1" />
 										
   						</LinearLayout>
   			<!--End of brief info-->
   						
   						
 			<!-- Detail info-->
-			<LinearLayout 
+		<!-- 	<LinearLayout 
 			   
 			    android:orientation="vertical"
 			    android:layout_width="fill_parent"
@@ -113,8 +113,8 @@
   						  					    			 
 			    android:background="@drawable/detail_bg">
 			
-			 </LinearLayout>
-<!-- End of info -->
+			 </LinearLayout>-->
+<!-- End of info --> 
 <!-- Rewiew -->
 		
 		<LinearLayout 
@@ -125,10 +125,14 @@
 				android:layout_marginLeft="8dp"
 	  			android:layout_marginRight="8dp"	  			  		    				 						    		
 			    >
+
+			
+
 						</LinearLayout>
 		</LinearLayout>
 		</ScrollView>						
 <!-- End of Rewiew -->
+
 <!-- Button bar -->
 
 			<LinearLayout
@@ -140,6 +144,7 @@
 			    android:layout_marginBottom="4dp"			    
 			    android:layout_alignParentBottom="true"			   
 			    android:background="@drawable/bottom_bar_bg"
+			    android:id="@+id/dt_btn_bar"
 			    android:orientation="horizontal" >
 
 			    <LinearLayout
@@ -269,4 +274,12 @@
 			    </LinearLayout>
 			</LinearLayout>
 <!-- End of Button Bar -->
+<ImageView
+			    android:id="@+id/google"
+			    android:layout_above="@id/dt_btn_bar"
+			    android:layout_alignParentRight="true"
+			    android:layout_marginRight="10dp"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:src="@drawable/powered_by_google_on_non_white" />
 </RelativeLayout>

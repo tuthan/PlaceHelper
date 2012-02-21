@@ -8,7 +8,7 @@ public class FavTable {
 	
 	//SQL statement 
 	private static final String DATABASE_CREATE = "create table " + ConstantsAndKey.DATABASE_TABLE + "( _id text primary key, "
-			+ "name text not null, address text not null, phone text,rating real, lng real, lat real, mapurl text, weburl text);";
+			+ "name text not null, address text not null, phone text,rating real, lng real, lat real, mapurl text, weburl text, typeimg int);";
 	
 	public static void onCreate(SQLiteDatabase database) {
 		database.execSQL(DATABASE_CREATE);

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/mn_changle_location" android:icon="@drawable/settings_location_icon" android:title="Đổi Vị Trí"></item>
-    <item android:id="@+id/mn_lstfavorite" android:icon="@drawable/favorites_icon" android:title="@string/favorite"></item>
-    <item android:id="@+id/mn_about" android:icon="@drawable/about" android:title="@string/about"></item>
+   <!--  <item android:id="@+id/mn_changle_location" android:icon="@drawable/settings_location_icon" android:title="Đổi Vị Trí"></item> -->
+    <item android:id="@+id/mn_lstfavorite" android:icon="@drawable/favorites_icon" android:title="@string/favorite"></item>    
     <item android:id="@+id/setting" android:icon="@drawable/ic_settings" android:title="@string/setting"></item>
+    <item android:id="@+id/mn_about" android:icon="@drawable/about" android:title="@string/about"></item>
 </menu>

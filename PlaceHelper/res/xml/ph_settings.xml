@@ -45,7 +45,7 @@
         android:key="@string/prefkey_radius"
         android:title="@string/radius"
         android:summary="@string/rad_sum"        
-        android:inputType="number"
+        android:inputType="phone"
         android:numeric="integer"
         android:defaultValue="5"/>   
     </PreferenceCategory>

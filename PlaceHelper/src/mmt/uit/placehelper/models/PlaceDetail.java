@@ -1,8 +1,13 @@
 package mmt.uit.placehelper.models;
 
+import mmt.uit.placehelper.R;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.api.client.util.Key;
 
-public class PlaceDetail extends BasePlace {
+public class PlaceDetail extends BasePlace implements Parcelable{
 
 
 	@Key("formatted_address")
@@ -17,11 +22,17 @@ public class PlaceDetail extends BasePlace {
 	@Key
 	private String website;
 	
+	private int typeImg = R.drawable.default_icon;
+	
+	public PlaceDetail (Parcel in){
+		readFromParcel(in);
+	}
 	public PlaceDetail(){
 		
 	}
+	
 	public PlaceDetail(String id, String name, 
-			 String address, String phone, float rating, double lng, double lat, String url, String weburl) {
+			 String address, String phone, float rating, double lng, double lat, String url, String weburl, int img) {
 			 PlaceLocation pl = new PlaceLocation(lat, lng);
 			 this.id = id;
 			 this.name = name;
@@ -32,8 +43,54 @@ public class PlaceDetail extends BasePlace {
 			 this.geometry.location = pl;
 			 this.url =url;
 			 this.website = weburl;
+			 this.typeImg = img;
 			 }
+	@Override
+	public int describeContents() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(id);
+		dest.writeString(name);
+		dest.writeString(address);
+		dest.writeString(phone);
+		dest.writeDouble(distance);
+		dest.writeParcelable(geometry, flags);
+		dest.writeByte((byte)(favorite?1:0));
+		dest.writeFloat(rating);
+		dest.writeString(url);
+		dest.writeString(website);
+		dest.writeInt(typeImg);
+		
+	}
+	
+	private void readFromParcel (Parcel in){
+		
+		this.id = in.readString();
+		this.name = in.readString();
+		this.address = in.readString();
+		this.phone = in.readString();
+		this.distance = in.readDouble();
+		this.geometry = in.readParcelable(MyGeometry.class.getClassLoader());
+		this.favorite = in.readByte()==1;
+		this.rating = in.readFloat();
+		this.url = in.readString();
+		this.website = in.readString();
+		this.typeImg = in.readInt();
+	}
+	
+    public static final Parcelable.Creator<PlaceDetail> CREATOR = new Parcelable.Creator<PlaceDetail>() {
+    	public PlaceDetail createFromParcel(Parcel source) {
+    		return new PlaceDetail(source);
+    	}
+    	
+    	public PlaceDetail[] newArray(int size) {
+    		return new PlaceDetail[size];
+    	}
+	};
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
@@ -89,6 +146,18 @@ public class PlaceDetail extends BasePlace {
 	 */
 	public void setWebsite(String website) {
 		this.website = website;
+	}
+	/**
+	 * @return the typeImg
+	 */
+	public int getTypeImg() {
+		return typeImg;
+	}
+	/**
+	 * @param typeImg the typeImg to set
+	 */
+	public void setTypeImg(int typeImg) {
+		this.typeImg = typeImg;
 	}
 
 	

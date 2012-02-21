@@ -257,10 +257,10 @@ public class CategoriesListActivity extends Activity {
 			intent.putExtras(b);
 			startActivity(intent);
 			return true;
-		case R.id.mn_changle_location:
+		/*case R.id.mn_changle_location:
 			Intent intent2 = new Intent(getApplicationContext(), ChangeLocationActivity.class);
 			startActivity(intent2);
-			return true;
+			return true;*/
 		case R.id.mn_about:			
 			showDialog(ConstantsAndKey.ABOUT);
 			return true;
@@ -318,7 +318,7 @@ public class CategoriesListActivity extends Activity {
 					.setNegativeButton(R.string.ok, null).show();
 		case ConstantsAndKey.RESTORE_LOC: 
 			return new AlertDialog.Builder(this)
-            .setIcon(R.drawable.app_icon)
+            .setIcon(R.drawable.default_icon)
             .setTitle(R.string.ask_save)
             .setPositiveButton("CĂ³", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {

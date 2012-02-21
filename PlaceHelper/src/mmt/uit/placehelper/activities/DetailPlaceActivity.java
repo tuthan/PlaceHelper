@@ -1,11 +1,8 @@
 package mmt.uit.placehelper.activities;
 
-import java.util.Locale;
-
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.models.PlaceDetailRs;
-import mmt.uit.placehelper.models.PlaceLocation;
 import mmt.uit.placehelper.services.FavDataService;
 import mmt.uit.placehelper.services.SearchPlace;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
@@ -15,7 +12,6 @@ import mmt.uit.placehelper.R.id;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -40,16 +36,12 @@ public class DetailPlaceActivity extends Activity {
 	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite;
 	//Image Viewav
 	private ImageView add_fav;
-	//other
-	private Bitmap mBitmap;
 	private RatingBar ratBar;	
-	private WebView mWebView;	
-	private Boolean fromFv;
 	private PlaceDetail plDetail;	
 	private Place place;
-	PlaceLocation curLoc;
-	Bundle mBundle;
+	private Bundle mBundle;
 	private String lang = "en";
+	private int img;
 	private SharedPreferences mSharePref;
 	
 	@Override
@@ -72,14 +64,22 @@ public class DetailPlaceActivity extends Activity {
 		btnFavorite.setOnClickListener(mClickListener);
 		btnMap.setOnClickListener(mClickListener);
 		mBundle = getIntent().getExtras();
+		if(mBundle.getBoolean(ConstantsAndKey.KEY_FROM_FAV)){
+			plDetail = mBundle.getParcelable(ConstantsAndKey.KEY_PL_DETAIL);
+			setDetail(plDetail);
+		}
+		else
+		{
 		place = mBundle.getParcelable("place");
-		curLoc = mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);
+		img = mBundle.getInt("img");
+		mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);
 		mSharePref = PreferenceManager.getDefaultSharedPreferences(this);
     	if(mSharePref!=null){
     	lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);    	
     	}
 		GetDetail gd = new GetDetail(lang);
 		gd.execute(place);
+		}
 		
 		}
 	
@@ -106,42 +106,7 @@ public class DetailPlaceActivity extends Activity {
 				// TODO Auto-generated method stub
 				if (result!=null && result.getStatus().contentEquals(ConstantsAndKey.STATUS_OK)){	
 					plDetail = result.getResult();
-					txtPlaceName.setText(result.getResult().getName());
-					txtAddress.setText(result.getResult().getAddress());
-					ratBar.setRating(result.getResult().getRating());
-					txtPhone.setText(result.getResult().getPhone());
-					txtWebsite.setText(result.getResult().getWebsite());					
-					if (place.isFavorite()){
-						add_fav.setImageResource(R.drawable.ic_rsfavorite);
-					}
-					else {
-						add_fav.setOnClickListener(new OnClickListener() {
-							
-							@Override
-							public void onClick(View v) {
-								// TODO Auto-generated method stub
-								FavDataService dataService = new FavDataService(getApplicationContext());
-								dataService.open();
-								
-								if(dataService.isExisted(plDetail.getId())){
-									Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
-									dataService.close();
-								}else{
-									dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().location.getLng(), plDetail.getGeometry().location.getLat(), plDetail.getUrl(), plDetail.getWebsite());
-									dataService.close();
-									Toast.makeText(getApplicationContext(), getResources().getString(R.string.de_success), Toast.LENGTH_LONG).show();
-									add_fav.setImageResource(R.drawable.ic_rsfavorite);
-									add_fav.setClickable(false);
-								}
-							}
-						});
-					}
-					/*mWebView.getSettings().setJavaScriptEnabled(true);			
-					mWebView.getSettings().setDomStorageEnabled(true);	
-					
-					String reviewURL = result.result.url + "&view=feature&mcsrc=google_reviews&num=10&start=0";
-					mWebView.loadUrl(reviewURL);*/
-					
+					setDetail(plDetail);
 							
 				}
 				else
@@ -149,6 +114,38 @@ public class DetailPlaceActivity extends Activity {
 			}
 		}
 		
+		private void setDetail (PlaceDetail item){							
+			txtPlaceName.setText(item.getName());
+			txtAddress.setText(item.getAddress());
+			ratBar.setRating(item.getRating());
+			txtPhone.setText(item.getPhone());
+			txtWebsite.setText(item.getWebsite());					
+			if (item.isFavorite()){
+				add_fav.setImageResource(R.drawable.ic_rsfavorite);
+			}
+			else {
+				add_fav.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						FavDataService dataService = new FavDataService(getApplicationContext());
+						dataService.open();
+						
+						if(dataService.isExisted(plDetail.getId())){
+							Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
+							dataService.close();
+						}else{
+							dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().location.getLng(), plDetail.getGeometry().location.getLat(), plDetail.getUrl(), plDetail.getWebsite(), img);
+							dataService.close();
+							Toast.makeText(getApplicationContext(), getResources().getString(R.string.de_success), Toast.LENGTH_LONG).show();
+							add_fav.setImageResource(R.drawable.ic_rsfavorite);
+							add_fav.setClickable(false);
+						}
+					}
+				});
+			}			
+		}
 		private class WebInfoClient extends WebViewClient {
 			@Override
 		    public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -157,24 +154,10 @@ public class DetailPlaceActivity extends Activity {
 		        return true;
 		    }
 			
-			/*@Override
-			public void onPageFinished(WebView view, String url) {
-				// TODO Auto-generated method stub
-				view.loadUrl("javascript:window.HTMLOUT.showHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
-			}*/
+			
 		}	
 		
-	/*	class MyJavaScriptInterface  
-		{  
-		    
-		    public void showHTML(String html)  
-		    {  
-		        Log.v("html", html);
-		    }  
-		}  */
 
-	
-	
 	
 	//Button Click Listener
 		private View.OnClickListener mClickListener = new View.OnClickListener() {
@@ -238,9 +221,10 @@ public class DetailPlaceActivity extends Activity {
 						Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
 						dataService.close();
 					}else{
-						dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().location.getLng(), plDetail.getGeometry().location.getLat(), plDetail.getUrl(), plDetail.getWebsite());
+						dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().location.getLng(), plDetail.getGeometry().location.getLat(), plDetail.getUrl(), plDetail.getWebsite(),img);
 						dataService.close();
 						Toast.makeText(getApplicationContext(), "Successed", Toast.LENGTH_LONG).show();
+						add_fav.setImageResource(R.drawable.ic_rsfavorite);
 					}
 				}
 				}

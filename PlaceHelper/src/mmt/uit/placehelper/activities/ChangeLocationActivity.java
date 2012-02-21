@@ -58,7 +58,7 @@ public class ChangeLocationActivity extends ListActivity {
 		switch (id){
 		case ConstantsAndKey.CHANGE_LOC: 
 			return new AlertDialog.Builder(this)
-            .setIcon(R.drawable.app_icon)
+            .setIcon(R.drawable.default_icon)
             .setTitle("Do you want set to this location")
             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
@@ -69,7 +69,7 @@ public class ChangeLocationActivity extends ListActivity {
                     mEditor.putFloat(ConstantsAndKey.KEY_LNG, new Float(lstAd.get(0).getLng()));
                     mEditor.commit();
                     Toast.makeText(getApplicationContext(), "Your Location was saved!", Toast.LENGTH_SHORT).show();
-                    Intent mIntent = new Intent(getApplicationContext(), CategoriesActivity.class);
+                    Intent mIntent = new Intent(getApplicationContext(), CategoriesListActivity.class);
                     Bundle mBundle = new Bundle();
                     mBundle.putDouble(ConstantsAndKey.KEY_LAT, lstAd.get(0).getLat());
                     mBundle.putDouble(ConstantsAndKey.KEY_LNG, lstAd.get(0).getLng());

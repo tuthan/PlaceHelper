@@ -65,7 +65,7 @@ public class SearchPlace {
 				if(types!=null){
 				mUrl.put("types",types);}
 				mUrl.put("key", API_KEY);				
-				Log.v(LOG_GETLIST, "url= " + mUrl);
+				//Log.v(LOG_GETLIST, "url= " + mUrl);
 				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
 				HttpResponse response = request.execute();
 				int sttCode = response.getStatusCode();
@@ -110,7 +110,7 @@ public class SearchPlace {
 				mUrl.put("sensor", "true");
 				mUrl.put("key", API_KEY);
 				mUrl.put("lang", lang);
-				Log.v(LOG_GETDETAIL, "url= " + mUrl);
+				//Log.v(LOG_GETDETAIL, "url= " + mUrl);
 				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
 				pld = request.execute().parseAs(PlaceDetailRs.class);
 				Log.v(LOG_GETDETAIL, "Result: " + pld.getStatus() + pld.getResult().toString());

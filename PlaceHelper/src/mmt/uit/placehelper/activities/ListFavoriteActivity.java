@@ -3,13 +3,17 @@ package mmt.uit.placehelper.activities;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.w3c.dom.ls.LSInput;
+
 import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.services.FavDataService;
+import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.R;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,8 +36,9 @@ public class ListFavoriteActivity extends ListActivity {
 	private List<PlaceDetail> favList;
 	protected static final int CONTEXTMENU_DELETEITEM = 0;
 	protected static final int CONTEXTMENU_DELETEALL = 1;		
-	private ImageButton btnMulti, btnDelete, btnDelAll;
+	private ImageButton btnMulti, btnDelete, btnSelectAll;
 	private boolean isMultiSl = false;
+	private boolean isSelectAll = false;
 	private Context mContext;
 	private final int GET_FAV=1;
 	private final int DELETE_FAV=2;
@@ -48,10 +53,9 @@ public class ListFavoriteActivity extends ListActivity {
 		btnMulti = (ImageButton)findViewById(R.id.btnMultiselect);
 		btnMulti.setOnClickListener(toggleCheckBox);
 		btnDelete =(ImageButton)findViewById(R.id.btnDelete);
-		btnDelete.setOnClickListener(delete);
-		btnDelete.setClickable(false);
-		btnDelAll =(ImageButton)findViewById(R.id.btnDeleteAll);
-		btnDelAll.setOnClickListener(deleteAll);
+		btnDelete.setOnClickListener(delete);		
+		btnSelectAll =(ImageButton)findViewById(R.id.btnSelectAll);
+		btnSelectAll.setOnClickListener(selectAll);
 		GetFavorite gfl = new GetFavorite();
 		gfl.execute(GET_FAV);
 		
@@ -64,42 +68,25 @@ public class ListFavoriteActivity extends ListActivity {
 			// TODO Auto-generated method stub
 			isMultiSl = !isMultiSl;
 			rsAdapter = new FavoriteAdapter(mContext,
-					R.layout.ph_favorite_row, favList,isMultiSl);
+					R.layout.ph_favorite_row, favList,isMultiSl,isSelectAll);
 			setListAdapter(rsAdapter);
 			
 			
 		}
 	};
 	
-	View.OnClickListener deleteAll = new View.OnClickListener() {
+	View.OnClickListener selectAll = new View.OnClickListener() {
 		
 		@Override
 		public void onClick(View arg0) {
 			
-			AlertDialog.Builder alertBox = new AlertDialog.Builder(mContext);
-			
-			alertBox.setMessage(R.string.fav_del_all);
-			//Yes
-			alertBox.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+			if(isMultiSl){
+				isSelectAll = !isSelectAll;
+				rsAdapter = new FavoriteAdapter(mContext,
+						R.layout.ph_favorite_row, favList,isMultiSl,isSelectAll);
+				setListAdapter(rsAdapter);			
 				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {						
-					GetFavorite gfl = new GetFavorite();
-					gfl.execute(DELETE_ALL);
-				}
-			});
-			//No
-			alertBox.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-				
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-					
-				}
-			});
-			//Show dialog
-			if(listFavorites.getChildCount()!=0)
-			alertBox.show();
+			}
 		}
 	};
 	
@@ -107,7 +94,10 @@ public class ListFavoriteActivity extends ListActivity {
 			
 			@Override
 			public void onClick(View v) {
-				AlertDialog.Builder alertBox = new AlertDialog.Builder(mContext);
+				if (isMultiSl){
+					GetFavorite gfl = new GetFavorite();
+					gfl.execute(DELETE_FAV);
+				/*AlertDialog.Builder alertBox = new AlertDialog.Builder(mContext);
 				alertBox.setMessage(R.string.fav_delete);
 				//Yes
 				alertBox.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -128,8 +118,9 @@ public class ListFavoriteActivity extends ListActivity {
 					}
 				});
 				//Show dialog
-				alertBox.show();
+				alertBox.show();*/
 				
+			}
 			}
 		};
 		
@@ -179,7 +170,7 @@ public class ListFavoriteActivity extends ListActivity {
 			if(result!=null){
 			favList =  result;
 			rsAdapter = new FavoriteAdapter(mContext,
-					R.layout.ph_favorite_row, favList,isMultiSl);
+					R.layout.ph_favorite_row, favList,isMultiSl,isSelectAll);
 			listFavorites.setAdapter(rsAdapter);
 			}
 		}
@@ -188,30 +179,20 @@ public class ListFavoriteActivity extends ListActivity {
 	
 	
 
-	/*@Override
+	
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		// Get the item that was clicked
-		FavoriteModel o = (FavoriteModel) this.getListAdapter().getItem(position);
-		
+		PlaceDetail item = favList.get(position);	
+		item.setFavorite(true);
 		Bundle b = new Bundle();
-		b.putBoolean("fromFv", true);
-		b.putDouble("curlon", curLon);
-		b.putDouble("curlat", curLat);
-		b.putString("title", o.getTitle());
-		b.putString("address", o.getAddress());
-		b.putString("addressFull", o.getAddressLines());
-		b.putString("phone", o.getPhoneNumber());
-		b.putString("map", o.getStaticMapUrl());
-		b.putString("web", o.getWebUrl());
-		b.putString("lng", o.getLng());
-		b.putString("lat", o.getLat());
-		b.putString("webUrl", o.getWebUrl());
+		b.putBoolean(ConstantsAndKey.KEY_FROM_FAV, true);
+		b.putParcelable(ConstantsAndKey.KEY_PL_DETAIL, item);
 		Intent mIntent = new Intent(getApplicationContext(), DetailPlaceActivity.class);
 		mIntent.putExtras(b);
 		startActivity(mIntent);
 		
-	}*/
+	}
 	
 	private class FavoriteAdapter extends ArrayAdapter<PlaceDetail> {
 
@@ -219,16 +200,18 @@ public class ListFavoriteActivity extends ListActivity {
 		int resourceId;
 		List<PlaceDetail> array;
 		boolean isMultiSl = false;
+		boolean isSelectAll = false;
 		
 		
 		public FavoriteAdapter(Context context, int textViewResourceId,
-				List<PlaceDetail> objects, boolean multi) {
+				List<PlaceDetail> objects, boolean multi, boolean isSelectAll) {
 			super(context, textViewResourceId, objects);
 			// TODO Auto-generated constructor stub
 			
 			this.resourceId = textViewResourceId;
 			this.array = objects;
 			this.isMultiSl = multi;
+			this.isSelectAll = isSelectAll;
 		}
 		
 			
@@ -247,32 +230,15 @@ public class ListFavoriteActivity extends ListActivity {
 				if(isMultiSl){
 					CheckBox mCb = (CheckBox)view.findViewById(R.id.fav_checkbox);
 					mCb.setVisibility(View.VISIBLE);
+					mCb.setChecked(isSelectAll);
 				}
+				
 				TextView name = (TextView) view.findViewById(R.id.fav_name);
 				//TextView dis = (TextView) view.findViewById(R.id.fav_distance);	
 				TextView add = (TextView) view.findViewById(R.id.fav_address);
 				ImageView imgItem = (ImageView)view.findViewById(R.id.fav_img);
 				RatingBar rateBar = (RatingBar)view.findViewById(R.id.fav_rate_bar);
-				
-				
-				String s = array.get(position).getName();
-				if (s.contains("Bank") || s.contains("bank") || s.contains("Union") || s.contains("Credit")) {
-					imgItem.setImageResource(R.drawable.banks);
-				}
-				else if(s.contains("Plaza") || s.contains("Hotel") || s.contains("Inn") || s.contains("Suites")){
-					imgItem.setImageResource(R.drawable.hotel);
-				}else if(s.contains("Airport") || s.contains("Flight") ){
-					imgItem.setImageResource(R.drawable.airport);
-				}else if(s.contains("Taxi") || s.contains("Cab") || s.contains("Limos") || s.contains("Limo")){
-					imgItem.setImageResource(R.drawable.taxi);
-				}else if(s.contains("ATM")){
-					imgItem.setImageResource(R.drawable.atm);
-				}
-				else {
-					imgItem.setImageResource(R.drawable.app_icon);
-				}
-				
-		
+				imgItem.setImageResource(place.getTypeImg());				
 				name.setText(place.getName());
 				add.setText(place.getAddress());
 				rateBar.setRating(place.getRating());

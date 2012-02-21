@@ -19,7 +19,6 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,7 +29,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -41,9 +39,7 @@ import android.widget.Toast;
 public class SearchResultActivity extends ListActivity {
 	
 
-	private ImageButton btnSearch;
-	private ImageButton btnShowAllMap;
-	private TextView txtCurAdd, txtrs;
+	private TextView  txtrs;
 	private String keyWord;
     private RslistAdapter rsAdapter;       
     private PlaceLocation curLoc = new PlaceLocation();
@@ -77,7 +73,11 @@ public class SearchResultActivity extends ListActivity {
     	mSharePref = PreferenceManager.getDefaultSharedPreferences(mContext);
     	if(mSharePref!=null){
     	lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);
-    	radius = 1000*Integer.parseInt(mSharePref.getString(getResources().getString(R.string.prefkey_radius), "5"));
+    	String tmp = mSharePref.getString(getResources().getString(R.string.prefkey_radius), "5");    	
+    	if (tmp.equalsIgnoreCase("")){
+    		tmp="5";
+    	}
+    	radius = 1000*Integer.parseInt(tmp);
     	search_op = Integer.parseInt(mSharePref.getString(getResources().getString(R.string.prefkey_search), "1"));
     	}
         //Task to get place result from google place service
@@ -181,8 +181,10 @@ public class SearchResultActivity extends ListActivity {
 		Intent mIntent = new Intent(this, DetailPlaceActivity.class);
 		Place pl = lsPlace.getResults().get(position);
 		Bundle mBundle = new Bundle();
+		mBundle.putBoolean(ConstantsAndKey.KEY_FROM_FAV, false);
 		mBundle.putParcelable("place", pl);
 		mBundle.putParcelable(ConstantsAndKey.KEY_CURLOC, curLoc);
+		mBundle.putInt("img", img);
 		mIntent.putExtras(mBundle);
 		startActivity(mIntent);
 		
