@@ -163,9 +163,10 @@ public class CategoriesListActivity extends Activity {
 		
 		@Override
 		public void gotLocation(Location location) {
+			if (location!=null){
 			currentLoc = new Location(location);
 			hasLocation = true;
-			
+			}
 		}
 	};
     
@@ -435,6 +436,7 @@ public class CategoriesListActivity extends Activity {
              else
              {
                  cur_add.setText(R.string.err_address);
+                 loc_progress.setVisibility(View.GONE);
              }
          }
 

@@ -138,6 +138,7 @@ public class SearchResultActivity extends ListActivity {
 			if (result==null){
 				Toast.makeText(mContext, getResources().getText(R.string.seact_connect_error), Toast.LENGTH_SHORT).show();
 				txtrs.setText(getResources().getText(R.string.seact_connect_error));
+				search_progress.setVisibility(View.GONE);
 				return;
 			}
 			if (result!=null && result.getStatus().contentEquals(ConstantsAndKey.STATUS_OK)){			
