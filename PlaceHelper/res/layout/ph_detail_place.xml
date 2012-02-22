@@ -99,21 +99,89 @@
 										
   						</LinearLayout>
   			<!--End of brief info-->
-  						
-  						
-			<!-- Detail info-->
-		<!-- 	<LinearLayout 
+  			
+  					
+			<!-- Direction info-->
+			<LinearLayout 
+			   
+			    android:orientation="horizontal"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_marginTop="10dp"
+			    android:layout_marginLeft="8dp"
+  				android:layout_marginRight="8dp"  
+  				android:gravity="center_vertical"	  						  					    			
+			    >			
+  				
+			    <TextView		 		    
+		 		    android:layout_marginLeft="15dp"		 		    
+		 		    android:layout_width="wrap_content"
+		 		    android:layout_height="wrap_content"
+					android:text="@string/de_direction"		
+					android:textColor="@color/black" 
+					android:textStyle="bold"		    
+		 		    >
+  				</TextView>	
+			    
+  				<Spinner
+		 		    android:id="@+id/de_dir_mode"
+		 		    android:layout_width="fill_parent"
+		 		    android:layout_height="wrap_content" 
+		 		    android:prompt="@string/de_dir_mode_text"
+		 		    android:layout_marginLeft="8dp"
+		 		    android:entries="@array/arr_dir_mode"
+		 		    />
+			</LinearLayout>
+		 	<LinearLayout 
 			   
 			    android:orientation="vertical"
 			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
 			    android:layout_marginTop="10dp"
 			    android:layout_marginLeft="8dp"
-  				android:layout_marginRight="8dp"  	
-  						  					    			 
+  				android:layout_marginRight="8dp"  	  						  					    			
 			    android:background="@drawable/detail_bg">
+
+		 		
+
+		 		<TextView
+		 		    android:id="@+id/dt_distance"
+		 		    android:layout_marginLeft="15dp"
+		 		    android:layout_marginTop="10dp"
+		 		    android:layout_width="fill_parent"
+		 		    android:layout_height="wrap_content"
+					android:text="@string/de_distance"		
+					android:textColor="@color/green" 
+					android:textStyle="bold"		    
+		 		    >
+  				</TextView>	
+		 		<TextView
+		 		    android:id="@+id/dt_time"
+		 		    android:layout_marginLeft="15dp"
+		 		    android:layout_width="fill_parent"
+		 		    android:layout_height="wrap_content"
+					android:text="@string/de_time"	
+					android:textColor="@color/green"
+					android:textStyle="bold"	 		    
+		 		    >
+		 		    
+		 		</TextView>
+		 		
 			
-			 </LinearLayout>-->
+		 		<TextView
+		 		    android:id="@+id/dt_guide"
+		 		    android:layout_marginLeft="15dp"
+		 		    android:layout_marginRight="5dp"
+		 		    android:layout_width="fill_parent"
+		 		    android:layout_height="fill_parent"
+		 		    android:inputType="textMultiLine"					
+					android:textColor="@color/black"
+					android:maxLines="5"	 
+					android:scrollbars="vertical"		    
+		 		    >
+		 		    
+		 		</TextView>
+			 </LinearLayout>
 <!-- End of info --> 
 <!-- Rewiew -->
 		

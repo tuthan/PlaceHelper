@@ -1,12 +1,17 @@
 package mmt.uit.placehelper.services;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import mmt.uit.placehelper.models.Direction;
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceDetailRs;
 import mmt.uit.placehelper.models.PlacesList;
 
 import android.util.Log;
 
+import com.google.android.maps.GeoPoint;
 import com.google.api.client.googleapis.GoogleHeaders;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
@@ -29,12 +34,13 @@ public class SearchPlace {
 		//Log Tag
 		private static final String LOG_GETLIST = "pl_place_list";
 		private static final String LOG_GETDETAIL = "pl_place_detail";
+		private static final String LOG_GETDIRECTION = "pl_directions";
 		
 		// URL for different request
 		private static final String PLACES_SEARCH_URL =  "https://maps.googleapis.com/maps/api/place/search/json?";
 		//private static final String PLACES_AUTOCOMPLETE_URL = "https://maps.googleapis.com/maps/api/place/autocomplete/json?";
 		private static final String PLACES_DETAILS_URL = "https://maps.googleapis.com/maps/api/place/details/json?";
-		
+		private static final String DIRECTIONS_URL ="https://maps.googleapis.com/maps/api/directions/json?";
 				
 		private static HttpRequestFactory createRequestFactory(final HttpTransport transport) {
 			   
@@ -122,4 +128,32 @@ public class SearchPlace {
 			}
 			return pld;
 		}
+		
+		public static Direction getDirection (String origin, String dest, String mode){
+			GenericUrl mUrl = new GenericUrl(DIRECTIONS_URL);
+			Direction result = null;
+			HttpRequestFactory httpRequestFactory = createRequestFactory(transport);
+			try {
+				
+				mUrl.put("origin", origin);				
+				mUrl.put("destination", dest);
+				mUrl.put("mode", mode);
+				mUrl.put("sensor", "true");
+				mUrl.put("units", "metric");
+				Log.v(LOG_GETDIRECTION, "url= " + mUrl);
+				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
+				result = request.execute().parseAs(Direction.class);
+				Log.v(LOG_GETDIRECTION, "Result: " + result.getStatus());
+				
+			}
+			
+			catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return result;
+			
+		}
+		
+		
 }

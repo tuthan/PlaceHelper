@@ -3,6 +3,15 @@
     <string name="de_success">Add successed!</string>
     <string name="de_exist">Already in your list!!</string>
     <string name="de_webhint">Click to goto place website for more information!</string>
+    <string name="de_distance">Distance:</string>
+    <string name="de_time">Duration:</string>
+    <string-array name="arr_dir_mode">
+        <item >Driving</item>
+        <item >Walking</item>
+        <item >Bicycling</item>
+    </string-array>
+    <string name="de_dir_mode_text">Choose direction mode</string>
+    <string name="de_direction">Find directions for:</string>
 
     
 </resources>

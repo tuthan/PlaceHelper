@@ -1,20 +1,30 @@
 package mmt.uit.placehelper.activities;
 
+import java.net.UnknownHostException;
+
+import com.google.android.maps.GeoPoint;
+
+import mmt.uit.placehelper.models.Direction;
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceDetail;
 import mmt.uit.placehelper.models.PlaceDetailRs;
+import mmt.uit.placehelper.models.PlaceLocation;
 import mmt.uit.placehelper.services.FavDataService;
 import mmt.uit.placehelper.services.SearchPlace;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
+import mmt.uit.placehelper.utilities.PointAddressUtil;
 import mmt.uit.placehelper.R;
 import mmt.uit.placehelper.R.id;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,9 +32,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,7 +46,7 @@ public class DetailPlaceActivity extends Activity {
 	//Button Bar
 	private ImageButton btnCall, btnWeb, btnEmail, btnMap, btnFavorite; 
 	//Textview
-	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite;
+	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite,txtDistance,txtTime,txtDirection;
 	//Image Viewav
 	private ImageView add_fav;
 	private RatingBar ratBar;	
@@ -43,6 +56,10 @@ public class DetailPlaceActivity extends Activity {
 	private String lang = "en";
 	private int img;
 	private SharedPreferences mSharePref;
+	private PlaceLocation curLoc;
+	private Context mContext;
+	private Spinner spDirMode;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +76,15 @@ public class DetailPlaceActivity extends Activity {
 		txtAddress = (TextView)findViewById(R.id.de_address);
 		txtPhone = (TextView)findViewById(R.id.de_phone);
 		txtWebsite = (TextView)findViewById(R.id.de_website);
+		txtDistance = (TextView)findViewById(R.id.dt_distance);
+		txtTime = (TextView)findViewById(R.id.dt_time);
+		txtDirection = (TextView)findViewById(R.id.dt_guide);
 		ratBar = (RatingBar)findViewById(R.id.de_rate_bar);
 		add_fav = (ImageView)findViewById(R.id.de_add_fav);
 		btnFavorite.setOnClickListener(mClickListener);
 		btnMap.setOnClickListener(mClickListener);
+		spDirMode = (Spinner)findViewById(R.id.de_dir_mode);
+		mContext = this;
 		mBundle = getIntent().getExtras();
 		if(mBundle.getBoolean(ConstantsAndKey.KEY_FROM_FAV)){
 			plDetail = mBundle.getParcelable(ConstantsAndKey.KEY_PL_DETAIL);
@@ -72,7 +94,7 @@ public class DetailPlaceActivity extends Activity {
 		{
 		place = mBundle.getParcelable("place");
 		img = mBundle.getInt("img");
-		mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);
+		curLoc = mBundle.getParcelable(ConstantsAndKey.KEY_CURLOC);
 		mSharePref = PreferenceManager.getDefaultSharedPreferences(this);
     	if(mSharePref!=null){
     	lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);    	
@@ -80,12 +102,32 @@ public class DetailPlaceActivity extends Activity {
 		GetDetail gd = new GetDetail(lang);
 		gd.execute(place);
 		}
-		
+						
+		}
+	
+	
+		private class MyOnItemSelectListener implements OnItemSelectedListener{
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int pos, long id) {
+				GetDirection getDir = new GetDirection();
+				getDir.execute(plDetail.getAddress(),parent.getItemAtPosition(pos).toString().toLowerCase());
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// nothing
+				
+			}
+			
 		}
 	
 		//Create Task to make request and get places detail
 		private class GetDetail extends AsyncTask<Place,Void, PlaceDetailRs>{
 			private String lang;
+			
 			
 			public GetDetail(String lang){
 				this.lang = lang;
@@ -97,7 +139,7 @@ public class DetailPlaceActivity extends Activity {
 				// TODO Auto-generated method stub
 								
 				PlaceDetailRs pd=null; //initialize place detail result						
-				pd = SearchPlace.getDetail(params[0].getReference(),lang);
+				pd = SearchPlace.getDetail(params[0].getReference(),lang);				 				
 				return pd;				
 			}
 			
@@ -107,12 +149,60 @@ public class DetailPlaceActivity extends Activity {
 				if (result!=null && result.getStatus().contentEquals(ConstantsAndKey.STATUS_OK)){	
 					plDetail = result.getResult();
 					setDetail(plDetail);
-							
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					GetDirection getDir = new GetDirection();
+					getDir.execute(result.getResult().getAddress(),"driving");
+					spDirMode.setOnItemSelectedListener(new MyOnItemSelectListener());
+											
 				}
 				else
+					{
 					Toast.makeText(getApplicationContext(), getResources().getText(R.string.seact_rq_error), Toast.LENGTH_SHORT).show();
+					}				
 			}
 		}
+		
+		//Create Task to make request and get places detail
+				private class GetDirection extends AsyncTask<String,Void, Direction>{
+					
+					
+					@Override
+					protected Direction doInBackground(String... params) {
+						Direction direct = new Direction();	
+						 GeoPoint point = new GeoPoint(
+			   			          (int) (curLoc.getLat() * 1E6), 
+			   			          (int) (curLoc.getLng() * 1E6));
+						 String currentAdd = "";
+						 try {
+					   			currentAdd = PointAddressUtil.ConvertPointToAddress(point, mContext);
+					   			}
+					   			catch (UnknownHostException ex){
+					   				ex.printStackTrace();
+					   			}
+						direct = SearchPlace.getDirection(currentAdd, params[0], params[1]);
+						/**
+						 * 
+						 */
+						return direct;				
+					}
+					
+					@Override
+					protected void onPostExecute(Direction result) {
+						// TODO Auto-generated method stub
+						
+						if(result !=null){
+							txtDistance.setText(getResources().getText(R.string.de_distance)+" " + result.getRoutes().get(0).getLegs().get(0).getDistance().getDistanceInText());
+							txtTime.setText(getResources().getText(R.string.de_time)+" " + result.getRoutes().get(0).getLegs().get(0).getDuration().getDurationInText());
+							txtDirection.setMovementMethod(new ScrollingMovementMethod());
+							txtDirection.setText(Html.fromHtml(result.getRoutes().get(0).getLegs().get(0).getInstructions()));
+						}
+					}
+				}
 		
 		private void setDetail (PlaceDetail item){							
 			txtPlaceName.setText(item.getName());
