@@ -49,5 +49,6 @@ public class ConstantsAndKey {
 	//Status CODE
 	public static final String STATUS_OK = "OK";
 	public static final String NO_RESULT = "ZERO_RESULTS";
+	public static final String NOT_FOUND = "NOT_FOUND";
 	
 }

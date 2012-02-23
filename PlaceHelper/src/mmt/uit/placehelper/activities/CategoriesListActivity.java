@@ -32,7 +32,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
@@ -160,8 +159,20 @@ public class CategoriesListActivity extends Activity {
     	
     	super.onStop();
     	//When activity stop also stop update location and stop task too.
-    	locHelper.stopLocationUpdates();
-    	getLoc.cancel(true);
+    	/*locHelper.stopLocationUpdates();
+    	getLoc.cancel(true);*/
+    }
+    
+    @Override
+    protected void onPause() {    	
+    	/*locHelper.stopLocationUpdates();
+    	getLoc.cancel(true);*/
+    	super.onPause();
+    }
+    
+    @Override
+    protected void onResume() {    	
+    	super.onResume();
     }
     
     public LocationResult locResult = new LocationResult() {
@@ -425,9 +436,9 @@ public class CategoriesListActivity extends Activity {
          {
              //Wait 15 seconds to see if we can get a location from either network or GPS, otherwise stop
              Long t = Calendar.getInstance().getTimeInMillis();
-             while (!hasLocation && Calendar.getInstance().getTimeInMillis() - t < 15000) {
+             while (!hasLocation && Calendar.getInstance().getTimeInMillis() - t < 30000) {
                  try {
-                     Thread.sleep(15000);
+                     Thread.sleep(30000);
                  } catch (InterruptedException e) {
                      e.printStackTrace();
                  }

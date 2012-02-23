@@ -54,8 +54,10 @@ public class ViewOnMapActivity extends MapActivity
 		
 		mapView = (MapView) findViewById(R.id.mapView);
 	    mapView.setBuiltInZoomControls(true);
+	    
 	        
 	    mapOverlays = mapView.getOverlays();
+	    
 	    
 	    mapController = mapView.getController(); 
 		mapController.setZoom(14);
@@ -117,11 +119,12 @@ public class ViewOnMapActivity extends MapActivity
 	
 	private void showAllPlace(PlacesList places)
 	{		  
-       	 
+       	 if (lsplaces !=null){
       	  
       	 for(Place pl:lsplaces.getResults()){
       		 showALocation(pl);
       	 }
+       	 }
     	 
 	}
 	

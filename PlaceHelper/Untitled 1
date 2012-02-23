@@ -1,108 +1,85 @@
 package mmt.uit.placehelper.utilities;
 
+
 import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Looper;
 
 public class LocationHelper {
-LocationManager locationManager;
+	LocationManager locationManager;
     private LocationResult locationResult;
     private boolean gpsEnabled = false;
     private boolean networkEnabled = false;
 
     public boolean isDisable (Context context){
-     if(locationManager == null)
+    	 if(locationManager == null)
          {
              locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
          }
-     if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)==false &&
-     locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)==false){
-     return true;
-     }
-     return false;
+    	 
+    	 gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    	 networkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+    	 
+    	 if (!gpsEnabled && !networkEnabled){
+    		 return true;
+    	 }
+    	 return false;
     }
-    public boolean getLocation(Context context, LocationResult result)
-    {
+    public boolean getLocation(Context context, LocationResult result) 
+    {       
         locationResult = result;
+        String mProviderName = LocationManager.NETWORK_PROVIDER;
+        Criteria criteria = new Criteria();		
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);				
+		
 
         if(locationManager == null)
         {
             locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+            mProviderName = locationManager.getBestProvider(criteria, true);	
         }
-            //exceptions thrown if provider not enabled
-            try
-            {
-                gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            }
-            catch (Exception ex) {}
-            try
-            {
-                networkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-            }
-            catch (Exception ex) {}
-
-            //dont start listeners if no provider is enabled
-            if(!gpsEnabled && !networkEnabled)
-            {
-                return false;
-            }
-
-            if(gpsEnabled)
-            { 
-            	new Thread (new Runnable() {
-					
-					@Override
-					public void run() {
-						Looper.prepare();
-						locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListenerGps); 
-						Looper.loop();
-					}
-				}).start();
-                        
-            }
-            if(networkEnabled)
-            {
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListenerNetwork);
-            }
+           locationManager.requestLocationUpdates(mProviderName, 0, 0, mylocationListener);
 
 
             GetLastLocation();
             return true;
     }
 
-    LocationListener locationListenerGps = new LocationListener() {
+    LocationListener mylocationListener = new LocationListener() {
         public void onLocationChanged(Location location)
         {
             locationResult.gotLocation(location);
-           
+            
 
         }
-        public void onProviderDisabled(String provider) {}
-        public void onProviderEnabled(String provider) {}
+        public void onProviderDisabled(String provider) {
+        	if (provider.equalsIgnoreCase(LocationManager.GPS_PROVIDER)){
+        		gpsEnabled = true;
+        	}
+        	if (provider.equalsIgnoreCase(LocationManager.NETWORK_PROVIDER)){
+        		networkEnabled = true;
+        	}
+        }
+        public void onProviderEnabled(String provider) {
+        	if (provider.equalsIgnoreCase(LocationManager.GPS_PROVIDER)){
+        		gpsEnabled = false;
+        	}
+        	if (provider.equalsIgnoreCase(LocationManager.NETWORK_PROVIDER)){
+        		networkEnabled = false;
+        	}
+        }
         public void onStatusChanged(String provider, int status, Bundle extra) {}
     };
 
-    LocationListener locationListenerNetwork = new LocationListener() {
-        public void onLocationChanged(Location location)
-        {
-            locationResult.gotLocation(location);
-            locationManager.removeUpdates(this);
-            locationManager.removeUpdates(locationListenerGps);
-
-        }
-        public void onProviderDisabled(String provider) {}
-        public void onProviderEnabled(String provider) {}
-        public void onStatusChanged(String provider, int status, Bundle extra) {}
-
-    };
+    
 
     private void GetLastLocation()
     {
             
-
+    		
             Location gpsLocation = null;
             Location networkLocation = null;
 
@@ -147,10 +124,9 @@ LocationManager locationManager;
     
     //Stop update location
     public void stopLocationUpdates()
-{
-locationManager.removeUpdates(locationListenerGps);
-locationManager.removeUpdates(locationListenerNetwork);
-}
+	    {
+	    locationManager.removeUpdates(mylocationListener);	    
+	    }
 
     
     

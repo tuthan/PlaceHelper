@@ -12,6 +12,7 @@
     </string-array>
     <string name="de_dir_mode_text">Choose direction mode</string>
     <string name="de_direction">Find directions for:</string>
+    <string name="de_dir_not_found">Can not find direction to here!</string>
 
     
 </resources>

@@ -47,7 +47,7 @@ public class DetailPlaceActivity extends Activity {
 	private ImageButton btnCall, btnWeb, btnEmail, btnMap, btnFavorite; 
 	//Textview
 	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite,txtDistance,txtTime,txtDirection;
-	//Image Viewav
+	//Image View
 	private ImageView add_fav;
 	private RatingBar ratBar;	
 	private PlaceDetail plDetail;	
@@ -148,13 +148,7 @@ public class DetailPlaceActivity extends Activity {
 				// TODO Auto-generated method stub
 				if (result!=null && result.getStatus().contentEquals(ConstantsAndKey.STATUS_OK)){	
 					plDetail = result.getResult();
-					setDetail(plDetail);
-					try {
-						Thread.sleep(3000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					setDetail(plDetail);					
 					GetDirection getDir = new GetDirection();
 					getDir.execute(result.getResult().getAddress(),"driving");
 					spDirMode.setOnItemSelectedListener(new MyOnItemSelectListener());
@@ -170,7 +164,9 @@ public class DetailPlaceActivity extends Activity {
 		//Create Task to make request and get places detail
 				private class GetDirection extends AsyncTask<String,Void, Direction>{
 					
-					
+					/**
+					 * @param params[0] destination address, params[1] is direction mode (driving, walking or bicycling)
+					 */
 					@Override
 					protected Direction doInBackground(String... params) {
 						Direction direct = new Direction();	
@@ -184,22 +180,29 @@ public class DetailPlaceActivity extends Activity {
 					   			catch (UnknownHostException ex){
 					   				ex.printStackTrace();
 					   			}
-						direct = SearchPlace.getDirection(currentAdd, params[0], params[1]);
-						/**
-						 * 
-						 */
+						direct = SearchPlace.getDirection(currentAdd, params[0], params[1]);						
+						
+						try {
+							Thread.sleep(3000);//Thread pause for 3s 
+						} catch (InterruptedException e) {							
+							e.printStackTrace();
+						}
 						return direct;				
 					}
 					
 					@Override
 					protected void onPostExecute(Direction result) {
-						// TODO Auto-generated method stub
 						
-						if(result !=null){
+						
+						if(result !=null&&result.getStatus().equalsIgnoreCase(ConstantsAndKey.STATUS_OK)){
 							txtDistance.setText(getResources().getText(R.string.de_distance)+" " + result.getRoutes().get(0).getLegs().get(0).getDistance().getDistanceInText());
 							txtTime.setText(getResources().getText(R.string.de_time)+" " + result.getRoutes().get(0).getLegs().get(0).getDuration().getDurationInText());
 							txtDirection.setMovementMethod(new ScrollingMovementMethod());
 							txtDirection.setText(Html.fromHtml(result.getRoutes().get(0).getLegs().get(0).getInstructions()));
+						}
+						
+						else {
+							txtDirection.setText(R.string.de_dir_not_found);
 						}
 					}
 				}
@@ -218,7 +221,7 @@ public class DetailPlaceActivity extends Activity {
 					
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
+						
 						FavDataService dataService = new FavDataService(getApplicationContext());
 						dataService.open();
 						

@@ -3,6 +3,7 @@ package mmt.uit.placehelper.utilities;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import com.google.android.maps.MapView;
 import com.google.android.maps.OverlayItem;
@@ -16,6 +17,12 @@ public class CustomOverlay extends BalloonItemizedOverlay<OverlayItem>{
 	public CustomOverlay(Drawable defaultMarker, MapView mapView) {
 		super(boundCenter(defaultMarker), mapView);
 		c = mapView.getContext();
+	}
+	
+	@Override
+	public void draw(Canvas canvas, MapView mapView, boolean shadow) {
+		// TODO Auto-generated method stub
+		super.draw(canvas, mapView, false);
 	}
 
 	public void addOverlay(OverlayItem overlay) {
