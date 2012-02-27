@@ -1,8 +1,14 @@
 package mmt.uit.placehelper.activities;
 
 import java.net.UnknownHostException;
+import java.util.List;
 
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
 
 import mmt.uit.placehelper.models.Direction;
 import mmt.uit.placehelper.models.Place;
@@ -12,39 +18,43 @@ import mmt.uit.placehelper.models.PlaceLocation;
 import mmt.uit.placehelper.services.FavDataService;
 import mmt.uit.placehelper.services.SearchPlace;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
+import mmt.uit.placehelper.utilities.CustomOverlay;
 import mmt.uit.placehelper.utilities.PointAddressUtil;
+import mmt.uit.placehelper.utilities.RouteOverlay;
 import mmt.uit.placehelper.R;
 import mmt.uit.placehelper.R.id;
 
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class DetailPlaceActivity extends Activity {
+public class DetailPlaceActivity extends MapActivity  {
 	
 	//Button Bar
-	private ImageButton btnCall, btnWeb, btnEmail, btnMap, btnFavorite; 
+	private ImageButton btnCall, btnWeb, btnDetail, btnMode, btnFavorite; 
 	//Textview
 	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite,txtDistance,txtTime,txtDirection;
 	//Image View
@@ -59,7 +69,14 @@ public class DetailPlaceActivity extends Activity {
 	private PlaceLocation curLoc;
 	private Context mContext;
 	private Spinner spDirMode;
-	
+	private MapView routeMap;
+	private List<Overlay> mapOverlays;
+	private MapController mapControl;	
+	private CustomOverlay itemizedOverlay;
+	private static final int LIST_MODE=1;
+	private static final int DETAIL_ROUTE=2;
+	private ProgressBar mProgressBar;
+	private String dirInstruct ="";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,9 +85,9 @@ public class DetailPlaceActivity extends Activity {
 		setContentView(R.layout.ph_detail_place);
 		//Get instance from view
 		btnWeb = (ImageButton)findViewById(id.btnFacebook);
-		btnCall = (ImageButton) findViewById(R.id.btnCall);
-		btnEmail = (ImageButton) findViewById(R.id.btnEmail);
-		btnMap = (ImageButton) findViewById(R.id.btnMap);
+		btnCall = (ImageButton) findViewById(R.id.btnTwitter);
+		btnDetail = (ImageButton) findViewById(R.id.btnDetail);
+		btnMode = (ImageButton) findViewById(R.id.btnDirMode);
 		btnFavorite = (ImageButton) findViewById(R.id.btnFavorite);
 		txtPlaceName = (TextView)findViewById(R.id.de_place_name);
 		txtAddress = (TextView)findViewById(R.id.de_address);
@@ -78,13 +95,21 @@ public class DetailPlaceActivity extends Activity {
 		txtWebsite = (TextView)findViewById(R.id.de_website);
 		txtDistance = (TextView)findViewById(R.id.dt_distance);
 		txtTime = (TextView)findViewById(R.id.dt_time);
-		txtDirection = (TextView)findViewById(R.id.dt_guide);
+		//txtDirection = (TextView)findViewById(R.id.dt_guide);
 		ratBar = (RatingBar)findViewById(R.id.de_rate_bar);
 		add_fav = (ImageView)findViewById(R.id.de_add_fav);
 		btnFavorite.setOnClickListener(mClickListener);
-		btnMap.setOnClickListener(mClickListener);
-		spDirMode = (Spinner)findViewById(R.id.de_dir_mode);
+		btnMode.setOnClickListener(mClickListener);
+		btnDetail.setOnClickListener(mClickListener);
+		mProgressBar = (ProgressBar)findViewById(R.id.de_progress);
+		//spDirMode = (Spinner)findViewById(R.id.de_dir_mode);
+		routeMap = (MapView)findViewById(R.id.de_routeMap);
 		mContext = this;
+		//Map settings
+    	routeMap.setBuiltInZoomControls(true);
+    	mapOverlays = routeMap.getOverlays();
+    	mapControl = routeMap.getController();
+    	mapControl.setZoom(15);
 		mBundle = getIntent().getExtras();
 		if(mBundle.getBoolean(ConstantsAndKey.KEY_FROM_FAV)){
 			plDetail = mBundle.getParcelable(ConstantsAndKey.KEY_PL_DETAIL);
@@ -99,19 +124,74 @@ public class DetailPlaceActivity extends Activity {
     	if(mSharePref!=null){
     	lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);    	
     	}
+    	
+    	
+    	
 		GetDetail gd = new GetDetail(lang);
 		gd.execute(place);
 		}
 						
 		}
 	
-	
+		
+		@Override
+		protected Dialog onCreateDialog(int id) {
+			switch(id){
+			case LIST_MODE:
+				return new AlertDialog.Builder(this)
+                .setTitle(R.string.de_dir_mode_text)
+                .setItems(R.array.arr_dir_mode, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    	GetDirection getDir = new GetDirection(getResources().getIntArray(R.array.dir_color)[which]);
+        				getDir.execute(plDetail.getAddress(),getResources().getStringArray(R.array.arr_dir_mode_value)[which]);
+                    }
+                })
+                .create();
+				
+			case DETAIL_ROUTE:
+	            return new AlertDialog.Builder(this)
+	                .setIcon(R.drawable.ic_route)
+	                .setTitle(R.string.de_detail_route)
+	                .setMessage(dirInstruct)
+	                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+	                    public void onClick(DialogInterface dialog, int whichButton) {
+	    
+	                        dismissDialog(DETAIL_ROUTE);
+	                    }
+	                })
+	                
+	                .create();
+			}
+			return null;
+		}
+		
+		//Show current location on map
+		private void showMarker(GeoPoint point, int  drawableId, boolean isCenter, String title)
+		{
+			Drawable drawable = this.getResources().getDrawable(drawableId);
+	        itemizedOverlay = new CustomOverlay(drawable, routeMap);        
+			
+			try {
+			String currentAdd = PointAddressUtil.ConvertPointToAddress(point, getBaseContext());
+			OverlayItem overlayitem = new OverlayItem(point, title, currentAdd);	    	
+	    	if(isCenter){
+	    		mapControl.setCenter(point);
+			}
+	    	itemizedOverlay.addOverlay(overlayitem);	    	
+	    	mapOverlays.add(itemizedOverlay);
+			}
+			catch (UnknownHostException e){
+				e.printStackTrace();
+			}
+	    	
+	    	
+		}
 		private class MyOnItemSelectListener implements OnItemSelectedListener{
 
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View view,
 					int pos, long id) {
-				GetDirection getDir = new GetDirection();
+				GetDirection getDir = new GetDirection(getResources().getIntArray(R.array.dir_color)[pos]);
 				getDir.execute(plDetail.getAddress(),parent.getItemAtPosition(pos).toString().toLowerCase());
 				
 			}
@@ -133,6 +213,11 @@ public class DetailPlaceActivity extends Activity {
 				this.lang = lang;
 			}
 			
+			@Override
+			protected void onPreExecute() {
+				mProgressBar.setVisibility(View.VISIBLE);
+				super.onPreExecute();
+			}
 			
 			@Override
 			protected PlaceDetailRs doInBackground(Place... params) {
@@ -145,13 +230,13 @@ public class DetailPlaceActivity extends Activity {
 			
 			@Override
 			protected void onPostExecute(PlaceDetailRs result) {
-				// TODO Auto-generated method stub
+				mProgressBar.setVisibility(View.GONE);
 				if (result!=null && result.getStatus().contentEquals(ConstantsAndKey.STATUS_OK)){	
 					plDetail = result.getResult();
 					setDetail(plDetail);					
-					GetDirection getDir = new GetDirection();
+					GetDirection getDir = new GetDirection(getResources().getIntArray(R.array.dir_color)[0]);
 					getDir.execute(result.getResult().getAddress(),"driving");
-					spDirMode.setOnItemSelectedListener(new MyOnItemSelectListener());
+					//spDirMode.setOnItemSelectedListener(new MyOnItemSelectListener());
 											
 				}
 				else
@@ -163,6 +248,17 @@ public class DetailPlaceActivity extends Activity {
 		
 		//Create Task to make request and get places detail
 				private class GetDirection extends AsyncTask<String,Void, Direction>{
+					private int color;
+					
+					public GetDirection (int color){
+						this.color = color;
+					}
+					
+					@Override
+					protected void onPreExecute() {
+						mProgressBar.setVisibility(View.VISIBLE);
+						super.onPreExecute();
+					}
 					
 					/**
 					 * @param params[0] destination address, params[1] is direction mode (driving, walking or bicycling)
@@ -183,7 +279,7 @@ public class DetailPlaceActivity extends Activity {
 						direct = SearchPlace.getDirection(currentAdd, params[0], params[1]);						
 						
 						try {
-							Thread.sleep(3000);//Thread pause for 3s 
+							Thread.sleep(1000);//Thread pause for 1s 
 						} catch (InterruptedException e) {							
 							e.printStackTrace();
 						}
@@ -193,16 +289,23 @@ public class DetailPlaceActivity extends Activity {
 					@Override
 					protected void onPostExecute(Direction result) {
 						
-						
+						mProgressBar.setVisibility(View.GONE);
 						if(result !=null&&result.getStatus().equalsIgnoreCase(ConstantsAndKey.STATUS_OK)){
 							txtDistance.setText(getResources().getText(R.string.de_distance)+" " + result.getRoutes().get(0).getLegs().get(0).getDistance().getDistanceInText());
 							txtTime.setText(getResources().getText(R.string.de_time)+" " + result.getRoutes().get(0).getLegs().get(0).getDuration().getDurationInText());
-							txtDirection.setMovementMethod(new ScrollingMovementMethod());
-							txtDirection.setText(Html.fromHtml(result.getRoutes().get(0).getLegs().get(0).getInstructions()));
+							//txtDirection.setMovementMethod(new ScrollingMovementMethod());
+							dirInstruct = Html.fromHtml(result.getRoutes().get(0).getLegs().get(0).getInstructions()).toString();
+							
+							List<GeoPoint> routes = result.getRoutes().get(0).getOverviewPolyline().getDecodePoly();
+							showMarker(routes.get(0),R.drawable.marker_start,true,getResources().getString(R.string.de_start));
+							showMarker(routes.get(routes.size()-1),R.drawable.marker_end,false,plDetail.getName());
+							for (int i=1; i<routes.size();i++){
+							mapOverlays.add(new RouteOverlay(routes.get(i),routes.get(i-1),color));							
+							}
 						}
 						
 						else {
-							txtDirection.setText(R.string.de_dir_not_found);
+							Toast.makeText(mContext, R.string.de_dir_not_found,Toast.LENGTH_SHORT);
 						}
 					}
 				}
@@ -239,18 +342,8 @@ public class DetailPlaceActivity extends Activity {
 				});
 			}			
 		}
-		private class WebInfoClient extends WebViewClient {
-			@Override
-		    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-		        view.loadUrl(url);
-		        view.setClickable(false);
-		        return true;
-		    }
-			
-			
-		}	
 		
-
+	
 	
 	//Button Click Listener
 		private View.OnClickListener mClickListener = new View.OnClickListener() {
@@ -298,12 +391,13 @@ public class DetailPlaceActivity extends Activity {
 	                 
 	                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
 				}*/
+				//Detail route
+				if (btnDetail.isPressed()){
+					showDialog(DETAIL_ROUTE);
+				}
 				//Button Map
-				if(btnMap.isPressed()){
-					Intent mMapIntent = new Intent(getApplicationContext(), ViewOnMapActivity.class);
-					mBundle.putBoolean(ConstantsAndKey.KEY_SHOW_ALL, false);
-					mMapIntent.putExtras(mBundle);
-					startActivity(mMapIntent);
+				if(btnMode.isPressed()){
+					showDialog(LIST_MODE);
 				}
 				//Button Favorite
 				if(btnFavorite.isPressed()){
@@ -360,5 +454,11 @@ public class DetailPlaceActivity extends Activity {
 				return super.onOptionsItemSelected(item);
 			}
 			
+		}
+
+		@Override
+		protected boolean isRouteDisplayed() {
+			// TODO Auto-generated method stub
+			return true;
 		}
 }

@@ -15,7 +15,6 @@
         android:layout_height="fill_parent"
         android:enabled="true"
         android:clickable="true"
-       	android:apiKey ="@string/map_key"/>        
-        <!-- "0gsH7HyCwtbh2J2BmWh6VpqxyjKq6nQPZzy5Mgg"-->
+       	android:apiKey ="@string/debug_key"/>                
       
 </RelativeLayout >

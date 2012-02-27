@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="mmt.uit.placehelper"
-      android:versionCode="1" android:versionName="@string/version">
+      android:versionCode="101" android:versionName="@string/version">
     <uses-sdk android:minSdkVersion="7" />
     <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission><uses-permission android:name="android.permission.INTERNET"></uses-permission>
     
@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
-    <application android:label="@string/app_name" android:icon="@drawable/placeicon" android:debuggable="true">
+    <application android:label="@string/app_name" android:icon="@drawable/placeicon" android:debuggable="false">
         <activity android:name=".MainActivity"
                   android:label="@string/app_name" android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>

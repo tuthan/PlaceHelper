@@ -6,15 +6,7 @@
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
   android:background="@drawable/app_bg2">
-    <ScrollView 
-		    android:layout_height="440dp"
-		    android:layout_width="fill_parent"		    
-		    android:fillViewport="false">
-
-		    <LinearLayout
-		        android:layout_width="wrap_content"
-		        android:layout_height="fill_parent"		        
-		        android:orientation="vertical" >
+    
 
   			<!-- Brief info  -->
   			<LinearLayout
@@ -25,7 +17,7 @@
   						android:layout_marginLeft="8dp"
   						android:layout_marginRight="8dp"
   						android:layout_marginTop="10dp"
-  						
+  						android:id="@+id/brief_info"
   						android:background="@drawable/brief_bg">
 
   					<RelativeLayout
@@ -53,7 +45,7 @@
 				  			android:layout_marginTop="10dp"
 				  			android:layout_alignParentLeft="true"
 				  			android:layout_toLeftOf="@id/de_add_fav"
-				  			android:text="Name: "/>
+				  			android:text="Name: " android:maxLines="1"/>
   						 
 		  				
 						
@@ -67,7 +59,7 @@
 				  			android:layout_height="wrap_content"				  			
 				  			android:layout_marginLeft="15dp"
 				  			android:textColor="@color/black"										  													  			
-				  			android:text="Address:"/>
+				  			android:text="Address:" android:ellipsize="marquee" android:maxLines="1"/>
 
 						<TextView
 						    android:id="@+id/de_phone"
@@ -96,12 +88,44 @@
 						    android:layout_marginLeft="15dp"						    
 						    android:numStars="5"
 						    android:rating="1" />
-										
+						<LinearLayout 
+						    android:orientation="horizontal"
+						    android:layout_marginLeft="15dp"	
+						    android:layout_width="fill_parent"
+						    android:layout_height="wrap_content">
+						<TextView
+				 		    android:id="@+id/dt_distance"
+				 		    			 		    
+				 		    android:layout_width="wrap_content"
+				 		    android:layout_height="wrap_content"
+							android:text="@string/de_distance"		
+							android:textColor="@color/green" 
+							android:textStyle="bold"		    
+				 		    >
+		  				</TextView>	
+				 		<TextView
+				 		    android:id="@+id/dt_time"
+				 		    android:layout_marginLeft="15dp"
+				 		    android:layout_width="wrap_content"
+				 		    android:layout_height="wrap_content"
+							android:text="@string/de_time"	
+							android:textColor="@color/green"
+							android:textStyle="bold"	 		    
+				 		    >
+				 		    
+				 		</TextView>
+						</LinearLayout>		
   						</LinearLayout>
   			<!--End of brief info-->
   			
-  					
-			<!-- Direction info-->
+  		
+
+		    <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="fill_parent"		        
+		        android:orientation="vertical" 
+		        android:layout_below="@id/brief_info">			
+			<!-- Direction info--><!-- 
 			<LinearLayout 
 			   
 			    android:orientation="horizontal"
@@ -182,23 +206,21 @@
 		 		    
 		 		</TextView>
 			 </LinearLayout>
-<!-- End of info --> 
+ --><!-- End of info --> 
 <!-- Rewiew -->
 		
-		<LinearLayout 
-			    android:orientation="vertical"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"				    
-			    android:layout_marginTop="10dp"
-				android:layout_marginLeft="8dp"
-	  			android:layout_marginRight="8dp"	  			  		    				 						    		
-			    >
+		
 
-			
-
-						</LinearLayout>
+			<com.google.android.maps.MapView 
+        android:id="@+id/de_routeMap"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp"
+        android:enabled="true"
+        android:clickable="true"
+       	android:apiKey ="@string/debug_key" android:layout_marginTop="3dp"/>        
+        
 		</LinearLayout>
-		</ScrollView>						
+								
 <!-- End of Rewiew -->
 
 <!-- Button bar -->
@@ -249,7 +271,7 @@
 			        android:orientation="vertical" >
 
 			        <ImageButton
-			            android:id="@+id/btnCall"
+			            android:id="@+id/btnTwitter"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
@@ -274,12 +296,12 @@
 			        android:orientation="vertical" >
 
 			        <ImageButton
-			            android:id="@+id/btnEmail"
+			            android:id="@+id/btnDetail"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
 			            android:layout_marginTop="4dp"			            
-			            android:src="@drawable/detail_btn_route"
+			            android:src="@drawable/detail_btn_detail"
 			            android:background="@android:color/transparent" />
 
 			        <TextView
@@ -299,19 +321,19 @@
 			        android:orientation="vertical" >
 
 			        <ImageButton
-			            android:id="@+id/btnMap"
+			            android:id="@+id/btnDirMode"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
 			            android:layout_marginTop="4dp"			            
-			            android:src="@drawable/detail_btn_map"
+			            android:src="@drawable/detail_btn_dir_mode"
 			            android:background="@android:color/transparent" />
 
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:text="Map"
+			            android:text="Mode"
 			            android:textColor="@color/black"
 			            android:textSize="10dp" />
 			    </LinearLayout>
@@ -342,12 +364,20 @@
 			    </LinearLayout>
 			</LinearLayout>
 <!-- End of Button Bar -->
-<ImageView
+<!-- <ImageView
 			    android:id="@+id/google"
 			    android:layout_above="@id/dt_btn_bar"
 			    android:layout_alignParentRight="true"
 			    android:layout_marginRight="10dp"
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
-			    android:src="@drawable/powered_by_google_on_non_white" />
+			    android:src="@drawable/powered_by_google_on_non_white" /> -->
+			<ProgressBar 
+			    android:id="@+id/de_progress" 
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content" 
+			    style="?android:attr/progressBarStyleSmall" 
+			    android:layout_alignParentRight="true" 
+			    android:visibility="gone"
+			    android:layout_alignParentTop="true"/>
 </RelativeLayout>
