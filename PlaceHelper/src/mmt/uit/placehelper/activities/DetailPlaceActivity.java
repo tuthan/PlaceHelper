@@ -10,6 +10,9 @@ import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
 
+import com.facebook.android.*;
+import com.facebook.android.Facebook.DialogListener;
+
 import mmt.uit.placehelper.models.Direction;
 import mmt.uit.placehelper.models.Place;
 import mmt.uit.placehelper.models.PlaceDetail;
@@ -23,6 +26,7 @@ import mmt.uit.placehelper.utilities.PointAddressUtil;
 import mmt.uit.placehelper.utilities.RouteOverlay;
 import mmt.uit.placehelper.R;
 import mmt.uit.placehelper.R.id;
+import mmt.uit.placehelper.activities.ShareOnFacebook;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,6 +39,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.*;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -58,6 +63,7 @@ public class DetailPlaceActivity extends MapActivity  {
 	//Textview
 	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite,txtDistance,txtTime;
 	//Image View
+	private Facebook mFacebook;
 	private ImageView add_fav;
 	private RatingBar ratBar;	
 	private PlaceDetail plDetail;	
@@ -97,6 +103,7 @@ public class DetailPlaceActivity extends MapActivity  {
 		//txtDirection = (TextView)findViewById(R.id.dt_guide);
 		ratBar = (RatingBar)findViewById(R.id.de_rate_bar);
 		add_fav = (ImageView)findViewById(R.id.de_add_fav);
+		btnWeb.setOnClickListener(mClickListener);
 		btnFavorite.setOnClickListener(mClickListener);
 		btnMode.setOnClickListener(mClickListener);
 		btnDetail.setOnClickListener(mClickListener);
@@ -371,6 +378,30 @@ public class DetailPlaceActivity extends MapActivity  {
 				//Button Map
 				if(btnMode.isPressed()){
 					showDialog(LIST_MODE);
+				}
+				
+				//Button post Facebook
+				
+				if (btnWeb.isPressed()){
+				/*	Share by intergrated software on device
+				 * 
+					Intent sendIntent = new Intent(Intent.ACTION_SEND);
+					sendIntent.putExtra(Intent.EXTRA_SUBJECT,"Test");
+					sendIntent.putExtra(Intent.EXTRA_TEXT, plDetail.getUrl());
+					sendIntent.setType("text/plain");
+					startActivity(Intent.createChooser(sendIntent, "test again")); */
+					
+					
+				// Share by using facebook API
+					Intent postFB = new Intent(DetailPlaceActivity.this,ShareOnFacebook.class);
+					String weburl = plDetail.getUrl();
+					String name = plDetail.getName();
+					Bundle bundle = new Bundle();
+					bundle.putString("URL", weburl);
+					bundle.putString("Name", name);
+					postFB.putExtras(bundle);
+					DetailPlaceActivity.this.startActivity(postFB);
+				    
 				}
 				//Button Favorite
 				if(btnFavorite.isPressed()){

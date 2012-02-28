@@ -13,7 +13,6 @@ import mmt.uit.placehelper.utilities.PointAddressUtil;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.LinearLayout;
 
 
@@ -40,7 +39,6 @@ public class ViewOnMapActivity extends MapActivity
 	
 	double curlat, curlon;	
 	private PlaceLocation curLoc;
-	private Handler handler;
 	private Bundle mBundle;
 	
 	@Override
