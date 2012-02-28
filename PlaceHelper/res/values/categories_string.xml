@@ -36,5 +36,6 @@
     <string name="error_network">Please check you network setting</string>  
     <string name="near">Near:</string>   
     <string name="err_address">Not available</string>  
-    <string name="get_cur_add">Updating</string>    
+    <string name="get_cur_add">Updating</string>
+    <string name="change_loc">Change Location</string>    
 </resources>

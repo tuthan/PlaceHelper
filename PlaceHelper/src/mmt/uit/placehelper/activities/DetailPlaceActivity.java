@@ -56,7 +56,7 @@ public class DetailPlaceActivity extends MapActivity  {
 	//Button Bar
 	private ImageButton btnCall, btnWeb, btnDetail, btnMode, btnFavorite; 
 	//Textview
-	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite,txtDistance,txtTime,txtDirection;
+	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite,txtDistance,txtTime;
 	//Image View
 	private ImageView add_fav;
 	private RatingBar ratBar;	
@@ -68,7 +68,6 @@ public class DetailPlaceActivity extends MapActivity  {
 	private SharedPreferences mSharePref;
 	private PlaceLocation curLoc;
 	private Context mContext;
-	private Spinner spDirMode;
 	private MapView routeMap;
 	private List<Overlay> mapOverlays;
 	private MapController mapControl;	
@@ -80,7 +79,7 @@ public class DetailPlaceActivity extends MapActivity  {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ph_detail_place);
 		//Get instance from view
@@ -143,7 +142,7 @@ public class DetailPlaceActivity extends MapActivity  {
                 .setItems(R.array.arr_dir_mode, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     	GetDirection getDir = new GetDirection(getResources().getIntArray(R.array.dir_color)[which]);
-        				getDir.execute(plDetail.getAddress(),getResources().getStringArray(R.array.arr_dir_mode_value)[which]);
+        				getDir.execute(getResources().getStringArray(R.array.arr_dir_mode_value)[which]);
                     }
                 })
                 .create();
@@ -186,24 +185,6 @@ public class DetailPlaceActivity extends MapActivity  {
 	    	
 	    	
 		}
-		private class MyOnItemSelectListener implements OnItemSelectedListener{
-
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int pos, long id) {
-				GetDirection getDir = new GetDirection(getResources().getIntArray(R.array.dir_color)[pos]);
-				getDir.execute(plDetail.getAddress(),parent.getItemAtPosition(pos).toString().toLowerCase());
-				
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
-				// nothing
-				
-			}
-			
-		}
-	
 		//Create Task to make request and get places detail
 		private class GetDetail extends AsyncTask<Place,Void, PlaceDetailRs>{
 			private String lang;
@@ -221,7 +202,7 @@ public class DetailPlaceActivity extends MapActivity  {
 			
 			@Override
 			protected PlaceDetailRs doInBackground(Place... params) {
-				// TODO Auto-generated method stub
+				
 								
 				PlaceDetailRs pd=null; //initialize place detail result						
 				pd = SearchPlace.getDetail(params[0].getReference(),lang);				 				
@@ -248,7 +229,7 @@ public class DetailPlaceActivity extends MapActivity  {
 		
 		//Create Task to make request and get places detail
 				private class GetDirection extends AsyncTask<String,Void, Direction>{
-					private int color;
+					private int color;					
 					
 					public GetDirection (int color){
 						this.color = color;
@@ -266,17 +247,9 @@ public class DetailPlaceActivity extends MapActivity  {
 					@Override
 					protected Direction doInBackground(String... params) {
 						Direction direct = new Direction();	
-						 GeoPoint point = new GeoPoint(
-			   			          (int) (curLoc.getLat() * 1E6), 
-			   			          (int) (curLoc.getLng() * 1E6));
-						 String currentAdd = "";
-						 try {
-					   			currentAdd = PointAddressUtil.ConvertPointToAddress(point, mContext);
-					   			}
-					   			catch (UnknownHostException ex){
-					   				ex.printStackTrace();
-					   			}
-						direct = SearchPlace.getDirection(currentAdd, params[0], params[1]);						
+						 
+						direct = SearchPlace.getDirection(curLoc.getLat(), curLoc.getLng(),
+								plDetail.getGeometry().getLocation().getLat(),plDetail.getGeometry().getLocation().getLng(), params[1]);						
 						
 						try {
 							Thread.sleep(1000);//Thread pause for 1s 
@@ -332,7 +305,7 @@ public class DetailPlaceActivity extends MapActivity  {
 							Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
 							dataService.close();
 						}else{
-							dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().location.getLng(), plDetail.getGeometry().location.getLat(), plDetail.getUrl(), plDetail.getWebsite(), img);
+							dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().getLocation().getLng(), plDetail.getGeometry().getLocation().getLat(), plDetail.getUrl(), plDetail.getWebsite(), img);
 							dataService.close();
 							Toast.makeText(getApplicationContext(), getResources().getString(R.string.de_success), Toast.LENGTH_LONG).show();
 							add_fav.setImageResource(R.drawable.ic_rsfavorite);
@@ -350,7 +323,7 @@ public class DetailPlaceActivity extends MapActivity  {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				
 				//Button Web
 				
 				//Button Call
@@ -408,7 +381,7 @@ public class DetailPlaceActivity extends MapActivity  {
 						Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
 						dataService.close();
 					}else{
-						dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().location.getLng(), plDetail.getGeometry().location.getLat(), plDetail.getUrl(), plDetail.getWebsite(),img);
+						dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().getLocation().getLng(), plDetail.getGeometry().getLocation().getLat(), plDetail.getUrl(), plDetail.getWebsite(),img);
 						dataService.close();
 						Toast.makeText(getApplicationContext(), "Successed", Toast.LENGTH_LONG).show();
 						add_fav.setImageResource(R.drawable.ic_rsfavorite);
@@ -422,7 +395,7 @@ public class DetailPlaceActivity extends MapActivity  {
 		//Menu creation
 	    @Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
-	    	// TODO Auto-generated method stub    	
+	    	  	
 	    	MenuInflater inflater = getMenuInflater();
 			inflater.inflate(R.menu.mn_detail, menu);
 			return true;
@@ -458,7 +431,7 @@ public class DetailPlaceActivity extends MapActivity  {
 
 		@Override
 		protected boolean isRouteDisplayed() {
-			// TODO Auto-generated method stub
+			
 			return true;
 		}
 }

@@ -8,10 +8,10 @@ import com.google.api.client.util.Key;
 public class MyGeometry implements Parcelable{
 
 	@Key
-	public PlaceLocation location;
+	private PlaceLocation location;
 	
 	//Constructor 
-	private  MyGeometry (Parcel in){
+	public  MyGeometry (Parcel in){
 		this.location = in.readParcelable(PlaceLocation.class.getClassLoader());
 	}
 	
@@ -55,5 +55,13 @@ public class MyGeometry implements Parcelable{
 			return new MyGeometry(source);
 		}
 	};
+	
+	public PlaceLocation getLocation (){
+		return location;		
+	}
+	
+	public void setLocation(PlaceLocation l){
+		this.location = l;
+	}
 	
 }

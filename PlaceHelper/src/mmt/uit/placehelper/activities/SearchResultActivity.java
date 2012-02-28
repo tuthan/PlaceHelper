@@ -11,7 +11,8 @@ import mmt.uit.placehelper.models.PlacesList;
 import mmt.uit.placehelper.services.FavDataService;
 import mmt.uit.placehelper.services.SearchPlace;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
-import mmt.uit.placehelper.utilities.SortPlace;
+import mmt.uit.placehelper.utilities.SortByDistance;
+import mmt.uit.placehelper.utilities.SortByRate;
 
 import mmt.uit.placehelper.R;
 
@@ -146,7 +147,8 @@ public class SearchResultActivity extends ListActivity {
 				dataSrv.open();
 				txtrs.setText(getResources().getText(R.string.seact_result)+ keyWord);
 				lsPlace = result;				
-				Collections.sort(lsPlace.getResults(), new SortPlace());
+				//Collections.sort(lsPlace.getResults(), new SortByRate());
+				
 				for (int i=0;i<lsPlace.getResults().size();i++){
 					if (dataSrv.isExisted(lsPlace.getResults().get(i).getId())){
 						lsPlace.getResults().get(i).setFavorite(true);

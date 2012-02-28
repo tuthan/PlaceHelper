@@ -129,14 +129,14 @@ public class SearchPlace {
 			return pld;
 		}
 		
-		public static Direction getDirection (String origin, String dest, String mode){
+		public static Direction getDirection (double orginLat, double orginLng, double destLat, double destLng, String mode){
 			GenericUrl mUrl = new GenericUrl(DIRECTIONS_URL);
 			Direction result = null;
 			HttpRequestFactory httpRequestFactory = createRequestFactory(transport);
 			try {
 				
-				mUrl.put("origin", origin);				
-				mUrl.put("destination", dest);
+				mUrl.put("origin", orginLat + "," + orginLng);				
+				mUrl.put("destination", destLat + "," + destLng);
 				mUrl.put("mode", mode);
 				mUrl.put("sensor", "true");
 				mUrl.put("units", "metric");

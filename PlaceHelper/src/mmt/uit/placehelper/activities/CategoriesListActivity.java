@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
 import com.google.android.maps.GeoPoint;
-
 import mmt.uit.placehelper.R;
 import mmt.uit.placehelper.models.MainGroup;
+import mmt.uit.placehelper.models.MyAddress;
 import mmt.uit.placehelper.utilities.CatParser;
 import mmt.uit.placehelper.utilities.CheckConnection;
 import mmt.uit.placehelper.utilities.ConstantsAndKey;
 import mmt.uit.placehelper.utilities.ExpListAdapter;
+import mmt.uit.placehelper.utilities.LocationAdapter;
 import mmt.uit.placehelper.utilities.LocationHelper;
 import mmt.uit.placehelper.utilities.LocationHelper.LocationResult;
 import mmt.uit.placehelper.utilities.PointAddressUtil;
@@ -38,7 +38,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,7 +70,8 @@ public class CategoriesListActivity extends Activity {
 	private boolean hasLocation=false;	
 	private LocationHelper locHelper;
 	private GetLocation getLoc = new GetLocation();;
-	private String lang = "en";	
+	private String lang = "en";
+	Dialog customLoc;
 	private static final int FAVORITE_GROUP = 900;
 	private static final int SETTING_GROUP = 800;
 	private static final int CHILD_ADD = 701;
@@ -175,7 +185,9 @@ public class CategoriesListActivity extends Activity {
     	super.onResume();
     }
     
-    public LocationResult locResult = new LocationResult() {
+    
+    
+	public LocationResult locResult = new LocationResult() {
 		
 		@Override
 		public void gotLocation(Location location) {
@@ -247,8 +259,7 @@ public class CategoriesListActivity extends Activity {
     //Create menu
     
     @Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// TODO Auto-generated method stub
+	public boolean onCreateOptionsMenu(Menu menu) {		
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.mn_mainscreen, menu);
 		return true;
@@ -268,10 +279,11 @@ public class CategoriesListActivity extends Activity {
 			intent.putExtras(b);
 			startActivity(intent);
 			return true;
-		/*case R.id.mn_changle_location:
-			Intent intent2 = new Intent(getApplicationContext(), ChangeLocationActivity.class);
-			startActivity(intent2);
-			return true;*/
+		case R.id.mn_changle_location:
+			/*Intent intent2 = new Intent(getApplicationContext(), ChangeLocationActivity.class);
+			startActivity(intent2);*/
+			showDialog(ConstantsAndKey.CUSTOM_LOC);			
+			return true;
 		case R.id.mn_about:			
 			showDialog(ConstantsAndKey.ABOUT);
 			return true;
@@ -284,22 +296,8 @@ public class CategoriesListActivity extends Activity {
 		}
 	}
     
-    private void getCurrentLocation(){
-		//mSharePref = getSharedPreferences(Constants.PREF_NAME,0);
-		
-		try {
-			/*if (mSharePref!=null)
-				showDialog(Constants.RESTORE_LOC);
-			else*/
-			getLocation();
-		}
-		catch (Exception e) {
-				Log.v(ConstantsAndKey.TAG_EXCEPTION, e.toString());
-			
-			}
-	}
-    
-    protected Dialog onCreateDialog(int id) {
+    @SuppressWarnings("static-access")
+	protected Dialog onCreateDialog(int id) {
 
 		switch (id) {
 		case ConstantsAndKey.CHECK_SETTING:
@@ -364,6 +362,55 @@ public class CategoriesListActivity extends Activity {
                 })
                 
                 .create();
+		case ConstantsAndKey.CUSTOM_LOC:
+				customLoc = new Dialog(mContext);
+				customLoc.requestWindowFeature(Window.FEATURE_NO_TITLE);
+				customLoc.setContentView(R.layout.change_location);				
+				customLoc.setCancelable(true);				
+				ImageButton btnSearch = (ImageButton)customLoc.findViewById(R.id.btnSearch);							        	            
+		        btnSearch.setOnClickListener(new OnClickListener() {					
+					@Override
+					public void onClick(View v) {
+						TextView textView = (AutoCompleteTextView)CategoriesListActivity.this.customLoc.findViewById(R.id.searchLocation);	
+						
+						final List<MyAddress> lstAd = PointAddressUtil.getAdress(textView.getText().toString(),getApplicationContext());
+						if (lstAd !=null){
+							ListView addressList = (ListView)CategoriesListActivity.this.customLoc.findViewById(android.R.id.list);
+							ListAdapter mAdapter = new LocationAdapter(getApplicationContext(), R.layout.row_location, lstAd);
+							addressList.setAdapter(mAdapter);
+							addressList.setOnItemClickListener(new OnItemClickListener() {
+
+								@Override
+								public void onItemClick(AdapterView<?> av,
+										View v, int pos, long id) {
+									currentLoc = new Location(LocationManager.NETWORK_PROVIDER);
+									currentLoc.setLatitude(lstAd.get(pos).getLat());
+									currentLoc.setLongitude(lstAd.get(pos).getLng());
+									GeoPoint point = new GeoPoint(
+						   			          (int) (currentLoc.getLatitude() * 1E6), 
+						   			          (int) (currentLoc.getLongitude() * 1E6));
+						   			String currentAdd = mContext.getResources().getString(R.string.near);	
+						   			try {
+						   			currentAdd += PointAddressUtil.ConvertPointToAddress(point, mContext);
+						   			}
+						   			catch (UnknownHostException ex){
+						   				cur_add.setText(R.string.error_network);
+						   				return;
+						   			}
+							   		if (currentAdd!=null){
+							   			cur_add.setText(currentAdd);
+							   		}
+						          CategoriesListActivity.this.customLoc.dismiss();						             
+								}
+							});
+						}						
+						 
+						        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+						        imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
+
+					}
+				});
+				return customLoc;
 		}
 		return null;
 	}

@@ -41,6 +41,7 @@ public class ConstantsAndKey {
 	public static final int WAIT_MSG = 2;
 	public static final int LOC_NOTFOUND= 3;
 	public static final int ABOUT= 10;
+	public static final int CUSTOM_LOC= 123;
 	public static final int DATABASE_VERSION = 1;
 	
 	//Double constants

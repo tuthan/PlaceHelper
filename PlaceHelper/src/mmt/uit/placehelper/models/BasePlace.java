@@ -34,10 +34,10 @@ public class BasePlace {
 	//Calculate distance with given lat and lng
 	public void setDistance(double lat, double lng) {
 		//Haversine formula
-		double deltaLat = Math.toRadians(Math.abs(this.geometry.location.getLat() - lat));
-		double deltaLng = Math.toRadians(Math.abs(this.geometry.location.getLng() - lng));
+		double deltaLat = Math.toRadians(Math.abs(this.geometry.getLocation().getLat() - lat));
+		double deltaLng = Math.toRadians(Math.abs(this.geometry.getLocation().getLng() - lng));
 		double a = Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) + 
-				   Math.cos(Math.toRadians(this.geometry.location.getLat())) * Math.cos(Math.toRadians(lat)) * 
+				   Math.cos(Math.toRadians(this.geometry.getLocation().getLat())) * Math.cos(Math.toRadians(lat)) * 
 				   Math.sin(deltaLng / 2) * Math.sin(deltaLng / 2);
 		double c =  2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		this.distance = ConstantsAndKey.EARTH_RADIUS * c;

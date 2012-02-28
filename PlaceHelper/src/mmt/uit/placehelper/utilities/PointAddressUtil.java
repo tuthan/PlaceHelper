@@ -36,23 +36,24 @@ public class PointAddressUtil {
 	    return address;
 	  } 
 	public static List<MyAddress> getAdress(String name, Context mContext){
-		MyAddress myAd= new MyAddress();
-		String address="";
+		
 		List<MyAddress> lstAd = new ArrayList<MyAddress>();
 	    Geocoder geoCoder = new Geocoder(
 	        mContext, Locale.getDefault());
 	    try {
-	    List<Address> addresses = geoCoder.getFromLocationName(name, 5);
+	    List<Address> addresses = geoCoder.getFromLocationName(name, 10);
 	    if (!addresses.isEmpty()){
-	    	for (int i =0; i<addresses.size();i++){
-	    		myAd.setLat(addresses.get(i).getLatitude());
-	    		myAd.setLng(addresses.get(i).getLongitude());
-	    		for (int index = 0; 
-	    		index < addresses.get(i).getMaxAddressLineIndex(); index++)
-	    	          address += addresses.get(i).getAddressLine(index) + " ";
+	    	for (Address ad:addresses){
+	    		MyAddress myAd= new MyAddress();	    		
+	    		String address=ad.getAddressLine(0);
+	    		for (int i=1;i<ad.getMaxAddressLineIndex();i++){
+	    			address += " - " + ad.getAddressLine(i);
+	    		}
 	    		myAd.setAdress(address);
-	    	      }
+	    		myAd.setLat(ad.getLatitude());
+	    		myAd.setLng(ad.getLongitude());
 	    		lstAd.add(myAd);
+	    	}
 	    	}
 	    
 	    }

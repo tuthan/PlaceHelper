@@ -110,7 +110,7 @@ public class ViewOnMapActivity extends MapActivity
 		drawable = this.getResources().getDrawable(R.drawable.marker_normal);
 		}
         itemizedOverlay = new CustomOverlay(drawable,mapView);        
-		GeoPoint point = new GeoPoint((int)( pl.getGeometry().location.getLat()* 1e6),(int)(pl.getGeometry().location.getLng() * 1e6));
+		GeoPoint point = new GeoPoint((int)( pl.getGeometry().getLocation().getLat()* 1e6),(int)(pl.getGeometry().getLocation().getLng() * 1e6));
     	OverlayItem overlayitem = new OverlayItem(point, pl.getName(), pl.getVicinity());	    	    	
     	itemizedOverlay.addOverlay(overlayitem);
     	mapOverlays.add(itemizedOverlay);

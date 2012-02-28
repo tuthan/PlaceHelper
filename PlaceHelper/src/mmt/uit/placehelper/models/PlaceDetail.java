@@ -39,8 +39,7 @@ public class PlaceDetail extends BasePlace implements Parcelable{
 			 this.address = address;
 			 this.phone = phone;
 			 this.rating = rating;
-			 this.geometry = new MyGeometry();
-			 this.geometry.location = pl;
+			 this.geometry = new MyGeometry(pl);			 
 			 this.url =url;
 			 this.website = weburl;
 			 this.typeImg = img;

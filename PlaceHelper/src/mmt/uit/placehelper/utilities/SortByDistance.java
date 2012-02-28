@@ -5,11 +5,11 @@ import java.util.Comparator;
 import mmt.uit.placehelper.models.Place;
 
 //Class to help sort place by distance
-public class SortPlace implements Comparator<Place> {
+public class SortByDistance implements Comparator<Place> {
 	public int compare(Place place1, Place place2) {
-		// TODO Auto-generated method stub
-		double dis1 = place1.getDistance();
-		double dis2 = place2.getDistance();
+		
+		float dis1 = place1.getRating();
+		float dis2 = place2.getRating();
 		
 		if(dis1 > dis2)
 			return 1;
@@ -19,5 +19,7 @@ public class SortPlace implements Comparator<Place> {
 			else
 				return 0;
 		}		
-	}	
+	}
+	
+	
 }
