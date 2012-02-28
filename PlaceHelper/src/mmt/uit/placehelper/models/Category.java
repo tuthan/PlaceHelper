@@ -4,9 +4,9 @@ public class Category {
 	
 	private int id;
 
-	private int name;
+	private String name;
 
-	private int imgID;
+	private String imgID;
 	
 	private String types;
 	
@@ -14,18 +14,18 @@ public class Category {
 		
 	}
    
-    public Category(int id, int name) {
+    public Category(int id, String name) {
         this.id = id;
     	this.name = name;
     }
 
    
 
-	public int getName() {
+	public String getName() {
         return name;
     }
 
-    public void setName(int i) {
+    public void setName(String i) {
         this.name = i;
     }
     
@@ -37,11 +37,11 @@ public class Category {
     	return id;
     }
 
-	public int getImgID() {
+	public String getImgID() {
 		return imgID;
 	}
 
-	public void setImgID(int imgID) {
+	public void setImgID(String imgID) {
 		this.imgID = imgID;
 	}
 	

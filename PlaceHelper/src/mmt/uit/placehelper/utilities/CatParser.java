@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +21,17 @@ import mmt.uit.placehelper.models.MainGroup;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xmlpull.v1.XmlSerializer;
 
+import android.R.integer;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Environment;
 import android.util.Log;
-
+import android.util.Xml;
+/*
+ * reference: http://www.ibm.com/developerworks/opensource/library/x-android/
+ */
 public class CatParser {
 
 	//XML TAG
@@ -64,10 +71,10 @@ public class CatParser {
 						current.setId(Integer.parseInt(property.getFirstChild().getNodeValue()));
 					}
 					else if (name.equalsIgnoreCase(NAME)){
-						current.setName(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+property.getFirstChild().getNodeValue(), null, null));
+						current.setName(property.getFirstChild().getNodeValue());
 					}
 					else if (name.equalsIgnoreCase(IMAGE)){
-						current.setImgID(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+property.getFirstChild().getNodeValue(), null, null));
+						current.setImgID(property.getFirstChild().getNodeValue());
 					}
 					else if(name.equalsIgnoreCase(TYPE)){
 						current.setTypes(property.getFirstChild().getNodeValue());
@@ -83,10 +90,10 @@ public class CatParser {
 								currentChild.setId(Integer.parseInt(childpro.getFirstChild().getNodeValue()));
 							}
 							else if (childname.equalsIgnoreCase(NAME)){
-								currentChild.setName(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+childpro.getFirstChild().getNodeValue(), null, null));
+								currentChild.setName(childpro.getFirstChild().getNodeValue());
 							}
 							else if (childname.equalsIgnoreCase(IMAGE)){
-								currentChild.setImgID(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+childpro.getFirstChild().getNodeValue(), null, null));
+								currentChild.setImgID(childpro.getFirstChild().getNodeValue());
 							}
 							else if (childname.equalsIgnoreCase(TYPE)){
 								currentChild.setTypes(childpro.getFirstChild().getNodeValue());
@@ -135,7 +142,7 @@ public class CatParser {
 			
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -165,4 +172,88 @@ public class CatParser {
 		Log.i("Stat","Available="+mExternalStorageAvailable+"Writeable="+mExternalStorageWriteable+" State"+state);
 		return (mExternalStorageAvailable && mExternalStorageWriteable);
 	}
+	
+	
+	//Function for create xml 
+	public static String writeXml(List<MainGroup> listData){
+		XmlSerializer xmlSerial = Xml.newSerializer();
+		StringWriter stWriter = new StringWriter();
+		File newxmlfile = new File(Environment.getExternalStorageDirectory()+"/categories.xml");
+        try{
+                newxmlfile.createNewFile();
+        }catch(IOException e){
+                Log.e("IOException", "exception in createNewFile() method");
+        }
+        //we have to bind the new file with a FileOutputStream
+        FileOutputStream fileos = null;        
+        try{
+                fileos = new FileOutputStream(newxmlfile);
+        }catch(FileNotFoundException e){
+                Log.e("FileNotFoundException", "can't create FileOutputStream");
+        }
+		try {
+			xmlSerial.setOutput(fileos, "UTF-8");
+			//Start of document
+			xmlSerial.startDocument("UTF-8", true);
+			xmlSerial.startTag("", CAT);
+			for (MainGroup mg:listData){
+				//<Group>
+				xmlSerial.startTag("", GROUP);	
+				//<Id>
+				xmlSerial.startTag("", ID);
+				xmlSerial.text(String.valueOf(mg.getId()));
+				xmlSerial.endTag("", ID);
+				//<Name>
+				xmlSerial.startTag("", NAME);
+				xmlSerial.text(String.valueOf(mg.getName()));
+				xmlSerial.endTag("", NAME);
+				//<Image>
+				xmlSerial.startTag("", IMAGE);
+				xmlSerial.text(String.valueOf(mg.getImgID()));
+				xmlSerial.endTag("", IMAGE);
+				//<Types>
+				xmlSerial.startTag("", TYPE);
+				xmlSerial.text(mg.getTypes());
+				xmlSerial.endTag("", TYPE);
+				
+					for (Child ch:mg.getChild()){
+						//<Child>
+						xmlSerial.startTag("", CHILD);
+						//<Id>
+						xmlSerial.startTag("", ID);
+						xmlSerial.text(String.valueOf(ch.getId()));
+						xmlSerial.endTag("", ID);
+						//<Name>
+						xmlSerial.startTag("", NAME);
+						xmlSerial.text(String.valueOf(ch.getName()));
+						xmlSerial.endTag("", NAME);
+						//<Image>
+						xmlSerial.startTag("", IMAGE);
+						xmlSerial.text(String.valueOf(ch.getImgID()));
+						xmlSerial.endTag("", IMAGE);
+						//<Types>
+						xmlSerial.startTag("", TYPE);
+						xmlSerial.text(ch.getTypes());
+						xmlSerial.endTag("", TYPE);
+						//</Child>
+						xmlSerial.endTag("", CHILD);
+					}
+					
+				//</Group>
+				xmlSerial.endTag("", GROUP);
+			}
+			
+			//</Category>
+			xmlSerial.endTag("", CAT);
+			xmlSerial.endDocument();
+			xmlSerial.flush();
+			fileos.close();
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+		return stWriter.toString();
+		
+	}
+	
 }

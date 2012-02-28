@@ -54,7 +54,7 @@ import android.widget.Toast;
 public class DetailPlaceActivity extends MapActivity  {
 	
 	//Button Bar
-	private ImageButton btnCall, btnWeb, btnDetail, btnMode, btnFavorite; 
+	private ImageButton btnFacebook, btnWeb, btnDetail, btnMode, btnEmail; 
 	//Textview
 	private TextView txtPlaceName, txtAddress, txtPhone,txtWebsite,txtDistance,txtTime;
 	//Image View
@@ -83,11 +83,11 @@ public class DetailPlaceActivity extends MapActivity  {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.ph_detail_place);
 		//Get instance from view
-		btnWeb = (ImageButton)findViewById(id.btnFacebook);
-		btnCall = (ImageButton) findViewById(R.id.btnTwitter);
+		btnFacebook = (ImageButton)findViewById(id.btnFacebook);
+		btnEmail = (ImageButton) findViewById(R.id.btnEmail);
 		btnDetail = (ImageButton) findViewById(R.id.btnDetail);
 		btnMode = (ImageButton) findViewById(R.id.btnDirMode);
-		btnFavorite = (ImageButton) findViewById(R.id.btnFavorite);
+		btnWeb = (ImageButton) findViewById(R.id.btnWeb);
 		txtPlaceName = (TextView)findViewById(R.id.de_place_name);
 		txtAddress = (TextView)findViewById(R.id.de_address);
 		txtPhone = (TextView)findViewById(R.id.de_phone);
@@ -97,9 +97,10 @@ public class DetailPlaceActivity extends MapActivity  {
 		//txtDirection = (TextView)findViewById(R.id.dt_guide);
 		ratBar = (RatingBar)findViewById(R.id.de_rate_bar);
 		add_fav = (ImageView)findViewById(R.id.de_add_fav);
-		btnFavorite.setOnClickListener(mClickListener);
+		btnWeb.setOnClickListener(mClickListener);
 		btnMode.setOnClickListener(mClickListener);
 		btnDetail.setOnClickListener(mClickListener);
+		btnEmail.setOnClickListener(mClickListener);
 		mProgressBar = (ProgressBar)findViewById(R.id.de_progress);
 		//spDirMode = (Spinner)findViewById(R.id.de_dir_mode);
 		routeMap = (MapView)findViewById(R.id.de_routeMap);
@@ -108,7 +109,7 @@ public class DetailPlaceActivity extends MapActivity  {
     	routeMap.setBuiltInZoomControls(true);
     	mapOverlays = routeMap.getOverlays();
     	mapControl = routeMap.getController();
-    	mapControl.setZoom(15);
+    	mapControl.setZoom(15);    	
 		mBundle = getIntent().getExtras();
 		if(mBundle.getBoolean(ConstantsAndKey.KEY_FROM_FAV)){
 			plDetail = mBundle.getParcelable(ConstantsAndKey.KEY_PL_DETAIL);
@@ -325,7 +326,11 @@ public class DetailPlaceActivity extends MapActivity  {
 			public void onClick(View v) {
 				
 				//Button Web
-				
+				if(btnWeb.isPressed()){
+					Intent mIntent = new Intent(mContext, WebInfoActivity.class);
+					mIntent.putExtra("url", plDetail.getUrl());
+					startActivity(mIntent);
+				}
 				//Button Call
 				/*if(btnCall.isPressed()){
 					try {
@@ -349,21 +354,14 @@ public class DetailPlaceActivity extends MapActivity  {
 					}*/
 				//Button Email
 				//Call extra email application to send mail
-				/*if (btnEmail.isPressed()){
+				if (btnEmail.isPressed()){
 					final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);                
 	                emailIntent.setType("plain/text");           
-	                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, "friends@domainl.com");         
-	                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Ä�á»‹a Ä‘iá»ƒm hay"); 
-	                if(fromFv==false){
-	                	emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Xem nĂ¨, chá»— nĂ y hay láº¯m "+ place.getUrl());
-					}
-					else 
-					{
-						emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Xem nĂ¨, chá»— nĂ y hay láº¯m "+ b.getString("webUrl"));
-					}
-	                 
+	                emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, getResources().getString(R.string.de_email_add));         
+	                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getResources().getString(R.string.de_subject)); 
+	                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, plDetail.getUrl());						                 
 	                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-				}*/
+				}
 				//Detail route
 				if (btnDetail.isPressed()){
 					showDialog(DETAIL_ROUTE);
@@ -372,20 +370,9 @@ public class DetailPlaceActivity extends MapActivity  {
 				if(btnMode.isPressed()){
 					showDialog(LIST_MODE);
 				}
-				//Button Favorite
-				if(btnFavorite.isPressed()){
-					FavDataService dataService = new FavDataService(getApplicationContext());
-					dataService.open();
+				//Button View On google place site
+				if(btnWeb.isPressed()){
 					
-					if(dataService.isExisted(plDetail.getId())){
-						Toast.makeText(getApplicationContext(), "Existed", Toast.LENGTH_LONG).show();
-						dataService.close();
-					}else{
-						dataService.createFav(plDetail.getId(), plDetail.getName(), plDetail.getAddress(), plDetail.getPhone(), plDetail.getRating(), plDetail.getGeometry().getLocation().getLng(), plDetail.getGeometry().getLocation().getLat(), plDetail.getUrl(), plDetail.getWebsite(),img);
-						dataService.close();
-						Toast.makeText(getApplicationContext(), "Successed", Toast.LENGTH_LONG).show();
-						add_fav.setImageResource(R.drawable.ic_rsfavorite);
-					}
 				}
 				}
 			

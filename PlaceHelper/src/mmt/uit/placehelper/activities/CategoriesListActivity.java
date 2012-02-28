@@ -1,12 +1,15 @@
 package mmt.uit.placehelper.activities;
 
+import java.io.File;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+
 import com.google.android.maps.GeoPoint;
 import mmt.uit.placehelper.R;
+import mmt.uit.placehelper.models.Child;
 import mmt.uit.placehelper.models.MainGroup;
 import mmt.uit.placehelper.models.MyAddress;
 import mmt.uit.placehelper.utilities.CatParser;
@@ -32,8 +35,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,6 +49,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -118,11 +124,24 @@ public class CategoriesListActivity extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView expLv, View v, int groupPos, int childPos, long id)
             {
-                if(lsGroup.get(groupPos).getChild().get(childPos).getId()!=CHILD_ADD){
-            	startSearch(getResources().getString(lsGroup.get(groupPos).getChild().get(childPos).getName()),lsGroup.get(groupPos).getChild().get(childPos).getImgID(),
-            			lsGroup.get(groupPos).getChild().get(childPos).getTypes());            	
-                return true;}
-                return false;
+            	switch(lsGroup.get(groupPos).getChild().get(childPos).getId()){
+            	case CHILD_ADD:
+            		showDialog(ConstantsAndKey.ADD_CAT);
+            		return true;
+            	default:
+            		int tmpId = getResources().getIdentifier("mmt.uit.placehelper:"+lsGroup.get(groupPos).getChild().get(childPos).getName(), null, null);
+                	int imgId = getResources().getIdentifier("mmt.uit.placehelper:"+lsGroup.get(groupPos).getChild().get(childPos).getImgID(), null, null);
+                	if (lsGroup.get(groupPos).getChild().get(childPos).getId()<702||lsGroup.get(groupPos).getChild().get(childPos).getId()>=800){
+                		startSearch(getResources().getString(tmpId),imgId,
+                				lsGroup.get(groupPos).getChild().get(childPos).getTypes());            	
+                	}
+                	else {
+                		startSearch(lsGroup.get(groupPos).getChild().get(childPos).getName(),imgId,
+                				lsGroup.get(groupPos).getChild().get(childPos).getTypes());   
+                	}
+                	return true;
+            	}            	               
+                
             }
         });
         
@@ -144,7 +163,9 @@ public class CategoriesListActivity extends Activity {
             		return true;
             	}
             	if(lsGroup.get(groupPos).getChild().size()==0){
-                	startSearch(getResources().getString(lsGroup.get(groupPos).getName()),lsGroup.get(groupPos).getImgID(),lsGroup.get(groupPos).getTypes());
+            		int tmpId = getResources().getIdentifier("mmt.uit.placehelper:"+lsGroup.get(groupPos).getName(), null, null);
+            		int imgId = getResources().getIdentifier("mmt.uit.placehelper:"+lsGroup.get(groupPos).getImgID(), null, null);
+                	startSearch(getResources().getString(tmpId),imgId,lsGroup.get(groupPos).getTypes());
                 	return true;
                 }
                 
@@ -291,6 +312,9 @@ public class CategoriesListActivity extends Activity {
 			Intent intSetting = new Intent(getApplicationContext(),SettingsActivity.class);
 			startActivity(intSetting);
 			return true;
+		case R.id.mn_clear:
+			File file = new File(Environment.getExternalStorageDirectory()+"/categories.xml");
+			return file.delete();
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -365,7 +389,7 @@ public class CategoriesListActivity extends Activity {
 		case ConstantsAndKey.CUSTOM_LOC:
 				customLoc = new Dialog(mContext);
 				customLoc.requestWindowFeature(Window.FEATURE_NO_TITLE);
-				customLoc.setContentView(R.layout.change_location);				
+				customLoc.setContentView(R.layout.ph_change_location);				
 				customLoc.setCancelable(true);				
 				ImageButton btnSearch = (ImageButton)customLoc.findViewById(R.id.btnSearch);							        	            
 		        btnSearch.setOnClickListener(new OnClickListener() {					
@@ -376,7 +400,7 @@ public class CategoriesListActivity extends Activity {
 						final List<MyAddress> lstAd = PointAddressUtil.getAdress(textView.getText().toString(),getApplicationContext());
 						if (lstAd !=null){
 							ListView addressList = (ListView)CategoriesListActivity.this.customLoc.findViewById(android.R.id.list);
-							ListAdapter mAdapter = new LocationAdapter(getApplicationContext(), R.layout.row_location, lstAd);
+							ListAdapter mAdapter = new LocationAdapter(getApplicationContext(), R.layout.ph_row_location, lstAd);
 							addressList.setAdapter(mAdapter);
 							addressList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -411,6 +435,38 @@ public class CategoriesListActivity extends Activity {
 					}
 				});
 				return customLoc;
+		case ConstantsAndKey.ADD_CAT:
+			LayoutInflater factory = LayoutInflater.from(mContext);
+            final View textEntryView = factory.inflate(R.layout.ph_add_cat, null);
+            return new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_child_add)
+                .setTitle(R.string.cat_add_title)
+                .setView(textEntryView)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+    
+                        // Add new category and write to xml file
+                    	EditText edTxt = (EditText)textEntryView.findViewById(R.id.name_edit);
+                    	if (edTxt.getText()!=null){
+                    		int lastId = lsGroup.get(6).getChild().get(lsGroup.get(6).getChild().size()-1).getId();
+                    		Child ch = new Child();
+                    		ch.setId(++lastId);
+                    		ch.setImgID("drawable/ic_child_user");
+                    		ch.setName(edTxt.getText().toString());
+                    		ch.setTypes("establishment");
+                    		lsGroup.get(6).addChild(ch);
+                    		adapter.notifyDataSetChanged();
+                    		CatParser.writeXml(lsGroup);
+                    	}
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                       dialog.dismiss();
+                    }
+                })
+                .create();
 		}
 		return null;
 	}
@@ -462,7 +518,7 @@ public class CategoriesListActivity extends Activity {
 			if (result !=null){
 				lsGroup = result;				
 				adapter = new ExpListAdapter(mContext, lsGroup);
-		        listView.setAdapter(adapter);
+		        listView.setAdapter(adapter);		        		       
 			}
 		}
     	
