@@ -217,7 +217,8 @@
         android:layout_height="300dp"
         android:enabled="true"
         android:clickable="true"
-       	android:apiKey ="@string/debug_key" android:layout_marginTop="3dp"/>        
+       	android:apiKey ="@string/map_key" 
+       	android:layout_marginTop="3dp"/>        
         
 		</LinearLayout>
 								
