@@ -147,7 +147,7 @@ public class SearchResultActivity extends ListActivity {
 				dataSrv.open();
 				txtrs.setText(getResources().getText(R.string.seact_result)+ keyWord);
 				lsPlace = result;				
-				//Collections.sort(lsPlace.getResults(), new SortByRate());
+				Collections.sort(lsPlace.getResults(), new SortByDistance());
 				
 				for (int i=0;i<lsPlace.getResults().size();i++){
 					if (dataSrv.isExisted(lsPlace.getResults().get(i).getId())){

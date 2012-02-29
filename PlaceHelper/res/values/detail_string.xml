@@ -8,7 +8,7 @@
     <string-array name="arr_dir_mode">
         <item >Driving</item>
         <item >Walking</item>
-        <item >Bicycling</item>
+        <item >Bicycling (Us only)</item>
     </string-array>
     <string name="de_dir_mode_text">Choose direction mode</string>
     <string name="de_direction">Find directions for:</string>

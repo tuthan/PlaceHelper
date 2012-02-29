@@ -250,7 +250,7 @@ public class DetailPlaceActivity extends MapActivity  {
 						Direction direct = new Direction();	
 						 
 						direct = SearchPlace.getDirection(curLoc.getLat(), curLoc.getLng(),
-								plDetail.getGeometry().getLocation().getLat(),plDetail.getGeometry().getLocation().getLng(), params[1]);						
+								plDetail.getGeometry().getLocation().getLat(),plDetail.getGeometry().getLocation().getLng(), params[0]);						
 						
 						try {
 							Thread.sleep(1000);//Thread pause for 1s 
@@ -271,6 +271,9 @@ public class DetailPlaceActivity extends MapActivity  {
 							dirInstruct = Html.fromHtml(result.getRoutes().get(0).getLegs().get(0).getInstructions()).toString();
 							
 							List<GeoPoint> routes = result.getRoutes().get(0).getOverviewPolyline().getDecodePoly();
+							if(!mapOverlays.isEmpty()){
+								mapOverlays.clear();
+							}
 							showMarker(routes.get(0),R.drawable.marker_start,true,getResources().getString(R.string.de_start));
 							showMarker(routes.get(routes.size()-1),R.drawable.marker_end,false,plDetail.getName());
 							for (int i=1; i<routes.size();i++){
