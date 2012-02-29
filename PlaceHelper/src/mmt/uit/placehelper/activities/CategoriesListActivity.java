@@ -133,11 +133,11 @@ public class CategoriesListActivity extends Activity {
                 	int imgId = getResources().getIdentifier("mmt.uit.placehelper:"+lsGroup.get(groupPos).getChild().get(childPos).getImgID(), null, null);
                 	if (lsGroup.get(groupPos).getChild().get(childPos).getId()<702||lsGroup.get(groupPos).getChild().get(childPos).getId()>=800){
                 		startSearch(getResources().getString(tmpId),imgId,
-                				lsGroup.get(groupPos).getChild().get(childPos).getTypes());            	
+                				lsGroup.get(groupPos).getChild().get(childPos).getTypes(),false);            	
                 	}
                 	else {
                 		startSearch(lsGroup.get(groupPos).getChild().get(childPos).getName(),imgId,
-                				lsGroup.get(groupPos).getChild().get(childPos).getTypes());   
+                				lsGroup.get(groupPos).getChild().get(childPos).getTypes(),true);   
                 	}
                 	return true;
             	}            	               
@@ -165,7 +165,7 @@ public class CategoriesListActivity extends Activity {
             	if(lsGroup.get(groupPos).getChild().size()==0){
             		int tmpId = getResources().getIdentifier("mmt.uit.placehelper:"+lsGroup.get(groupPos).getName(), null, null);
             		int imgId = getResources().getIdentifier("mmt.uit.placehelper:"+lsGroup.get(groupPos).getImgID(), null, null);
-                	startSearch(getResources().getString(tmpId),imgId,lsGroup.get(groupPos).getTypes());
+                	startSearch(getResources().getString(tmpId),imgId,lsGroup.get(groupPos).getTypes(),false);
                 	return true;
                 }
                 
@@ -219,7 +219,7 @@ public class CategoriesListActivity extends Activity {
 		}
 	};
     
-    private void startSearch(String place, int img, String types){
+    private void startSearch(String place, int img, String types, boolean isUser){
 		Log.v("ph_info", "Start Search");
 		if (CheckConnection.checkInternet(mContext)){
 		if (currentLoc!=null){
@@ -230,7 +230,7 @@ public class CategoriesListActivity extends Activity {
 			b.putDouble("curlng", currentLoc.getLongitude());
 			b.putInt("img", img);
 			b.putString("types", types);
-			
+			b.putBoolean("user", isUser);
 		Intent mIntent = new Intent(getApplicationContext(),
 				SearchResultActivity.class);
 		mIntent.putExtras(b);

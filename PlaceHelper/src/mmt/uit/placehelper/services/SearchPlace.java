@@ -57,13 +57,17 @@ public class SearchPlace {
 		}
 		
 		
-		public static PlacesList getPlaceList (double lat,double lng, String keyword, String lang, int radius, String types){
+		public static PlacesList getPlaceList (double lat,double lng, String keyword, String lang, int radius, String types, boolean isUser){
 			PlacesList rs_list = null; //Store list result places
 			GenericUrl mUrl = new GenericUrl(PLACES_SEARCH_URL);						
 			HttpRequestFactory httpRequestFactory = createRequestFactory(transport);
 			try {
 				if(keyword!=null){
-				mUrl.put("name", keyword);}
+					if(isUser){
+						mUrl.put("keyword", keyword);
+					}
+					else mUrl.put("name", keyword);
+				}
 				mUrl.put("radius", radius);
 				mUrl.put("location", lat + "," + lng);
 				mUrl.put("sensor", "true");
@@ -71,7 +75,7 @@ public class SearchPlace {
 				if(types!=null){
 				mUrl.put("types",types);}
 				mUrl.put("key", API_KEY);				
-				//Log.v(LOG_GETLIST, "url= " + mUrl);
+				Log.v(LOG_GETLIST, "url= " + mUrl);
 				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
 				HttpResponse response = request.execute();
 				int sttCode = response.getStatusCode();

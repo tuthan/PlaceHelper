@@ -54,6 +54,7 @@ public class SearchResultActivity extends ListActivity {
 	private String types =null;
 	private static final int ONLY_NAME=1,ONLY_TYPES=2,BOTH_NAME_TYPES=3;
 	private int search_op=1;
+	private boolean isUser=false;
       
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,7 @@ public class SearchResultActivity extends ListActivity {
         curLoc.setLng(b.getDouble("curlng"));        
         img = b.getInt("img"); 
         types = b.getString("types");
+        isUser = b.getBoolean("user");
     	mSharePref = PreferenceManager.getDefaultSharedPreferences(mContext);
     	if(mSharePref!=null){
     	lang = mSharePref.getString(getResources().getString(R.string.prefkey_lang), getResources().getStringArray(R.array.arr_lang_value)[0]);
@@ -121,7 +123,7 @@ public class SearchResultActivity extends ListActivity {
 		protected PlacesList doInBackground(PlaceLocation... params) {		
 					
 			PlacesList pl=null; //initialize list result
-			pl = SearchPlace.getPlaceList(params[0].getLat(), params[0].getLng(),keyword,lang,radius,types);
+			pl = SearchPlace.getPlaceList(params[0].getLat(), params[0].getLng(),keyword,lang,radius,types,isUser);
 			return pl; //Return list Place				
 		}
 		

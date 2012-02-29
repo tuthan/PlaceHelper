@@ -38,7 +38,7 @@
     <string name="err_address">Not available</string>  
     <string name="get_cur_add">Updating</string>
     <string name="change_loc">Change Location</string>
-    <string name="cat_name">Name</string>
+    <string name="cat_name">Keyword</string>
     <string name="cat_add_title">Add new category</string>
     <string name="clear_setting">Clear User Categories</string>    
 </resources>

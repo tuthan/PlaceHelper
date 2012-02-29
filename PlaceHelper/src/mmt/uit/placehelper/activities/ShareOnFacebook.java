@@ -50,7 +50,7 @@ public class ShareOnFacebook extends Activity{
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-		setContentView(R.layout.facebook_dialog);
+		setContentView(R.layout.ph_facebook_dialog);
 		Bundle bundle = getIntent().getExtras();
 		String URL = bundle.getString("URL");
 		String name = bundle.getString("Name");
@@ -69,7 +69,6 @@ public class ShareOnFacebook extends Activity{
 	public void share(View button){
 		if (! facebook.isSessionValid()) {
 			loginAndPostToWall();
-			finish();
 		}
 		else {
 			postToWall(messageToPost, Name);

@@ -38,7 +38,7 @@
     <string name="err_address">Không tìm thấy</string>  
     <string name="get_cur_add">Đang lấy vị trí</string> 
     <string name="change_loc">Đổi vị trí</string>
-    <string name="cat_name">Tên</string>
+    <string name="cat_name">Từ khóa</string>
     <string name="cat_add_title">Thêm danh mục mới</string>
     <string name="clear_setting">Xóa danh mục đã thêm</string>   
 </resources>
