@@ -71,7 +71,7 @@ public class SearchPlace {
 				if(types!=null){
 				mUrl.put("types",types);}
 				mUrl.put("key", API_KEY);				
-				//Log.v(LOG_GETLIST, "url= " + mUrl);
+				Log.v(LOG_GETLIST, "url= " + mUrl);
 				HttpRequest request = httpRequestFactory.buildGetRequest(mUrl);			
 				HttpResponse response = request.execute();
 				int sttCode = response.getStatusCode();
