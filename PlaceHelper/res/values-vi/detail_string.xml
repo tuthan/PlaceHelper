@@ -3,6 +3,20 @@
     <string name="de_success">Thêm vào thành công!</string>
     <string name="de_exist">Đã có trong danh sách của bạn!!</string>
     <string name="de_webhint">Bấm vào xem thông tin trên trang web!</string>
-
+	<string name="de_distance">Khoảng cách:</string>
+    <string name="de_time">Thời gian:</string>
+    <string-array name="arr_dir_mode">
+        <item >Đi xe</item>
+        <item >Đi bộ</item>
+        <item >Xe đạp</item>
+    </string-array>
+    <string name="de_dir_mode_text">Chọn kiểu dẫn đường</string>
+    <string name="de_direction">Tìm dẫn đường:</string>
+    <string name="de_dir_not_found">Không có dẫn đường đến vị trí này!</string>    
+    <string name="de_detail_route">Chi tiết</string>
+    <string name="de_start">Bạn ở đây</string>
+    <string name="de_end">Đích đến</string>
+    <string name="de_email_add">Email người nhận</string>
+    <string name="de_subject">Tiêu đề thư</string>
     
 </resources>

@@ -82,9 +82,15 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 	            convertView = infalInflater.inflate(R.layout.ph_cat_child, null);
 	        }
 	        TextView tv = (TextView) convertView.findViewById(R.id.tv_child);
-	        tv.setText(child.getName());
+	        if(child.getId()<702||child.getId()>=800){
+	        	tv.setText(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+child.getName(), null, null));
+	        }
+	        else 
+	        {
+	        	tv.setText(child.getName());
+	        }
 	        ImageView iv = (ImageView) convertView.findViewById(R.id.iv_child);
-	        iv.setImageResource(child.getImgID());
+	        iv.setImageResource(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+child.getImgID(), null, null));
 	        return convertView;
 	    }
 
@@ -120,9 +126,9 @@ public class ExpListAdapter extends BaseExpandableListAdapter {
 	            convertView = infalInflater.inflate(R.layout.ph_cat_group, null);
 	        }
 	        TextView tv = (TextView) convertView.findViewById(R.id.tv_group);
-	        tv.setText(group.getName());
+	        tv.setText(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+group.getName(), null, null));
 	        ImageView iv = (ImageView) convertView.findViewById(R.id.iv_group);
-	        iv.setImageResource(group.getImgID());
+	        iv.setImageResource(mContext.getResources().getIdentifier("mmt.uit.placehelper:"+group.getImgID(), null, null));
 	        ImageView indicator = (ImageView)convertView.findViewById(R.id.gr_indicator);
 	        if (getChildrenCount(groupPosition)==0){
 	        	indicator.setVisibility(View.INVISIBLE);

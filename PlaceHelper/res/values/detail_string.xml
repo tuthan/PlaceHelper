@@ -8,7 +8,7 @@
     <string-array name="arr_dir_mode">
         <item >Driving</item>
         <item >Walking</item>
-        <item >Bicycling</item>
+        <item >Bicycling (Us only)</item>
     </string-array>
     <string name="de_dir_mode_text">Choose direction mode</string>
     <string name="de_direction">Find directions for:</string>
@@ -21,6 +21,8 @@
     <string name="de_detail_route">Detail direction</string>
     <string name="de_start">You here</string>
     <string name="de_end">Destination</string>
+    <string name="de_email_add">Enter destination email</string>
+    <string name="de_subject">Enter subject</string>
 
     
 </resources>

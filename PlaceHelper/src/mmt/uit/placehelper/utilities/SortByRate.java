@@ -7,8 +7,8 @@ import mmt.uit.placehelper.models.Place;
 //Class to help sort place by Rating 
 public class SortByRate implements Comparator<Place> {
 	public int compare(Place place1, Place place2) {		
-		double rate1 = place1.getDistance();
-		double rate2 = place2.getDistance();
+		float rate1 = place1.getRating();
+		float rate2 = place2.getRating();
 		
 		if(rate1 > rate2)
 			return 1;

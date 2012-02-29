@@ -8,8 +8,8 @@ import mmt.uit.placehelper.models.Place;
 public class SortByDistance implements Comparator<Place> {
 	public int compare(Place place1, Place place2) {
 		
-		float dis1 = place1.getRating();
-		float dis2 = place2.getRating();
+		double dis1 = place1.getDistance();
+		double dis2 = place2.getDistance();
 		
 		if(dis1 > dis2)
 			return 1;

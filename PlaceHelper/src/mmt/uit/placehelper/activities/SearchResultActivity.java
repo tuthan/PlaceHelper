@@ -127,7 +127,7 @@ public class SearchResultActivity extends ListActivity {
 		
 		@Override
 		protected void onPreExecute() {
-			// TODO Auto-generated method stub
+			
 			super.onPreExecute();
 			search_progress.setVisibility(View.VISIBLE);
 			txtrs.setText(getResources().getText(R.string.seact_load));
@@ -147,7 +147,8 @@ public class SearchResultActivity extends ListActivity {
 				dataSrv.open();
 				txtrs.setText(getResources().getText(R.string.seact_result)+ keyWord);
 				lsPlace = result;				
-				//Collections.sort(lsPlace.getResults(), new SortByRate());
+				Collections.sort(lsPlace.getResults(), new SortByRate());
+				Collections.reverse(lsPlace.getResults());
 				
 				for (int i=0;i<lsPlace.getResults().size();i++){
 					if (dataSrv.isExisted(lsPlace.getResults().get(i).getId())){
@@ -179,7 +180,7 @@ public class SearchResultActivity extends ListActivity {
 	
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
-		// TODO Auto-generated method stub
+		
 		Intent mIntent = new Intent(this, DetailPlaceActivity.class);
 		Place pl = lsPlace.getResults().get(position);
 		Bundle mBundle = new Bundle();
@@ -227,7 +228,7 @@ public class SearchResultActivity extends ListActivity {
 		public RslistAdapter(Context context, int textViewResourceId,
 				List<Place> objects, int img) {
 			super(context, textViewResourceId, objects);
-			// TODO Auto-generated constructor stub
+			
 			
 			this.resourceId = textViewResourceId;
 			this.array = objects;

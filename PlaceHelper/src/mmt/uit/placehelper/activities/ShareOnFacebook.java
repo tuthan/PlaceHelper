@@ -69,6 +69,7 @@ public class ShareOnFacebook extends Activity{
 	public void share(View button){
 		if (! facebook.isSessionValid()) {
 			loginAndPostToWall();
+			finish();
 		}
 		else {
 			postToWall(messageToPost, Name);

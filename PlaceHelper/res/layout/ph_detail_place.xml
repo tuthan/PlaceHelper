@@ -271,19 +271,19 @@
 			        android:orientation="vertical" >
 
 			        <ImageButton
-			            android:id="@+id/btnTwitter"
+			            android:id="@+id/btnEmail"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
 			            android:layout_marginTop="4dp"			            
-			            android:src="@drawable/detail_btn_twitter"
+			            android:src="@drawable/detail_btn_email"
 			            android:background="@android:color/transparent" />
 
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:text="Twitter"
+			            android:text="Email"
 			            android:textColor="@color/black"
 			            android:textSize="10dp" />
 			    </LinearLayout>
@@ -346,19 +346,19 @@
 			        android:orientation="vertical" >
 
 			        <ImageButton
-			            android:id="@+id/btnFavorite"
+			            android:id="@+id/btnWeb"
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
 			            android:layout_marginTop="4dp"			           
-			            android:src="@drawable/detail_btn_favorite"
+			            android:src="@drawable/detail_btn_web"
 			            android:background="@android:color/transparent" />
 
 			        <TextView
 			            android:layout_width="wrap_content"
 			            android:layout_height="wrap_content"
 			            android:layout_gravity="center"
-			            android:text="Favorite"
+			            android:text="On Web"
 			            android:textColor="@color/black"
 			            android:textSize="10dp" />
 			    </LinearLayout>
