@@ -89,7 +89,7 @@ LocationManager locationManager;
         public void onLocationChanged(Location location)
         {
             locationResult.gotLocation(location);
-            
+            stopLocationUpdates();
 
         }
         public void onProviderDisabled(String provider) {}
