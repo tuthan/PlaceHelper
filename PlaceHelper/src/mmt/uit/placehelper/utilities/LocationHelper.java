@@ -89,8 +89,7 @@ LocationManager locationManager;
         public void onLocationChanged(Location location)
         {
             locationResult.gotLocation(location);
-            locationManager.removeUpdates(this);
-            locationManager.removeUpdates(locationListenerGps);
+            
 
         }
         public void onProviderDisabled(String provider) {}
@@ -106,14 +105,16 @@ LocationManager locationManager;
             Location gpsLocation = null;
             Location networkLocation = null;
 
-            if(gpsEnabled)
+            if(gpsEnabled || (gpsEnabled && networkEnabled))
             {
                 gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             }
-            if(networkEnabled)
-            {
-                networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            }
+            else 
+            	{if(networkEnabled)
+            		{
+            		networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            		}
+            	}
 
             //if there are both values use the latest one
             if(gpsLocation != null && networkLocation != null)

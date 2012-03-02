@@ -2,7 +2,7 @@
 <resources>
     <string name="hello">Hello World, MainActivity!</string>
     <string name="app_name">PlaceHelper</string>
-    <string name="version">1.1</string>    
+    <string name="version">1.2</string>    
     <string name="cur_loca">Current Location</string>    
     <string name="about_title">Informations</string>
     <string name="about_msg ">University Of Information Technology \n Faculty of Netwrok and Communication \n Class MMT02 \n Võ Trung Hưng \n Email: hungvotrung@gmail.com\n Đỗ Huy Hưng</string>

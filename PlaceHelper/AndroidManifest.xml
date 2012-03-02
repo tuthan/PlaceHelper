@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="mmt.uit.placehelper"
-      android:versionCode="101" android:versionName="@string/version">
+      android:versionCode="102" android:versionName="@string/version">
     <uses-sdk android:minSdkVersion="7" android:maxSdkVersion="10"/>
     <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission><uses-permission android:name="android.permission.INTERNET"></uses-permission>
     
